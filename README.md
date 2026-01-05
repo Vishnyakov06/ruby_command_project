@@ -1,1 +1,0 @@
-# Салон красоты "Beauty Violett"
