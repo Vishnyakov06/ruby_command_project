@@ -6,6 +6,13 @@
     <title>Beauty Salon</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="container">
@@ -13,7 +20,10 @@
         <header class="header">
             <div class="logo">
                 <i class="fas fa-spa"></i>
-                <h1>Салон красоты - Beauty Violett</h1>
+                <h1 style="font-family: Lobster, serif;">Beauty Violett</h1>
+            </div>
+            <div class="header-center">
+                <span class="center-text" style="font-family: Lobster, serif;">Салон красоты</span>
             </div>
         </header>
 
@@ -62,7 +72,7 @@
                                 </div>
                                 <div class="stat-info">
                                     <h3 id="masters-count">0</h3>
-                                    <p>Мастеры</p>
+                                    <p>Мастера</p>
                                 </div>
                             </div>
                             <div class="stat-card">
@@ -124,12 +134,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>ФИО</th>
-                                    <th>Специализация</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Отчество</th>
                                     <th>Телефон</th>
-                                    <th>Ставка (₽/час)</th>
                                     <th>Статус</th>
-                                    <th>Действия</th>
+                                    <th>Активен/нет</th>
                                 </tr>
                             </thead>
                             <tbody id="masters-table-body">
@@ -152,13 +162,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>ФИО</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Отчество</th>
                                     <th>Телефон</th>
-                                    <th>Email</th>
-                                    <th>Дата рождения</th>
-                                    <th>Скидка</th>
-                                    <th>Кол-во посещений</th>
-                                    <th>Действия</th>
+                                    <th>Дата регистрации в системе</th>
                                 </tr>
                             </thead>
                             <tbody id="clients-table-body">
@@ -177,7 +185,7 @@
                                 <i class="fas fa-plus"></i> Новая запись
                             </button>
                             <div class="date-filter">
-                                <input type="date" id="appointment-date-filter" value="">
+                                <input type="date" class="beautiful-date" value="">
                                 <button class="btn-secondary" id="filter-appointments">
                                     <i class="fas fa-filter"></i>
                                 </button>
@@ -192,11 +200,10 @@
                                     <th>Клиент</th>
                                     <th>Мастер</th>
                                     <th>Услуга</th>
-                                    <th>Дата и время</th>
-                                    <th>Длительность</th>
-                                    <th>Стоимость</th>
-                                    <th>Статус</th>
-                                    <th>Действия</th>
+                                    <th>Время</th>
+                                    <th>Дата создания записи</th>
+                                    <th>Заметка</th>
+                                    <th>Цена</th>
                                 </tr>
                             </thead>
                             <tbody id="appointments-table-body">
@@ -213,14 +220,14 @@
                     </div>
                     <div class="reports-tabs">
                         <div class="report-tabs-nav">
-                            <button class="report-tab active" data-report="revenue">Выручка</button>
+                            <button class="report-tab active" data-report="revenue" >Выручка</button>
                             <button class="report-tab" data-report="masters">Мастера</button>
                             <button class="report-tab" data-report="clients">Клиенты</button>
                         </div>
                         <div class="report-content active" id="revenue-report">
                             <h3>Отчет по выручке</h3>
                             <div class="report-controls">
-                                <select id="report-period">
+                                <select id="report-period" class="styled-select">
                                     <option value="today">Сегодня</option>
                                     <option value="week">Неделя</option>
                                     <option value="month" selected>Месяц</option>
@@ -307,158 +314,174 @@
         </div>
 
         <!-- Модальные окна -->
+        <!-- Модальное окно для мастера -->
         <div id="master-modal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3 id="master-modal-title">Добавить мастера</h3>
-                <form id="master-form">
-                    <input type="hidden" id="master-id">
-                    <div class="form-group">
-                        <label for="master-name">ФИО *</label>
-                        <input type="text" id="master-name" required>
-                        <div class="error-message" id="master-name-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="master-specialty">Специализация *</label>
-                        <select id="master-specialty" required>
-                            <option value="">Выберите специализацию</option>
-                            <option value="Парикмахер">Парикмахер</option>
-                            <option value="Визажист">Визажист</option>
-                            <option value="Мастер маникюра">Мастер маникюра</option>
-                            <option value="Косметолог">Косметолог</option>
-                            <option value="Массажист">Массажист</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="master-phone">Телефон *</label>
-                        <input type="tel" id="master-phone" required pattern="[\+]\d{1,3}\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}">
-                        <div class="error-message" id="master-phone-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="master-rate">Ставка (₽/час) *</label>
-                        <input type="number" id="master-rate" min="0" step="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="master-status">Статус</label>
-                        <select id="master-status">
-                            <option value="active">Активен</option>
-                            <option value="inactive">Неактивен</option>
-                            <option value="vacation">В отпуске</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancel-master">Отмена</button>
-                        <button type="submit" class="btn-primary">Сохранить</button>
-                    </div>
-                </form>
+                <div class="modal-header">
+                    <h3><i class="fas fa-user-tie"></i> Добавить мастера</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="master-form">
+                        <input type="hidden" id="master-id">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="master-firstname">Имя *</label>
+                                <input type="text" id="master-firstname" placeholder="Анна" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="master-lastname">Фамилия *</label>
+                                <input type="text" id="master-lastname" placeholder="Иванова" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="master-middlename">Отчество</label>
+                            <input type="text" id="master-middlename" placeholder="Сергеевна">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="master-phone">Телефон *</label>
+                            <input type="tel" id="master-phone" placeholder="+7 (999) 123-45-67" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="master-status">Статус *</label>
+                                <select id="master-status" required>
+                                    <option value="">Выберите статус</option>
+                                    <option value="working">Работает</option>
+                                    <option value="vacation">Отпуск</option>
+                                    <option value="sick">Больничный</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="master-active">Активен *</label>
+                                <select id="master-active" required>
+                                    <option value="1">Да</option>
+                                    <option value="0">Нет</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary close-modal">Отмена</button>
+                            <button type="submit" class="btn-primary">Сохранить мастера</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
+        <!-- Модальное окно для клиента -->
         <div id="client-modal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3 id="client-modal-title">Добавить клиента</h3>
-                <form id="client-form">
-                    <input type="hidden" id="client-id">
-                    <div class="form-group">
-                        <label for="client-name">ФИО *</label>
-                        <input type="text" id="client-name" required>
-                        <div class="error-message" id="client-name-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="client-phone">Телефон *</label>
-                        <input type="tel" id="client-phone" required>
-                        <div class="error-message" id="client-phone-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="client-email">Email</label>
-                        <input type="email" id="client-email">
-                        <div class="error-message" id="client-email-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="client-birthdate">Дата рождения</label>
-                        <input type="date" id="client-birthdate">
-                    </div>
-                    <div class="form-group">
-                        <label for="client-discount">Скидка (%)</label>
-                        <input type="number" id="client-discount" min="0" max="100" value="0">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancel-client">Отмена</button>
-                        <button type="submit" class="btn-primary">Сохранить</button>
-                    </div>
-                </form>
+                <div class="modal-header">
+                    <h3><i class="fas fa-user-plus"></i> Добавить клиента</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="client-form">
+                        <input type="hidden" id="client-id">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="client-firstname">Имя *</label>
+                                <input type="text" id="client-firstname" placeholder="Мария" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="client-lastname">Фамилия *</label>
+                                <input type="text" id="client-lastname" placeholder="Петрова" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-middlename">Отчество</label>
+                            <input type="text" id="client-middlename" placeholder="Александровна">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-phone">Телефон *</label>
+                            <input type="tel" id="client-phone" placeholder="+7 (999) 987-65-43" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-reg-date">Дата регистрации *</label>
+                            <input type="date" id="client-reg-date" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary close-modal">Отмена</button>
+                            <button type="submit" class="btn-primary">Сохранить клиента</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
+        <!-- Модальное окно для записи -->
         <div id="appointment-modal" class="modal">
             <div class="modal-content wide-modal">
-                <span class="close">&times;</span>
-                <h3 id="appointment-modal-title">Новая запись</h3>
-                <form id="appointment-form">
-                    <input type="hidden" id="appointment-id">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="appointment-client">Клиент *</label>
-                            <select id="appointment-client" required>
-                                <option value="">Выберите клиента</option>
-                            </select>
+                <div class="modal-header">
+                    <h3><i class="fas fa-calendar-plus"></i> Новая запись</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="appointment-form">
+                        <input type="hidden" id="appointment-id">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointment-client">Клиент *</label>
+                                <select id="appointment-client" required>
+                                    <option value="">Выберите клиента</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointment-master">Мастер *</label>
+                                <select id="appointment-master" required>
+                                    <option value="">Выберите мастера</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="appointment-master">Мастер *</label>
-                            <select id="appointment-master" required>
-                                <option value="">Выберите мастера</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
+                        
                         <div class="form-group">
                             <label for="appointment-service">Услуга *</label>
                             <select id="appointment-service" required>
                                 <option value="">Выберите услугу</option>
-                                <option value="Стрижка">Стрижка</option>
-                                <option value="Окрашивание">Окрашивание</option>
-                                <option value="Маникюр">Маникюр</option>
-                                <option value="Педикюр">Педикюр</option>
-                                <option value="Макияж">Макияж</option>
-                                <option value="Чистка лица">Чистка лица</option>
-                                <option value="Массаж">Массаж</option>
+                                <option value="haircut">Стрижка</option>
+                                <option value="coloring">Окрашивание</option>
+                                <option value="manicure">Маникюр</option>
+                                <option value="pedicure">Педикюр</option>
+                                <option value="makeup">Макияж</option>
+                                <option value="cosmetology">Косметология</option>
+                                <option value="massage">Массаж</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="appointment-price">Стоимость (₽) *</label>
-                            <input type="number" id="appointment-price" min="0" required>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointment-time">Время *</label>
+                                <input type="time" id="appointment-time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointment-price">Цена, ₽ *</label>
+                                <input type="number" id="appointment-price" min="0" step="100" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
+                        
                         <div class="form-group">
-                            <label for="appointment-date">Дата *</label>
-                            <input type="date" id="appointment-date" required>
+                            <label for="appointment-note">Заметка</label>
+                            <textarea id="appointment-note" rows="2" placeholder="Дополнительная информация"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="appointment-time">Время *</label>
-                            <input type="time" id="appointment-time" required>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary close-modal">Отмена</button>
+                            <button type="submit" class="btn-primary">Создать запись</button>
                         </div>
-                        <div class="form-group">
-                            <label for="appointment-duration">Длительность (мин) *</label>
-                            <select id="appointment-duration" required>
-                                <option value="30">30 мин</option>
-                                <option value="60">1 час</option>
-                                <option value="90">1.5 часа</option>
-                                <option value="120">2 часа</option>
-                                <option value="180">3 часа</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="appointment-notes">Примечания</label>
-                        <textarea id="appointment-notes" rows="3"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancel-appointment">Отмена</button>
-                        <button type="submit" class="btn-primary">Сохранить запись</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
 

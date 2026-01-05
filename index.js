@@ -123,21 +123,28 @@ class BeautySalonApp {
     
     showMasterModal(master = null) {
         const modal = document.getElementById('master-modal');
-        const title = document.getElementById('master-modal-title');
+        const title = modal.querySelector('h3'); // Изменил селектор
         const form = document.getElementById('master-form');
         
         if (master) {
+            // Разбиваем ФИО на части
+            const nameParts = master.name.split(' ');
+            const firstname = nameParts[1] || '';
+            const lastname = nameParts[0] || '';
+            const middlename = nameParts[2] || '';
+            
             title.textContent = 'Редактировать мастера';
             document.getElementById('master-id').value = master.id;
-            document.getElementById('master-name').value = master.name;
-            document.getElementById('master-specialty').value = master.specialty;
-            document.getElementById('master-phone').value = master.phone;
-            document.getElementById('master-rate').value = master.rate;
-            document.getElementById('master-status').value = master.status;
+            document.getElementById('master-firstname').value = firstname;
+            document.getElementById('master-lastname').value = lastname;
+            document.getElementById('master-middlename').value = middlename;
+            document.getElementById('master-phone').value = master.phone || '';
+            document.getElementById('master-status').value = master.status || 'active';
+            document.getElementById('master-active').value = master.active ? 'yes' : 'no';
             this.selectedMaster = master;
         } else {
             title.textContent = 'Добавить мастера';
-            form.reset();
+            if (form) form.reset();
             document.getElementById('master-id').value = '';
             this.selectedMaster = null;
         }
@@ -147,22 +154,31 @@ class BeautySalonApp {
     
     showClientModal(client = null) {
         const modal = document.getElementById('client-modal');
-        const title = document.getElementById('client-modal-title');
+        const title = modal.querySelector('h3'); // Изменил селектор
         const form = document.getElementById('client-form');
         
         if (client) {
+            // Разбиваем ФИО на части
+            const nameParts = client.name.split(' ');
+            const firstname = nameParts[1] || '';
+            const lastname = nameParts[0] || '';
+            const middlename = nameParts[2] || '';
+            
             title.textContent = 'Редактировать клиента';
             document.getElementById('client-id').value = client.id;
-            document.getElementById('client-name').value = client.name;
-            document.getElementById('client-phone').value = client.phone;
-            document.getElementById('client-email').value = client.email || '';
-            document.getElementById('client-birthdate').value = client.birthdate || '';
-            document.getElementById('client-discount').value = client.discount || 0;
+            document.getElementById('client-firstname').value = firstname;
+            document.getElementById('client-lastname').value = lastname;
+            document.getElementById('client-middlename').value = middlename;
+            document.getElementById('client-phone').value = client.phone || '';
+            document.getElementById('client-reg-date').value = client.regDate || this.getTodayDate();
             this.selectedClient = client;
         } else {
             title.textContent = 'Добавить клиента';
-            form.reset();
+            if (form) form.reset();
             document.getElementById('client-id').value = '';
+            // Устанавливаем сегодняшнюю дату по умолчанию
+            const regDateField = document.getElementById('client-reg-date');
+            if (regDateField) regDateField.value = this.getTodayDate();
             this.selectedClient = null;
         }
         
@@ -171,7 +187,7 @@ class BeautySalonApp {
     
     showAppointmentModal(appointment = null) {
         const modal = document.getElementById('appointment-modal');
-        const title = document.getElementById('appointment-modal-title');
+        const title = modal.querySelector('h3'); // Изменил селектор
         const form = document.getElementById('appointment-form');
         
         // Заполнить выпадающие списки
@@ -181,21 +197,20 @@ class BeautySalonApp {
         if (appointment) {
             title.textContent = 'Редактировать запись';
             document.getElementById('appointment-id').value = appointment.id;
-            document.getElementById('appointment-client').value = appointment.clientId;
-            document.getElementById('appointment-master').value = appointment.masterId;
-            document.getElementById('appointment-service').value = appointment.service;
-            document.getElementById('appointment-price').value = appointment.price;
-            document.getElementById('appointment-date').value = appointment.date;
-            document.getElementById('appointment-time').value = appointment.time;
-            document.getElementById('appointment-duration').value = appointment.duration;
-            document.getElementById('appointment-notes').value = appointment.notes || '';
+            document.getElementById('appointment-client').value = appointment.clientId || '';
+            document.getElementById('appointment-master').value = appointment.masterId || '';
+            document.getElementById('appointment-service').value = appointment.service || '';
+            document.getElementById('appointment-price').value = appointment.price || '';
+            document.getElementById('appointment-time').value = appointment.time || '10:00';
+            document.getElementById('appointment-note').value = appointment.note || '';
             this.selectedAppointment = appointment;
         } else {
             title.textContent = 'Новая запись';
-            form.reset();
+            if (form) form.reset();
             document.getElementById('appointment-id').value = '';
-            document.getElementById('appointment-date').value = this.getTodayDate();
-            document.getElementById('appointment-time').value = '10:00';
+            // Устанавливаем время по умолчанию
+            const timeField = document.getElementById('appointment-time');
+            if (timeField) timeField.value = '10:00';
             this.selectedAppointment = null;
         }
         
@@ -211,12 +226,16 @@ class BeautySalonApp {
     saveMaster() {
         const masterData = {
             id: document.getElementById('master-id').value || Date.now().toString(),
-            name: document.getElementById('master-name').value,
-            specialty: document.getElementById('master-specialty').value,
+            firstname: document.getElementById('master-firstname').value,
+            lastname: document.getElementById('master-lastname').value,
+            middlename: document.getElementById('master-middlename').value || '',
             phone: document.getElementById('master-phone').value,
-            rate: parseInt(document.getElementById('master-rate').value),
-            status: document.getElementById('master-status').value
+            status: document.getElementById('master-status').value,
+            active: document.getElementById('master-active').value === '1'
         };
+        
+        // Формируем полное имя для отображения
+        masterData.name = `${masterData.lastname} ${masterData.firstname} ${masterData.middlename}`.trim();
         
         // Валидация
         if (!this.validateMaster(masterData)) return;
@@ -243,13 +262,15 @@ class BeautySalonApp {
     saveClient() {
         const clientData = {
             id: document.getElementById('client-id').value || Date.now().toString(),
-            name: document.getElementById('client-name').value,
+            firstname: document.getElementById('client-firstname').value,
+            lastname: document.getElementById('client-lastname').value,
+            middlename: document.getElementById('client-middlename').value || '',
             phone: document.getElementById('client-phone').value,
-            email: document.getElementById('client-email').value || null,
-            birthdate: document.getElementById('client-birthdate').value || null,
-            discount: parseInt(document.getElementById('client-discount').value) || 0,
-            visits: this.selectedClient ? this.selectedClient.visits : 0
+            regDate: document.getElementById('client-reg-date').value
         };
+        
+        // Формируем полное имя
+        clientData.name = `${clientData.lastname} ${clientData.firstname} ${clientData.middlename}`.trim();
         
         // Валидация
         if (!this.validateClient(clientData)) return;
@@ -280,14 +301,12 @@ class BeautySalonApp {
             masterId: document.getElementById('appointment-master').value,
             service: document.getElementById('appointment-service').value,
             price: parseInt(document.getElementById('appointment-price').value),
-            date: document.getElementById('appointment-date').value,
             time: document.getElementById('appointment-time').value,
-            duration: parseInt(document.getElementById('appointment-duration').value),
-            notes: document.getElementById('appointment-notes').value,
-            status: 'pending'
+            note: document.getElementById('appointment-note').value || '',
+            createDate: new Date().toISOString().split('T')[0]
         };
         
-        // Получаем имена клиента и мастера
+        // Получаем имена для отображения
         const client = this.clients.find(c => c.id === appointmentData.clientId);
         const master = this.masters.find(m => m.id === appointmentData.masterId);
         

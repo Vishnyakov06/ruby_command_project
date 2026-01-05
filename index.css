@@ -59,6 +59,19 @@ body {
     font-weight: 600;
 }
 
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.center-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+
 .user-info {
     display: flex;
     align-items: center;
@@ -100,6 +113,9 @@ body {
 
 .nav-menu {
     list-style: none;
+    font-family: Oswald, serif;
+    letter-spacing: 0.1rem;
+    font-size: 18px;
 }
 
 .nav-item {
@@ -155,6 +171,9 @@ body {
 }
 
 .dashboard-header h2 {
+    font-family: Oswald, serif;
+    font-size: 30px;
+    /*letter-spacing: 0.001em; */
     margin-bottom: 1.5rem;
     color: var(--dark-color);
     display: flex;
@@ -207,12 +226,14 @@ body {
 }
 
 .dashboard-content {
+    font-family: Oswald, serif;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 2rem;
 }
 
 .widget {
+    font-family: Oswald, serif;
     background: white;
     border-radius: 10px;
     padding: 1.5rem;
@@ -233,8 +254,34 @@ body {
     overflow-y: auto;
 }
 
+.beautiful-date {
+    padding: 12px 16px;
+    border: 2px solid #9c27b0;
+    border-radius: 8px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    width: 175px;
+    height: 43px;
+    cursor: pointer;
+}
+
+.beautiful-date:hover {
+    border-color: #7b1fa2;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+}
+
+.beautiful-date:focus {
+    outline: none;
+    border-color: #7b1fa2;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2);
+}
+
+
 /* Таблицы */
 .section-header {
+    font-family: Oswald, serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -274,7 +321,7 @@ body {
 .data-table th {
     background-color: #f8f9fa;
     padding: 1rem;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     color: var(--dark-color);
     border-bottom: 2px solid var(--border-color);
@@ -321,6 +368,8 @@ body {
 .btn-primary,
 .btn-secondary,
 .btn-danger {
+    font-family: Oswald, serif;
+    font-size: 15px;
     padding: 0.6rem 1.2rem;
     border: none;
     border-radius: 5px;
@@ -521,6 +570,8 @@ body {
 }
 
 .report-tab {
+    font-family: Oswald, serif;
+    font-size: 16px;
     padding: 1rem 2rem;
     background: none;
     border: none;
@@ -554,7 +605,7 @@ body {
 .report-controls {
     display: flex;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin: 1rem 1rem;
 }
 
 .report-controls select {
@@ -562,6 +613,33 @@ body {
     border-radius: 5px;
     border: 1px solid var(--border-color);
 }
+
+.styled-select {
+    width: 10%;
+    padding: 12px 40px 12px 16px; /* Padding 8px + стрелка */
+    font-family: Arial, sans-serif;
+    font-size: 13.3333px;
+    text-align: center;
+    color: #000000;
+    background-color: #FFFFFF;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 40.8px; /* Точная высота из макета */
+    box-sizing: border-box;
+}
+
+.styled-select:hover {
+    border-color: #9c27b0;
+}
+
+.styled-select:focus {
+    outline: none;
+    border-color: #9c27b0;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+}
+
 
 .chart-container {
     height: 400px;
@@ -582,6 +660,10 @@ body {
     text-align: center;
     box-shadow: var(--shadow);
     transition: var(--transition);
+}
+
+.backup-card h3{
+    font-family: Oswald, serif;
 }
 
 .backup-card:hover {
@@ -745,5 +827,50 @@ body {
     
     .btn-icon {
         width: 100%;
+    }
+}
+
+/* Стили для новых модальных окон */
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-content {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.close-modal {
+    cursor: pointer;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .modal-body {
+        padding: 1.5rem;
     }
 }
