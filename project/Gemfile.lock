@@ -391,7 +391,6 @@ PLATFORMS
   arm-linux-musl
   arm64-darwin
   x86_64-darwin
-  x86_64-linux
   x86_64-linux-gnu
   x86_64-linux-musl
 
@@ -407,7 +406,7 @@ DEPENDENCIES
   kamal
   propshaft
   puma (>= 5.0)
-  rails (~> 8.1.1)
+  rails (= 8.1.1)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable
