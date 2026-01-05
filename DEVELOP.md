@@ -8,8 +8,9 @@
 
 **Модуль:** Называем в виде *CamelCase*. Например, module MigrationInstallerPostgres
 
-**Ветки:** Называем в виде *snake_case*, но вместо нижних подчеркиваний ставим дефис. Например, migration-installer-postgres
+**Ветки:** Называем в виде *kebab-case*. Например, migration-installer-postgres
 
 **Уточнения:**
 - классы необходимо именовать в соответствии с названием файла: файл: migration_installer_postgres.rb $\Leftrightarrow$ класс: class MigrationInstallerPostgres
+
 
