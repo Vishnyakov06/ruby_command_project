@@ -1,8 +1,10 @@
+require 'pg'
 class MigrationInstaller
     MIGRATIONS_DIR = File.join(__dir__, "../db/migrations")
     SEEDS_DIR = File.join(__dir__, "../db/seeds")
 
-    def self.setup_database(db)
+    def self.setup_database(config)
+        db = PG.connect(**config)
         ensure_schema_migrations_table(db)
         run_migrations(db)
         run_seeds(db)
