@@ -23,7 +23,7 @@ class Booking < ApplicationRecord
     
     def date_service_in_future
         if date_service.present? && date_service <= Time.current
-        errors.add(:date_service, "должна быть в будущем")
+            errors.add(:date_service, "должна быть в будущем")
         end
     end
 end

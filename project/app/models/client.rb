@@ -1,4 +1,4 @@
-class Client<ApplicationRecord
+class Client < ApplicationRecord
     self.table_name = 'client'
     has_many :bookings,foreign_key: 'client_id',dependent: :destroy
     validates :last_name, :first_name, :phone_number, presence: true
