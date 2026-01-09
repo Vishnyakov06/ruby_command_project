@@ -1,4 +1,5 @@
 class BookingsController < ApplicationController
+    skip_before_action :verify_authenticity_token
     before_action :set_booking, only: %i[show update destroy]
 
     def index

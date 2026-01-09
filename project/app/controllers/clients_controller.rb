@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+    skip_before_action :verify_authenticity_token
     before_action :set_client, only: %i[show update destroy]
 
     def index
@@ -42,7 +43,8 @@ class ClientsController < ApplicationController
         params.require(:client).permit(
             :first_name,
             :last_name,
-            :phone_number
+            :phone_number,
+            :patronymic
         )
     end
 end
