@@ -8,7 +8,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: salon_user  # или ваше имя пользователя
+  username: salon_user
   password: salon_password
   host: localhost
 

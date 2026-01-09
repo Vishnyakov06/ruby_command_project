@@ -1,0 +1,318 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/bookings":
+    get:
+      summary: Retrieve all bookings
+      tags:
+      - Booking
+      responses:
+        '200':
+          description: bookings found
+    post:
+      summary: Create a booking
+      tags:
+      - Booking
+      parameters: []
+      responses:
+        '201':
+          description: booking created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: integer
+                service_id:
+                  type: integer
+                master_id:
+                  type: integer
+                date:
+                  type: string
+                  format: date-time
+              required:
+              - client_id
+              - service_id
+              - master_id
+              - date
+  "/bookings/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieve a booking
+      tags:
+      - Booking
+      responses:
+        '200':
+          description: booking found
+        '404':
+          description: booking not found
+    put:
+      summary: Update a booking
+      tags:
+      - Booking
+      parameters: []
+      responses:
+        '200':
+          description: booking updated
+        '404':
+          description: booking not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+    delete:
+      summary: Delete a booking
+      tags:
+      - Booking
+      responses:
+        '204':
+          description: booking deleted
+        '404':
+          description: booking not found
+  "/clients":
+    get:
+      summary: Retrieves all clients
+      tags:
+      - Client
+      responses:
+        '200':
+          description: clients found
+    post:
+      summary: Creates a client
+      tags:
+      - Client
+      parameters: []
+      responses:
+        '201':
+          description: client created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                phone:
+                  type: string
+              required:
+              - name
+              - phone
+  "/clients/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieves a client
+      tags:
+      - Client
+      responses:
+        '200':
+          description: client found
+        '404':
+          description: client not found
+    put:
+      summary: Updates a client
+      tags:
+      - Client
+      parameters: []
+      responses:
+        '200':
+          description: client updated
+        '404':
+          description: client not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                phone:
+                  type: string
+    delete:
+      summary: Deletes a client
+      tags:
+      - Client
+      responses:
+        '204':
+          description: client deleted
+        '404':
+          description: client not found
+  "/masters":
+    get:
+      summary: Retrieves all masters
+      tags:
+      - Master
+      responses:
+        '200':
+          description: masters found
+    post:
+      summary: Creates a master
+      tags:
+      - Master
+      parameters: []
+      responses:
+        '201':
+          description: master created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                specialty:
+                  type: string
+              required:
+              - name
+              - specialty
+  "/masters/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieves a master
+      tags:
+      - Master
+      responses:
+        '200':
+          description: master found
+        '404':
+          description: master not found
+    put:
+      summary: Updates a master
+      tags:
+      - Master
+      parameters: []
+      responses:
+        '200':
+          description: master updated
+        '404':
+          description: master not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                specialty:
+                  type: string
+    delete:
+      summary: Deletes a master
+      tags:
+      - Master
+      responses:
+        '204':
+          description: master deleted
+        '404':
+          description: master not found
+  "/services":
+    get:
+      summary: Retrieves all services
+      tags:
+      - Service
+      responses:
+        '200':
+          description: services found
+    post:
+      summary: Creates a service
+      tags:
+      - Service
+      parameters: []
+      responses:
+        '201':
+          description: service created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+              required:
+              - name
+              - price
+  "/services/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieves a service
+      tags:
+      - Service
+      responses:
+        '200':
+          description: service found
+        '404':
+          description: service not found
+    put:
+      summary: Updates a service
+      tags:
+      - Service
+      parameters: []
+      responses:
+        '200':
+          description: service updated
+        '404':
+          description: service not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+    delete:
+      summary: Deletes a service
+      tags:
+      - Service
+      responses:
+        '204':
+          description: service deleted
+        '404':
+          description: service not found
+servers:
+- url: http://localhost:3000
