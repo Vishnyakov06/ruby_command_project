@@ -14,6 +14,11 @@
 - классы необходимо именовать в соответствии с названием файла: файл: migration_installer_postgres.rb $\Leftrightarrow$ класс: class MigrationInstallerPostgres
 
 # Инструкция по запуску Swagger
-1. Запускаем команду bin/rails s из корня, то есть из ruby_command_project/project
+1. Запускаем команду "bin/rails s" из корня, то есть из "ruby_command_project/project"
 2. Открываем именно "http://localhost:3000" НЕ "http://127.0.0.1:3000", а тот, которые написан
 3. Дописываем к адресу "/api-docs"
+
+# Инструкция по добавлению эндпоинтов
+1. Вносим изменения в директорию "/spec/integration"
+2. Запускаем команду "rails rswag:specs:swaggerize" из корня, то есть из "ruby_command_project/project"
+3. Для запуска сервера: "bin/rails s" из корня, то есть из "ruby_command_project/project"
