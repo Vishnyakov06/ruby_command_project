@@ -9,7 +9,7 @@ class BookingsController < ApplicationController
 
         render json: bookings.as_json(include: {
             client:  { only: %i[client_id first_name last_name phone_number] },
-            master:  { only: %i[master_id first_name last_name] },
+            master:  { only: %i[master_id first_name last_name phone_number] },
             service: { only: %i[service_id title duration base_price] }
         })
     end
