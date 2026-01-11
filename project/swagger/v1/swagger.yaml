@@ -1,0 +1,584 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/bookings":
+    get:
+      summary: Get all bookings
+      tags:
+      - Bookings
+      responses:
+        '200':
+          description: bookings found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    booking_id:
+                      type: integer
+                      example: 1
+                    client_id:
+                      type: integer
+                      example: 1
+                    master_id:
+                      type: integer
+                      example: 1
+                    service_id:
+                      type: integer
+                      example: 1
+                    date_service:
+                      type: string
+                      format: date-time
+                      example: '2024-01-15T10:00:00Z'
+                    price:
+                      type: integer
+                      example: 1000
+                    status:
+                      type: string
+                      enum:
+                      - Подтверждена
+                      - Выполнена
+                      - Отменена
+                      - Неявка
+                      example: Подтверждена
+                    created_at:
+                      type: string
+                      format: date-time
+                      example: '2024-01-09T09:00:00Z'
+                    notes:
+                      type: string
+                      example: Дополнительные пожелания
+    post:
+      summary: Create booking
+      tags:
+      - Bookings
+      parameters: []
+      responses:
+        '201':
+          description: booking created
+        '422':
+          description: invalid request - duplicate booking time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: integer
+                master_id:
+                  type: integer
+                service_id:
+                  type: integer
+                date_service:
+                  type: string
+                  format: date-time
+                price:
+                  type: integer
+                status:
+                  type: string
+                  enum:
+                  - Подтверждена
+                  - Выполнена
+                  - Отменена
+                  - Неявка
+                notes:
+                  type: string
+              required:
+              - client_id
+              - master_id
+              - service_id
+              - date_service
+              - price
+  "/bookings/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Get booking
+      tags:
+      - Bookings
+      responses:
+        '200':
+          description: booking found
+        '404':
+          description: booking not found
+    put:
+      summary: Update booking
+      tags:
+      - Bookings
+      parameters: []
+      responses:
+        '200':
+          description: booking updated
+        '404':
+          description: booking not found
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: integer
+                master_id:
+                  type: integer
+                service_id:
+                  type: integer
+                date_service:
+                  type: string
+                  format: date-time
+                price:
+                  type: integer
+                status:
+                  type: string
+                  enum:
+                  - Подтверждена
+                  - Выполнена
+                  - Отменена
+                  - Неявка
+                notes:
+                  type: string
+    delete:
+      summary: Delete booking
+      tags:
+      - Bookings
+      responses:
+        '204':
+          description: booking deleted
+        '404':
+          description: booking not found
+  "/clients":
+    get:
+      summary: Get all clients
+      tags:
+      - Clients
+      description: Retrieves a list of all clients
+      responses:
+        '200':
+          description: clients found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    client_id:
+                      type: integer
+                      example: 1
+                    last_name:
+                      type: string
+                      example: Иванова
+                    first_name:
+                      type: string
+                      example: Анна
+                    patronymic:
+                      type: string
+                      example: Сергеевна
+                    phone_number:
+                      type: string
+                      example: "+79161234567"
+                    registartion_date:
+                      type: string
+                      format: date
+                      example: '2024-01-15'
+                  required:
+                  - client_id
+                  - last_name
+                  - first_name
+                  - phone_number
+                  - registartion_date
+    post:
+      summary: Create client
+      tags:
+      - Clients
+      description: Creates a new client record
+      parameters: []
+      responses:
+        '201':
+          description: client created successfully
+        '422':
+          description: invalid request - duplicate phone number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                last_name:
+                  type: string
+                  example: Иванова
+                first_name:
+                  type: string
+                  example: Анна
+                patronymic:
+                  type: string
+                  example: Сергеевна
+                phone_number:
+                  type: string
+                  example: "+79161234567"
+              required:
+              - last_name
+              - first_name
+              - phone_number
+  "/clients/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Client ID
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Get client
+      tags:
+      - Clients
+      description: Retrieves a client by ID
+      responses:
+        '200':
+          description: client found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  client_id:
+                    type: integer
+                    example: 1
+                  last_name:
+                    type: string
+                    example: Иванова
+                  first_name:
+                    type: string
+                    example: Анна
+                  patronymic:
+                    type: string
+                    example: Сергеевна
+                  phone_number:
+                    type: string
+                    example: "+79161234567"
+                  registartion_date:
+                    type: string
+                    format: date
+                    example: '2024-01-15'
+                required:
+                - client_id
+                - last_name
+                - first_name
+                - phone_number
+                - registartion_date
+        '404':
+          description: client not found
+    put:
+      summary: Update client
+      tags:
+      - Clients
+      description: Updates client information
+      parameters: []
+      responses:
+        '200':
+          description: client updated successfully
+        '404':
+          description: client not found
+        '422':
+          description: invalid request - validation failed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                last_name:
+                  type: string
+                  example: Иванова-Петрова
+                first_name:
+                  type: string
+                  example: Анна
+                patronymic:
+                  type: string
+                  example: Сергеевна
+                phone_number:
+                  type: string
+                  example: "+79161234567"
+    delete:
+      summary: Delete client
+      tags:
+      - Clients
+      description: Deletes a client by ID
+      responses:
+        '204':
+          description: client deleted successfully
+        '404':
+          description: client not found
+  "/masters":
+    get:
+      summary: Get all masters
+      tags:
+      - Masters
+      responses:
+        '200':
+          description: masters found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    master_id:
+                      type: integer
+                      example: 1
+                    last_name:
+                      type: string
+                      example: Петров
+                    first_name:
+                      type: string
+                      example: Иван
+                    patronymic:
+                      type: string
+                      example: Сергеевич
+                    phone_number:
+                      type: string
+                      example: "+79161234567"
+                    is_active:
+                      type: boolean
+                      example: true
+    post:
+      summary: Create master
+      tags:
+      - Masters
+      parameters: []
+      responses:
+        '201':
+          description: master created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                last_name:
+                  type: string
+                first_name:
+                  type: string
+                patronymic:
+                  type: string
+                phone_number:
+                  type: string
+                is_active:
+                  type: boolean
+              required:
+              - last_name
+              - first_name
+              - phone_number
+  "/masters/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Get master
+      tags:
+      - Masters
+      responses:
+        '200':
+          description: master found
+        '404':
+          description: master not found
+    put:
+      summary: Update master
+      tags:
+      - Masters
+      parameters: []
+      responses:
+        '200':
+          description: master updated
+        '404':
+          description: master not found
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                last_name:
+                  type: string
+                first_name:
+                  type: string
+                patronymic:
+                  type: string
+                phone_number:
+                  type: string
+                is_active:
+                  type: boolean
+    delete:
+      summary: Delete master
+      tags:
+      - Masters
+      responses:
+        '204':
+          description: master deleted
+        '404':
+          description: master not found
+  "/services":
+    get:
+      summary: Get all services
+      tags:
+      - Services
+      responses:
+        '200':
+          description: services found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    service_id:
+                      type: integer
+                      example: 1
+                    title:
+                      type: string
+                      example: Мужская стрижка
+                    duration:
+                      type: string
+                      example: '00:30:00'
+                    base_price:
+                      type: integer
+                      example: 1000
+                    category:
+                      type: string
+                      enum:
+                      - Cтрижка
+                      - Окрашивание
+                      - Укладка
+                      - Маникюр
+                      - Педикюр
+                      - Визаж
+                      - Депиляция
+                      - Массаж
+                      - Косметология
+                      example: Cтрижка
+    post:
+      summary: Create service
+      tags:
+      - Services
+      parameters: []
+      responses:
+        '201':
+          description: service created
+        '422':
+          description: invalid category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                duration:
+                  type: string
+                  description: Duration in HH:MM:SS format
+                  example: '00:30:00'
+                base_price:
+                  type: integer
+                category:
+                  type: string
+                  enum:
+                  - Cтрижка
+                  - Окрашивание
+                  - Укладка
+                  - Маникюр
+                  - Педикюр
+                  - Визаж
+                  - Депиляция
+                  - Массаж
+                  - Косметология
+              required:
+              - title
+              - duration
+              - base_price
+              - category
+  "/services/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Get service
+      tags:
+      - Services
+      responses:
+        '200':
+          description: service found
+        '404':
+          description: service not found
+    put:
+      summary: Update service
+      tags:
+      - Services
+      parameters: []
+      responses:
+        '200':
+          description: service updated
+        '404':
+          description: service not found
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                duration:
+                  type: string
+                  description: Duration in HH:MM:SS format
+                base_price:
+                  type: integer
+                category:
+                  type: string
+                  enum:
+                  - Cтрижка
+                  - Окрашивание
+                  - Укладка
+                  - Маникюр
+                  - Педикюр
+                  - Визаж
+                  - Депиляция
+                  - Массаж
+                  - Косметология
+    delete:
+      summary: Delete service
+      tags:
+      - Services
+      responses:
+        '204':
+          description: service deleted
+        '404':
+          description: service not found
+servers:
+- url: http://localhost:3000
