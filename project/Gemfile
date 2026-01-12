@@ -73,3 +73,5 @@ group :development, :test do
   gem "rswag", "~> 2.17"
 end
 
+
+gem "cssbundling-rails", "~> 1.4"
