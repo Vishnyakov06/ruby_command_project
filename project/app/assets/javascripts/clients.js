@@ -1,3 +1,5 @@
+let selectedClientId = null;
+
 async function loadClients() {
     try {
         const clients = await getClients();
@@ -21,7 +23,7 @@ async function loadClients() {
 
         clients.forEach(client => {
             tbody.insertAdjacentHTML("beforeend", `
-                <tr data-id="${client.client_id}">
+                <tr class="client-row" data-id="${client.client_id}">
                     <td style="text-align: center">${client.client_id}</td>
                     <td style="text-align: center">${client.last_name ?? " "}</td>
                     <td style="text-align: center">${client.first_name ?? " "}</td>
@@ -36,6 +38,38 @@ async function loadClients() {
         console.error("Ошибка загрузки клиентов:", error);
     }
 }
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".client-row");
+
+    if (!row) {
+        clearClientSelection();
+        return;
+    }
+
+    if (row.classList.contains("active")) {
+        clearClientSelection();
+        return;
+    }
+
+    selectClientRow(row);
+});
+
+function selectClientRow(row) {
+    clearClientSelection();
+    row.classList.add("active");
+    selectedClientId = row.dataset.id;
+    document.getElementById("edit-client-btn").classList.remove("hidden");
+    document.getElementById("delete-client-btn").classList.remove("hidden");
+}
+
+function clearClientSelection() {
+    document.querySelectorAll(".client-row.active").forEach(r => r.classList.remove("active"));
+    selectedClientId = null;
+    document.getElementById("edit-client-btn").classList.add("hidden");
+    document.getElementById("delete-client-btn").classList.add("hidden");
+}
+
 
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#client-form")) return;

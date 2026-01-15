@@ -21,7 +21,7 @@ async function loadServices() {
 
         services.forEach(service => {
             tbody.insertAdjacentHTML("beforeend", `
-                <tr data-id="${service.service_id}">
+                <tr class="service-row" data-id="${service.service_id}">
                     <td style="text-align: center">${service.service_id}</td>
                     <td style="text-align: center">${service.title ?? " "}</td>
                     <td style="text-align: center">${service.duration + " сек." ?? " "}</td>
@@ -61,5 +61,36 @@ document.addEventListener("submit", async (e) => {
         throw new Error("Не удалось создать услугу");
     }
 });
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".service-row");
+
+    if (!row) {
+        clearServiceSelection();
+        return;
+    }
+
+    if (row.classList.contains("active")) {
+        clearServiceSelection();
+        return;
+    }
+
+    selectServiceRow(row);
+});
+
+function selectServiceRow(row) {
+    clearServiceSelection();
+    row.classList.add("active");
+    selectedServiceId = row.dataset.id;
+    document.getElementById("edit-service-btn").classList.remove("hidden");
+    document.getElementById("delete-service-btn").classList.remove("hidden");
+}
+
+function clearServiceSelection() {
+    document.querySelectorAll(".service-row.active").forEach(r => r.classList.remove("active"));
+    selectedServiceId = null;
+    document.getElementById("edit-service-btn").classList.add("hidden");
+    document.getElementById("delete-service-btn").classList.add("hidden");
+}
 
 window.loadServices = loadServices;

@@ -1,3 +1,5 @@
+let selectedMasterId = null;
+
 async function loadMasters() {
     try {
         const masters = await getMasters();
@@ -20,13 +22,13 @@ async function loadMasters() {
 
         masters.forEach(master => {
         tbody.insertAdjacentHTML("beforeend", `
-            <tr data-id="${master.master_id}">
-            <td style="text-align: center">${master.master_id}</td>
-            <td style="text-align: center">${master.last_name ?? " "}</td>
-            <td style="text-align: center">${master.first_name ?? " "}</td>
-            <td style="text-align: center">${master.patronymic ?? " "}</td>
-            <td style="text-align: center">${master.phone_number ?? " "}</td>
-            <td style="text-align: center">${getActiveStatus(master.is_active)}</td>
+            <tr class="master-row" data-id="${master.master_id}">
+                <td style="text-align: center">${master.master_id}</td>
+                <td style="text-align: center">${master.last_name ?? " "}</td>
+                <td style="text-align: center">${master.first_name ?? " "}</td>
+                <td style="text-align: center">${master.patronymic ?? " "}</td>
+                <td style="text-align: center">${master.phone_number ?? " "}</td>
+                <td style="text-align: center">${getActiveStatus(master.is_active)}</td>
             </tr>
         `);
         });
@@ -62,6 +64,37 @@ document.addEventListener("submit", async (e) => {
         throw new Error("Не удалось создать мастер");
     }
 });
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".master-row");
+
+    if (!row) {
+        clearMasterSelection();
+        return;
+    }
+
+    if (row.classList.contains("active")) {
+        clearMasterSelection();
+        return;
+    }
+
+    selectMasterRow(row);
+});
+
+function selectMasterRow(row) {
+    clearMasterSelection();
+    row.classList.add("active");
+    selectedMasterId = row.dataset.id;
+    document.getElementById("edit-master-btn").classList.remove("hidden");
+    document.getElementById("delete-master-btn").classList.remove("hidden");
+}
+
+function clearMasterSelection() {
+    document.querySelectorAll(".master-row.active").forEach(r => r.classList.remove("active"));
+    selectedMasterId = null;
+    document.getElementById("edit-master-btn").classList.add("hidden");
+    document.getElementById("delete-master-btn").classList.add("hidden");
+}
 
 function getActiveStatus(isActive) {
     return isActive ? "Активен" : "Не активен";

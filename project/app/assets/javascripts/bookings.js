@@ -24,7 +24,7 @@ async function loadBookings() {
 
         bookings.forEach(booking => {
             tbody.insertAdjacentHTML("beforeend", `
-                <tr data-id="${booking.booking_id}" >
+                <tr class="booking-row" data-id="${booking.booking_id}" >
                     <td>${booking.booking_id}</td>
                     <td style="text-align: center">
                         ${booking.client.last_name ?? " "}<br>
@@ -82,6 +82,37 @@ document.addEventListener("submit", async (e) => {
         throw new Error("Не удалось создать запись");
     }
 });
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".booking-row");
+
+    if (!row) {
+        clearBookingSelection();
+        return;
+    }
+
+    if (row.classList.contains("active")) {
+        clearBookingSelection();
+        return;
+    }
+
+    selectBookingRow(row);
+});
+
+function selectBookingRow(row) {
+    clearBookingSelection();
+    row.classList.add("active");
+    selectedBookingId = row.dataset.id;
+    document.getElementById("edit-booking-btn").classList.remove("hidden");
+    document.getElementById("delete-booking-btn").classList.remove("hidden");
+}
+
+function clearBookingSelection() {
+    document.querySelectorAll(".booking-row.active").forEach(r => r.classList.remove("active"));
+    selectedBookingId = null;
+    document.getElementById("edit-booking-btn").classList.add("hidden");
+    document.getElementById("delete-booking-btn").classList.add("hidden");
+}
 
 function formatDate(dateString, includeTime = false) {
     if (!dateString) return "";

@@ -117,3 +117,14 @@
     background-color: #d1ecf1;
     color: #0c5460;
 }
+
+.hidden {
+    display: none;
+}
+
+.service-row.active,
+.booking-row.active,
+.master-row.active,
+.client-row.active {
+    background-color: #93a4cf;
+}

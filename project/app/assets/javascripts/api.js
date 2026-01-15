@@ -87,3 +87,55 @@ async function createBooking(data) {
 
     return response.json();
 }
+
+async function deleteClient(id) {
+    const response = await fetch(`${API_BASE}/clients/${id}`, {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Ошибка удаления клиента");
+    }
+}
+
+async function deleteMaster(id) {
+    const response = await fetch(`${API_BASE}/masters/${id}`, {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Ошибка удаления мастера");
+    }
+}
+
+async function deleteService(id) {
+    const response = await fetch(`${API_BASE}/services/${id}`, {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Ошибка удаления услуги");
+    }
+}
+
+async function deleteBooking(id) {
+    const response = await fetch(`${API_BASE}/bookings/${id}`, {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Ошибка удалени записи");
+    }
+}
