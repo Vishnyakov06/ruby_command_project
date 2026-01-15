@@ -1,0 +1,88 @@
+.reports-tabs {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.report-tabs-nav {
+    display: flex;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-tab {
+    font-family: Oswald, serif;
+    font-size: 16px;
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--gray-color);
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+}
+
+.report-tab:hover {
+    color: var(--primary-color);
+    background-color: rgba(106, 17, 203, 0.05);
+}
+
+.report-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    background-color: white;
+}
+
+.report-content {
+    padding: 2rem;
+    display: none;
+}
+
+.report-content.active {
+    display: block;
+}
+
+.report-controls {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 1rem;
+}
+
+.report-controls select {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.styled-select {
+    width: 10%;
+    padding: 12px 40px 12px 16px; /* Padding 8px + стрелка */
+    font-family: Arial, sans-serif;
+    font-size: 13.3333px;
+    text-align: center;
+    color: #000000;
+    background-color: #FFFFFF;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 40.8px; /* Точная высота из макета */
+    box-sizing: border-box;
+}
+
+.styled-select:hover {
+    border-color: #9c27b0;
+}
+
+.styled-select:focus {
+    outline: none;
+    border-color: #9c27b0;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+}
+
+.chart-container {
+    height: 400px;
+    position: relative;
+}

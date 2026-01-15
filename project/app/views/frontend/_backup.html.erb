@@ -1,0 +1,56 @@
+<div id="backup" class="tab-content active">
+    <div class="section-header">
+        <h2><i class="fas fa-database"></i> Управление бэкапами</h2>
+    </div>
+    <div class="backup-container">
+        <div class="backup-card">
+            <div class="backup-icon">
+                <i class="fas fa-file-export"></i>
+            </div>
+            <h3>Экспорт данных</h3>
+            <p>Создайте резервную копию всех данных</p>
+            <div class="format-options">
+                <label>
+                    <input type="radio" name="format" value="json" checked> JSON
+                </label>
+                <label>
+                    <input type="radio" name="format" value="yaml"> YAML
+                </label>
+            </div>
+            <button class="btn-primary" id="export-btn">
+                <i class="fas fa-download"></i> Экспортировать
+            </button>
+        </div>
+        
+        <div class="backup-card">
+            <div class="backup-icon">
+                <i class="fas fa-file-import"></i>
+            </div>
+            <h3>Импорт данных</h3>
+            <p>Восстановите данные из файла</p>
+            <div class="file-upload">
+                <input type="file" id="backup-file" accept=".json,.yaml,.yml">
+                <label for="backup-file" class="btn-secondary">
+                    <i class="fas fa-folder-open"></i> Выбрать файл
+                </label>
+            </div>
+            <button class="btn-primary" id="import-btn" disabled>
+                <i class="fas fa-upload"></i> Импортировать
+            </button>
+        </div>
+        
+        <div class="backup-card">
+            <div class="backup-icon">
+                <i class="fas fa-history"></i>
+            </div>
+            <h3>История изменений</h3>
+            <p>Последние 10 операций</p>
+            <div class="history-list" id="history-list">
+                <!-- Динамически заполняется -->
+            </div>
+            <button class="btn-secondary" id="undo-btn">
+                <i class="fas fa-undo"></i> Отменить последнее (Ctrl+Z)
+            </button>
+        </div>
+    </div>
+</div>

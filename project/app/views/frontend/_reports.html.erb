@@ -1,0 +1,38 @@
+<div id="reports" class="tab-content active">
+    <div class="section-header">
+        <h2><i class="fas fa-chart-bar"></i> Отчеты</h2>
+    </div>
+    <div class="reports-tabs">
+        <div class="report-tabs-nav">
+            <button class="report-tab active" data-report="revenue" >Выручка</button>
+            <button class="report-tab" data-report="masters">Мастера</button>
+            <button class="report-tab" data-report="clients">Клиенты</button>
+        </div>
+        <div class="report-content active" id="revenue-report">
+            <h3>Отчет по выручке</h3>
+            <div class="report-controls">
+                <select id="report-period" class="styled-select">
+                    <option value="today">Сегодня</option>
+                    <option value="week">Неделя</option>
+                    <option value="month" selected>Месяц</option>
+                    <option value="quarter">Квартал</option>
+                    <option value="year">Год</option>
+                </select>
+                <button class="btn-primary" id="generate-report">
+                    <i class="fas fa-chart-line"></i> Сгенерировать
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+        <div class="report-content" id="masters-report">
+            <h3>Отчет по мастерам</h3>
+            <!-- Контент отчета по мастерам -->
+        </div>
+        <div class="report-content" id="clients-report">
+            <h3>Отчет по клиентам</h3>
+            <!-- Контент отчета по клиентам -->
+        </div>
+    </div>
+</div>
