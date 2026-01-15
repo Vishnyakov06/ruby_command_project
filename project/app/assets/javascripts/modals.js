@@ -23,6 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
       openModal("booking-modal");
     }
 
+    if (e.target.closest("#add-service-btn")) {
+      openModal("service-modal");
+    }
+
     if (e.target.closest(".close, .close-modal")) {
       closeModal(e.target.closest(".modal"));
     }
