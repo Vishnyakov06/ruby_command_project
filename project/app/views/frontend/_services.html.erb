@@ -2,13 +2,22 @@
     <div class="section-header">
         <h2><i class="fas fa-handshake"></i> Управление услугами</h2>
         <div class="header-actions">
-            <button class="btn-primary" id="add-service-btn">
-                <i class="fas fa-plus"></i> Добавить услугу
+            <button class="btn-primary btn-icon" id="get-services-btn">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="btn-primary btn-icon" id="add-services-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn-primary btn-icon" id="refresh-services-btn">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <button class="btn-primary btn-icon" id="delete-services-btn">
+                <i class="fas fa-trash-alt"></i>
             </button>
         </div>
     </div>
     <div class="table-container">
-        <div class="table-container">
+        <div class="table-wrapper">
             <table class="data-table" id="services-table">
                 <thead>
                     <tr>

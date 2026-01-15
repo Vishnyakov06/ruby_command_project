@@ -1,3 +1,7 @@
+let clientsList = [];
+let mastersList = [];
+let servicesList = [];
+
 async function loadBookings() {
     try {
         const bookings = await getBookings();
@@ -50,6 +54,35 @@ async function loadBookings() {
     }
 }
 
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#booking-form")) return;
+
+    e.preventDefault();
+
+    const payload = {
+        booking: {
+            client_id: document.getElementById("booking-client").value,
+            master_id: document.getElementById("booking-master").value,
+            service_id: document.getElementById("booking-service").value,
+            date_service: document.getElementById("booking-time").value,
+            price: document.getElementById("booking-price").value,
+            status: document.getElementById("booking-status").value,
+            notes: document.getElementById("booking-note").value
+        }
+    };
+
+    try {
+        await createBooking(payload);
+        closeModal(document.getElementById("booking-modal"));
+        await loadBookings();
+        e.target.reset();
+
+    } catch (error) {
+        console.error(error);
+        throw new Error("Не удалось создать запись");
+    }
+});
+
 function formatDate(dateString, includeTime = false) {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -64,6 +97,69 @@ function formatDate(dateString, includeTime = false) {
         });
     } else {
         return date.toLocaleDateString("ru-RU");
+    }
+}
+
+async function populateClientSelect() {
+    const select = document.getElementById('booking-client');
+    if (!select) return;
+    const currentValue = select.value;
+    if (!clientsList.length) {
+        clientsList = await getClients();
+    }
+    select.innerHTML = '<option value="">Выберите клиента</option>';
+    
+    clientsList.forEach(client => {
+        const option = document.createElement('option');
+        option.value = client.client_id;
+        option.textContent = `${client.last_name} ${client.first_name} ${client.patronymic || ''}`.trim();
+        select.appendChild(option);
+    });
+    
+    if (currentValue) {
+        select.value = currentValue;
+    }
+}
+
+async function populateMasterSelect() {
+    const select = document.getElementById('booking-master');
+    if (!select) return;
+    const currentValue = select.value;
+    if (!mastersList.length) {
+        mastersList = await getMasters();
+    }
+    select.innerHTML = '<option value="">Выберите мастера</option>';
+
+    mastersList.forEach(master => {
+        const option = document.createElement('option');
+        option.value = master.master_id;
+        option.textContent = `${master.last_name} ${master.first_name} ${master.patronymic || ''}`.trim();
+        select.appendChild(option);
+    });
+    
+    if (currentValue) {
+        select.value = currentValue;
+    }
+}
+
+async function populateServiceSelect() {
+    const select = document.getElementById('booking-service');
+    if (!select) return;
+    const currentValue = select.value;
+    if (!servicesList.length) {
+        servicesList = await getServices();
+    }
+    select.innerHTML = '<option value="">Выберите услугу</option>';
+    
+    servicesList.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.service_id;
+        option.textContent = `${service.title}`.trim();
+        select.appendChild(option);
+    });
+    
+    if (currentValue) {
+        select.value = currentValue;
     }
 }
 
