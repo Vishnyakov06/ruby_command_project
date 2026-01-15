@@ -1,10 +1,10 @@
-module Snapshotable
+class Snapshot
     def initialize(entity)
         @attributes = entity.attributes.deep_dup
         @entity=entity
     end
     def restore
-        raise NotImplementedError, "Subclasses must implement the restore_to method"
+        @entity.class.create!(@attributes)
     end
     def restore_to(entity)
         @entity.update!(@attributes)
