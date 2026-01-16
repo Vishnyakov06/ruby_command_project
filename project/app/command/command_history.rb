@@ -1,15 +1,14 @@
 class CommandHistory
-    def initialize
-        @history = []
-    end
-    def push(command)
+    @history = []
+    def self.push(command)
+        p @history
         @history << command
         @history.shift if @history.size > 10
     end
-    def pop
+    def self.pop
         @history.pop
     end
-    def empty?
+    def self.empty?
         @history.empty?
     end
 end

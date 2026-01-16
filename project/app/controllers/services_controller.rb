@@ -11,25 +11,30 @@ class ServicesController < ApplicationController
     end
 
     def create
-        service = Service.new(service_params)
+        command = CreateCommand.new(Service, service_params)
 
-        if service.save
+        begin
+            service = Event.execute_command(command)
             render json: service, status: :created
-        else
-            render json: { errors: service.errors }, status: :unprocessable_entity
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @service.update(service_params)
-            render json: @service
-        else
-            render json: { errors: @service.errors }, status: :unprocessable_entity
+        command = UpdateCommand.new(@service, service_params)
+        begin
+            service = Event.execute_command(command)
+            render json: service
+            
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @service.destroy
+        command = DeleteCommand.new(@service)
+        Event.execute_command(command)
         head :no_content
     end
 

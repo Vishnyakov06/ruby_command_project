@@ -11,25 +11,32 @@ class ClientsController < ApplicationController
     end
 
     def create
-        client = Client.new(client_params)
+        command = CreateCommand.new(Client, client_params)
 
-        if client.save
+        begin
+            client = Event.execute_command(command)
             render json: client, status: :created
-        else
-            render json: { errors: client.errors }, status: :unprocessable_entity
+
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @client.update(client_params)
+        command = UpdateCommand.new(@client, client_params)
+        begin 
+            @client = Event.execute_command(command)
             render json: @client
-        else
-            render json: { errors: @client.errors }, status: :unprocessable_entity
+            Event.undo_last_command
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @client.destroy
+        #TODO: handle errors
+        command = DeleteCommand.new(@client)
+        Event.execute_command(command)
         head :no_content
     end
 

@@ -11,3 +11,4 @@ class UpdateCommand < Command
     def undo
         @snapshot.restore_to(@entity)
     end
+end

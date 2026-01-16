@@ -20,25 +20,29 @@ class MastersController < ApplicationController
     end
 
     def create
-        master = Master.new(master_params)
+        command = CreateCommand.new(Master, master_params)
 
-        if master.save
+        begin
+            master = Event.execute_command(command)
             render json: master, status: :created
-        else
-            render json: { errors: master.errors }, status: :unprocessable_entity
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @master.update(master_params)
-            render json: @master
-        else
-            render json: { errors: @master.errors }, status: :unprocessable_entity
+        command = UpdateCommand.new(@master, master_params)
+        begin
+            master = Event.execute_command(command)
+            render json: master
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @master.destroy
+        command = DeleteCommand.new(@master)
+        Event.execute_command(command)
         head :no_content
     end
 

@@ -19,25 +19,29 @@ class BookingsController < ApplicationController
     end
 
     def create
-        booking = Booking.new(booking_params)
+        command = CreateCommand.new(Booking, booking_params)
 
-        if booking.save
+        begin
+            booking = Event.execute_command(command)
             render json: booking, status: :created
-        else
-            render json: { errors: booking.errors }, status: :unprocessable_entity
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @booking.update(booking_params)
-            render json: @booking
-        else
-            render json: { errors: @booking.errors }, status: :unprocessable_entity
+        command = UpdateCommand.new(@booking, booking_params)
+        begin
+            booking = Event.execute_command(command)
+            render json: booking
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @booking.destroy
+        command = DeleteCommand.new(@booking)
+        Event.execute_command(command)
         head :no_content
     end
 
