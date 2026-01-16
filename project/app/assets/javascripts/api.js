@@ -141,7 +141,7 @@ async function deleteBooking(id) {
 }
 
 async function getClientById(id) {
-    const response = await fetch(`${API_BASE}/cleints/${id}`);
+    const response = await fetch(`${API_BASE}/clients/${id}`);
     return response.json();
 }
 

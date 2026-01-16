@@ -85,6 +85,41 @@ function populateClientDelete() {
     `;
 }
 
+async function searchClientById(id) {
+    const resultsDiv = document.getElementById("client-search-results");
+    const detailsDiv = document.getElementById("client-result-details");
+    
+    await getClientById(id)
+        .then(client => {
+            const registrationDate = client.registration_date 
+                ? formatDate(client.registration_date) 
+                : "—";
+            
+            detailsDiv.innerHTML = `
+                <p><strong>Фамилия И. О.:</strong> ${
+                    client.last_name + " " + 
+                    client.first_name[0] + "." + " " + 
+                    client.patronymic[0] + "."
+                }</p>
+                <p><strong>Телефон:</strong> ${client.phone_number || "—"}</p>
+                <p><strong>Дата регистрации:</strong> ${registrationDate}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        })
+        .catch(error => {
+            resultsDiv.style.display = 'block';
+        });
+}
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#search-client-form")) return;
+    
+    e.preventDefault();
+    
+    const clientId = document.getElementById("search-client-id").value.trim();
+    await searchClientById(clientId);
+});
+
 document.getElementById("confirm-delete-client")?.addEventListener("click", async () => {
     if (!selectedClientId) return;
 

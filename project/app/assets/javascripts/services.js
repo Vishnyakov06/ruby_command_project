@@ -77,6 +77,34 @@ function populateServiceDelete() {
     `;
 }
 
+async function searchServiceById(id) {
+    const resultsDiv = document.getElementById("service-search-results");
+    const detailsDiv = document.getElementById("service-result-details");
+    
+    await getServiceById(id)
+        .then(service => {
+            detailsDiv.innerHTML = `
+                <p><strong>Название:</strong> ${service.title}</p>
+                <p><strong>Продолжительность:</strong> ${service.duration + " сек."}</p>
+                <p><strong>Базовая стоимость:</strong> ${service.base_price + "₽"}</p>
+                <p><strong>Категория:</strong> ${service.category}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        })
+        .catch(error => {
+            resultsDiv.style.display = 'block';
+        });
+}
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#search-service-form")) return;
+    
+    e.preventDefault();
+    
+    const serviceId = document.getElementById("search-service-id").value.trim();
+    await searchServiceById(serviceId);
+});
+
 document.getElementById("confirm-delete-service")?.addEventListener("click", async () => {
     if (!selectedServiceId) return;
 

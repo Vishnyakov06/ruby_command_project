@@ -169,10 +169,53 @@ function populateBookingDelete() {
     detailsContainer.innerHTML = `
         <p><strong>Клиент:</strong> ${cells[1].textContent}</p>
         <p><strong>Мастер:</strong> ${cells[2].textContent}</p>
-        <p><strong>Услугу:</strong> ${cells[3].textContent}</p>
+        <p><strong>Услуга:</strong> ${cells[3].textContent}</p>
         <p><strong>Дата:</strong> ${cells[4].textContent}</p>
     `;
 }
+
+async function searchBookingById(id) {
+    const resultsDiv = document.getElementById("booking-search-results");
+    const detailsDiv = document.getElementById("booking-result-details");
+    
+    await getBookingById(id)
+        .then(booking => {
+            detailsDiv.innerHTML = `
+                <p><strong>Клиент:</strong> ${
+                    booking.client.last_name + " " + 
+                    booking.client.first_name + ", " + 
+                    booking.client.phone_number
+                }</p>
+                <p><strong>Мастер:</strong> ${
+                    booking.master.last_name + " " + 
+                    booking.master.first_name + ", " + 
+                    booking.master.phone_number
+                }</p>
+                <p><strong>Услуга:</strong> ${
+                    booking.service.title + ", " + 
+                    booking.service.duration + " сек. " + 
+                    booking.service.base_price + "₽"
+                }</p>
+                <p><strong>Дата:</strong> ${formatDate(booking.date_service)}</p>
+                <p><strong>Статус:</strong> ${booking.status}</p>
+                <p><strong>Цена:</strong> ${booking.price + "₽"}</p>
+                <p><strong>Заметка:</strong> ${booking.notes || "-"}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        })
+        .catch(error => {
+            resultsDiv.style.display = 'block';
+        });
+}
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#search-booking-form")) return;
+    
+    e.preventDefault();
+    
+    const bookingId = document.getElementById("search-booking-id").value.trim();
+    await searchBookingById(bookingId);
+});
 
 document.getElementById("confirm-delete-booking")?.addEventListener("click", async () => {
     if (!selectedBookingId) return;

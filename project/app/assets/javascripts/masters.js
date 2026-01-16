@@ -85,6 +85,37 @@ function populateMasterDelete() {
     `;
 }
 
+async function searchMasterById(id) {
+    const resultsDiv = document.getElementById("master-search-results");
+    const detailsDiv = document.getElementById("master-result-details");
+    
+    await getMasterById(id)
+        .then(master => {
+            detailsDiv.innerHTML = `
+                <p><strong>Фамилия И. О.:</strong> ${
+                    master.last_name + " " + 
+                    master.first_name[0] + "." + " " + 
+                    master.patronymic[0] + "."
+                }</p>
+                <p><strong>Телефон:</strong> ${master.phone_number || "—"}</p>
+                <p><strong>Статус:</strong> ${getActiveStatus(master.is_active)}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        })
+        .catch(error => {
+            resultsDiv.style.display = 'block';
+        });
+}
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#search-master-form")) return;
+    
+    e.preventDefault();
+    
+    const masterId = document.getElementById("search-master-id").value.trim();
+    await searchMasterById(masterId);
+});
+
 document.getElementById("confirm-delete-master")?.addEventListener("click", async () => {
     if (!selectedMasterId) return;
 
