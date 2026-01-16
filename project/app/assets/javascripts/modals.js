@@ -29,6 +29,24 @@ document.addEventListener("DOMContentLoaded", () => {
             openModal("service-modal");
         }
 
+        if (e.target.closest("#delete-client-btn")) {
+            populateClientDelete();
+            openModal("delete-client-modal");
+        }
+
+        if (e.target.closest("#delete-master-btn")) {
+            populateMasterDelete();
+            openModal("delete-master-modal");
+        }
+
+        if (e.target.closest("#delete-service-btn")) {
+            openModal("delete-service-modal");
+        }
+
+        if (e.target.closest("#delete-booking-btn")) {
+            openModal("delete-booking-modal");
+        }
+
         if (e.target.closest(".close, .close-modal")) {
             closeModal(e.target.closest(".modal"));
         }

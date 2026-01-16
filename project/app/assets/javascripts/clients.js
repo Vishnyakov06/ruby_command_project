@@ -39,22 +39,6 @@ async function loadClients() {
     }
 }
 
-document.addEventListener("click", (e) => {
-    const row = e.target.closest(".client-row");
-
-    if (!row) {
-        clearClientSelection();
-        return;
-    }
-
-    if (row.classList.contains("active")) {
-        clearClientSelection();
-        return;
-    }
-
-    selectClientRow(row);
-});
-
 function selectClientRow(row) {
     clearClientSelection();
     row.classList.add("active");
@@ -66,10 +50,53 @@ function selectClientRow(row) {
 function clearClientSelection() {
     document.querySelectorAll(".client-row.active").forEach(r => r.classList.remove("active"));
     selectedClientId = null;
-    document.getElementById("edit-client-btn").classList.add("hidden");
-    document.getElementById("delete-client-btn").classList.add("hidden");
+    document.getElementById("edit-client-btn")?.classList.add("hidden");
+    document.getElementById("delete-client-btn")?.classList.add("hidden");
 }
 
+function formatDate(dateString) {
+    if (!dateString) return "";
+    return new Date(dateString).toLocaleDateString("ru-RU");
+}
+
+function populateClientDelete() {
+    const detailsContainer = document.getElementById("delete-client-details");
+    if (!detailsContainer) return;
+    console.log(selectedClientId)
+    if (!selectedClientId) {
+        detailsContainer.innerHTML = "<p>Клиент не выбран</p>";
+        return;
+    }
+
+    const row = document.querySelector(`.client-row[data-id="${selectedClientId}"]`);
+    if (!row) {
+        detailsContainer.innerHTML = "<p>Клиент не найден</p>";
+        return;
+    }
+
+    const cells = row.children;
+    detailsContainer.innerHTML = `
+        <p><strong>Фамилия И. О.:</strong> ${
+            cells[1].textContent + " " + 
+            cells[2].textContent[0] + "." + " " + 
+            cells[3].textContent[0] + "."
+        }</p>
+        <p><strong>Телефон:</strong> ${cells[4].textContent}</p>
+    `;
+}
+
+document.getElementById("confirm-delete-client")?.addEventListener("click", async () => {
+    if (!selectedClientId) return;
+
+    try {
+        await deleteClient(selectedClientId);
+        closeModal(document.getElementById("delete-client-modal"));
+        await loadClients();
+        clearClientSelection();
+    } catch (error) {
+        throw new Error("Не удалось удалить клиента");
+    }
+});
 
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#client-form")) return;
@@ -92,14 +119,20 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        console.error(error);
         throw new Error("Не удалось создать клиента");
     }
 });
 
-function formatDate(dateString) {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleDateString("ru-RU");
-}
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".client-row");
+
+    if (!row) return;
+
+    if (row.classList.contains("active")) {
+        clearClientSelection();
+    } else {
+        selectClientRow(row);
+    }
+});
 
 window.loadClients = loadClients;

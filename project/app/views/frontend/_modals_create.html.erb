@@ -1,4 +1,4 @@
-<!-- Модальное окно для мастера -->
+<!-- Модальное окно для добавления мастера -->
 <div id="master-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -20,37 +20,37 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="master-middlename">Отчество</label>
+                    <label for="master-patronymic">Отчество</label>
                     <input type="text" id="master-patronymic" placeholder="Сергеевна">
                 </div>
                 
                 <div class="form-group">
-                    <label for="master-phone">Телефон</label>
+                    <label for="master-phone-number">Телефон</label>
                     <input type="tel" id="master-phone-number" placeholder="+7 (999) 123-45-67" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="master-active">Статус</label>
                     <select id="master-active" required>
-                        <option value="1">Да</option>
-                        <option value="0">Нет</option>
+                        <option value="1">Активен</option>
+                        <option value="0">Не активен</option>
                     </select>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить мастера</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для клиента -->
+<!-- Модальное окно для добавления клиента -->
 <div id="client-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-user-plus"></i> Добавить клиента</h3>
+            <h3><i class="fas fa-users"></i> Добавить клиента</h3>
         </div>
         <div class="modal-body">
             <form id="client-form">
@@ -79,18 +79,18 @@
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить клиента</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для записи -->
+<!-- Модальное окно для добавления записи -->
 <div id="booking-modal" class="modal">
     <div class="modal-content wide-modal">
         <div class="modal-header">
-            <h3><i class="fas fa-calendar-plus"></i> Новая запись</h3>
+            <h3><i class="fas fa-calendar-check"></i> Новая запись</h3>
         </div>
         <div class="modal-body">
             <form id="booking-form">
@@ -147,18 +147,18 @@
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить запись</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для услуги -->
+<!-- Модальное окно для добавления услуги -->
 <div id="service-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-user-plus"></i> Добавить услугу</h3>
+            <h3><i class="fas fa-handshake"></i> Добавить услугу</h3>
         </div>
         <div class="modal-body">
             <form id="service-form">
@@ -198,7 +198,7 @@
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить услугу</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>

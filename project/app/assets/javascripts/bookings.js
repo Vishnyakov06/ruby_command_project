@@ -54,51 +54,6 @@ async function loadBookings() {
     }
 }
 
-document.addEventListener("submit", async (e) => {
-    if (!e.target.matches("#booking-form")) return;
-
-    e.preventDefault();
-
-    const payload = {
-        booking: {
-            client_id: document.getElementById("booking-client").value,
-            master_id: document.getElementById("booking-master").value,
-            service_id: document.getElementById("booking-service").value,
-            date_service: document.getElementById("booking-time").value,
-            price: document.getElementById("booking-price").value,
-            status: document.getElementById("booking-status").value,
-            notes: document.getElementById("booking-note").value
-        }
-    };
-
-    try {
-        await createBooking(payload);
-        closeModal(document.getElementById("booking-modal"));
-        await loadBookings();
-        e.target.reset();
-
-    } catch (error) {
-        console.error(error);
-        throw new Error("Не удалось создать запись");
-    }
-});
-
-document.addEventListener("click", (e) => {
-    const row = e.target.closest(".booking-row");
-
-    if (!row) {
-        clearBookingSelection();
-        return;
-    }
-
-    if (row.classList.contains("active")) {
-        clearBookingSelection();
-        return;
-    }
-
-    selectBookingRow(row);
-});
-
 function selectBookingRow(row) {
     clearBookingSelection();
     row.classList.add("active");
@@ -110,8 +65,8 @@ function selectBookingRow(row) {
 function clearBookingSelection() {
     document.querySelectorAll(".booking-row.active").forEach(r => r.classList.remove("active"));
     selectedBookingId = null;
-    document.getElementById("edit-booking-btn").classList.add("hidden");
-    document.getElementById("delete-booking-btn").classList.add("hidden");
+    document.getElementById("edit-booking-btn")?.classList.add("hidden");
+    document.getElementById("delete-booking-btn")?.classList.add("hidden");
 }
 
 function formatDate(dateString, includeTime = false) {
@@ -193,5 +148,50 @@ async function populateServiceSelect() {
         select.value = currentValue;
     }
 }
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#booking-form")) return;
+
+    e.preventDefault();
+
+    const payload = {
+        booking: {
+            client_id: document.getElementById("booking-client").value,
+            master_id: document.getElementById("booking-master").value,
+            service_id: document.getElementById("booking-service").value,
+            date_service: document.getElementById("booking-time").value,
+            price: document.getElementById("booking-price").value,
+            status: document.getElementById("booking-status").value,
+            notes: document.getElementById("booking-note").value
+        }
+    };
+
+    try {
+        await createBooking(payload);
+        closeModal(document.getElementById("booking-modal"));
+        await loadBookings();
+        e.target.reset();
+
+    } catch (error) {
+        console.error(error);
+        throw new Error("Не удалось создать запись");
+    }
+});
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".booking-row");
+
+    if (!row) {
+        clearBookingSelection();
+        return;
+    }
+
+    if (row.classList.contains("active")) {
+        clearBookingSelection();
+        return;
+    }
+
+    selectBookingRow(row);
+});
 
 window.loadBookings = loadBookings;

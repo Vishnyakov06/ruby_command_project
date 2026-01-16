@@ -139,3 +139,23 @@ async function deleteBooking(id) {
         throw new Error("Ошибка удалени записи");
     }
 }
+
+async function getClientById(id) {
+    const response = await fetch(`${API_BASE}/cleints/${id}`);
+    return response.json();
+}
+
+async function getMasterById(id) {
+    const response = await fetch(`${API_BASE}/masters/${id}`);
+    return response.json();
+}
+
+async function getServiceById(id) {
+    const response = await fetch(`${API_BASE}/services/${id}`);
+    return response.json();
+}
+
+async function getBookingById(id) {
+    const response = await fetch(`${API_BASE}/bookings/${id}`);
+    return response.json();
+}

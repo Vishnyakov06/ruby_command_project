@@ -38,6 +38,66 @@ async function loadMasters() {
     }
 }
 
+function selectMasterRow(row) {
+    clearMasterSelection();
+    row.classList.add("active");
+    selectedMasterId = row.dataset.id;
+    console.log(selectedMasterId)
+    document.getElementById("edit-master-btn").classList.remove("hidden");
+    document.getElementById("delete-master-btn").classList.remove("hidden");
+}
+
+function clearMasterSelection() {
+    document.querySelectorAll(".master-row.active").forEach(r => r.classList.remove("active"));
+    selectedMasterId = null;
+    document.getElementById("edit-master-btn")?.classList.add("hidden");
+    document.getElementById("delete-master-btn")?.classList.add("hidden");
+}
+
+function getActiveStatus(isActive) {
+    return isActive ? "Активен" : "Не активен";
+}
+
+function populateMasterDelete() {
+    const detailsContainer = document.getElementById("delete-master-details");
+    if (!detailsContainer) return;
+
+    if (!selectedMasterId) {
+        detailsContainer.innerHTML = "<p>пизда</p>";
+        return;
+    }
+
+    const row = document.querySelector(`.master-row[data-id="${selectedMasterId}"]`);
+    if (!row) {
+        detailsContainer.innerHTML = "<p>Мастер не найден</p>";
+        return;
+    }
+
+    const cells = row.children;
+    detailsContainer.innerHTML = `
+        <p><strong>Фамилия И. О.:</strong> ${
+            cells[1].textContent + " " + 
+            cells[2].textContent[0] + "." + " " + 
+            cells[3].textContent[0] + "."
+        }</p>
+        <p><strong>Телефон:</strong> ${cells[4].textContent}</p>
+        <p><strong>Статус:</strong> ${cells[5].textContent}</p>
+    `;
+}
+
+document.getElementById("confirm-delete-master")?.addEventListener("click", async () => {
+    if (!selectedMasterId) return;
+
+    try {
+        await deleteMaster(selectedMasterId);
+        closeModal(document.getElementById("delete-master-modal"));
+        await loadMasters();
+        clearMasterSelection();
+    } catch (error) {
+        throw new Error("Не удалось удалить мастера");
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#master-form")) return;
 
@@ -68,36 +128,13 @@ document.addEventListener("submit", async (e) => {
 document.addEventListener("click", (e) => {
     const row = e.target.closest(".master-row");
 
-    if (!row) {
-        clearMasterSelection();
-        return;
-    }
+    if (!row) return;
 
     if (row.classList.contains("active")) {
         clearMasterSelection();
-        return;
+    } else {
+        selectMasterRow(row);
     }
-
-    selectMasterRow(row);
 });
-
-function selectMasterRow(row) {
-    clearMasterSelection();
-    row.classList.add("active");
-    selectedMasterId = row.dataset.id;
-    document.getElementById("edit-master-btn").classList.remove("hidden");
-    document.getElementById("delete-master-btn").classList.remove("hidden");
-}
-
-function clearMasterSelection() {
-    document.querySelectorAll(".master-row.active").forEach(r => r.classList.remove("active"));
-    selectedMasterId = null;
-    document.getElementById("edit-master-btn").classList.add("hidden");
-    document.getElementById("delete-master-btn").classList.add("hidden");
-}
-
-function getActiveStatus(isActive) {
-    return isActive ? "Активен" : "Не активен";
-}
 
 window.loadMasters = loadMasters;

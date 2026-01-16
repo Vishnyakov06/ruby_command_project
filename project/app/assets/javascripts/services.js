@@ -36,6 +36,21 @@ async function loadServices() {
     }
 }
 
+function selectServiceRow(row) {
+    clearServiceSelection();
+    row.classList.add("active");
+    selectedServiceId = row.dataset.id;
+    document.getElementById("edit-service-btn").classList.remove("hidden");
+    document.getElementById("delete-service-btn").classList.remove("hidden");
+}
+
+function clearServiceSelection() {
+    document.querySelectorAll(".service-row.active").forEach(r => r.classList.remove("active"));
+    selectedServiceId = null;
+    document.getElementById("edit-service-btn")?.classList.add("hidden");
+    document.getElementById("delete-service-btn")?.classList.add("hidden");
+}
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#service-form")) return;
 
@@ -77,20 +92,5 @@ document.addEventListener("click", (e) => {
 
     selectServiceRow(row);
 });
-
-function selectServiceRow(row) {
-    clearServiceSelection();
-    row.classList.add("active");
-    selectedServiceId = row.dataset.id;
-    document.getElementById("edit-service-btn").classList.remove("hidden");
-    document.getElementById("delete-service-btn").classList.remove("hidden");
-}
-
-function clearServiceSelection() {
-    document.querySelectorAll(".service-row.active").forEach(r => r.classList.remove("active"));
-    selectedServiceId = null;
-    document.getElementById("edit-service-btn").classList.add("hidden");
-    document.getElementById("delete-service-btn").classList.add("hidden");
-}
 
 window.loadServices = loadServices;
