@@ -2,10 +2,8 @@ class UndoController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    command = CommandHistory.pop
-
+    command = Event.undo_last_command
     if command
-      command.undo
       render json: { success: true, message: command.class.name }
     else
       render json: { success: false, message: "Нечего отменять" }

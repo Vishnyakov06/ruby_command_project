@@ -7,6 +7,6 @@ class DeleteCommand < Command
         @entity.destroy
     end
     def undo
-        @snapshot.restore_to(@entity.class)
+        @snapshot.restore
     end
 end
