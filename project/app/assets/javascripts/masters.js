@@ -98,6 +98,18 @@ document.getElementById("confirm-delete-master")?.addEventListener("click", asyn
     }
 });
 
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".master-row");
+
+    if (!row) return;
+
+    if (row.classList.contains("active")) {
+        clearMasterSelection();
+    } else {
+        selectMasterRow(row);
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#master-form")) return;
 
@@ -122,18 +134,6 @@ document.addEventListener("submit", async (e) => {
     } catch (error) {
         console.error(error);
         throw new Error("Не удалось создать мастер");
-    }
-});
-
-document.addEventListener("click", (e) => {
-    const row = e.target.closest(".master-row");
-
-    if (!row) return;
-
-    if (row.classList.contains("active")) {
-        clearMasterSelection();
-    } else {
-        selectMasterRow(row);
     }
 });
 

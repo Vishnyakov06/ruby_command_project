@@ -1,6 +1,7 @@
 let clientsList = [];
 let mastersList = [];
 let servicesList = [];
+let selectedBookingId = null;
 
 async function loadBookings() {
     try {
@@ -149,6 +150,55 @@ async function populateServiceSelect() {
     }
 }
 
+function populateBookingDelete() {
+    const detailsContainer = document.getElementById("delete-booking-details");
+    if (!detailsContainer) return;
+
+    if (!selectedBookingId) {
+        detailsContainer.innerHTML = "<p>Запись не выбрана</p>";
+        return;
+    }
+
+    const row = document.querySelector(`.booking-row[data-id="${selectedBookingId}"]`);
+    if (!row) {
+        detailsContainer.innerHTML = "<p>Запись не найдена</p>";
+        return;
+    }
+
+    const cells = row.children;
+    detailsContainer.innerHTML = `
+        <p><strong>Клиент:</strong> ${cells[1].textContent}</p>
+        <p><strong>Мастер:</strong> ${cells[2].textContent}</p>
+        <p><strong>Услугу:</strong> ${cells[3].textContent}</p>
+        <p><strong>Дата:</strong> ${cells[4].textContent}</p>
+    `;
+}
+
+document.getElementById("confirm-delete-booking")?.addEventListener("click", async () => {
+    if (!selectedBookingId) return;
+
+    try {
+        await deleteBooking(selectedBookingId);
+        closeModal(document.getElementById("delete-booking-modal"));
+        await loadBookings();
+        clearBookingSelection();
+    } catch (error) {
+        throw new Error("Не удалось удалить записи");
+    }
+});
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".booking-row");
+
+    if (!row) return;
+
+    if (row.classList.contains("active")) {
+        clearBookingSelection();
+    } else {
+        selectBookingRow(row);
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#booking-form")) return;
 
@@ -176,22 +226,6 @@ document.addEventListener("submit", async (e) => {
         console.error(error);
         throw new Error("Не удалось создать запись");
     }
-});
-
-document.addEventListener("click", (e) => {
-    const row = e.target.closest(".booking-row");
-
-    if (!row) {
-        clearBookingSelection();
-        return;
-    }
-
-    if (row.classList.contains("active")) {
-        clearBookingSelection();
-        return;
-    }
-
-    selectBookingRow(row);
 });
 
 window.loadBookings = loadBookings;

@@ -40,10 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (e.target.closest("#delete-service-btn")) {
+            populateServiceDelete();
             openModal("delete-service-modal");
         }
 
         if (e.target.closest("#delete-booking-btn")) {
+            populateBookingDelete();
             openModal("delete-booking-modal");
         }
 

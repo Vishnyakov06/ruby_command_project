@@ -1,3 +1,5 @@
+let selectedServiceId = null;
+
 async function loadServices() {
     try {
         const services = await getServices();
@@ -51,6 +53,55 @@ function clearServiceSelection() {
     document.getElementById("delete-service-btn")?.classList.add("hidden");
 }
 
+function populateServiceDelete() {
+    const detailsContainer = document.getElementById("delete-service-details");
+    if (!detailsContainer) return;
+
+    if (!selectedServiceId) {
+        detailsContainer.innerHTML = "<p>Услуга не выбрана</p>";
+        return;
+    }
+
+    const row = document.querySelector(`.service-row[data-id="${selectedServiceId}"]`);
+    if (!row) {
+        detailsContainer.innerHTML = "<p>Услуга не найдена</p>";
+        return;
+    }
+
+    const cells = row.children;
+    detailsContainer.innerHTML = `
+        <p><strong>Название:</strong> ${cells[1].textContent}</p>
+        <p><strong>Продолжительность:</strong> ${cells[2].textContent}</p>
+        <p><strong>Базовая стоимость:</strong> ${cells[3].textContent}</p>
+        <p><strong>Категория:</strong> ${cells[4].textContent}</p>
+    `;
+}
+
+document.getElementById("confirm-delete-service")?.addEventListener("click", async () => {
+    if (!selectedServiceId) return;
+
+    try {
+        await deleteService(selectedServiceId);
+        closeModal(document.getElementById("delete-service-modal"));
+        await loadServices();
+        clearServiceSelection();
+    } catch (error) {
+        throw new Error("Не удалось удалить услугу");
+    }
+});
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".service-row");
+
+    if (!row) return;
+
+    if (row.classList.contains("active")) {
+        clearServiceSelection();
+    } else {
+        selectServiceRow(row);
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#service-form")) return;
 
@@ -75,22 +126,6 @@ document.addEventListener("submit", async (e) => {
         console.error(error);
         throw new Error("Не удалось создать услугу");
     }
-});
-
-document.addEventListener("click", (e) => {
-    const row = e.target.closest(".service-row");
-
-    if (!row) {
-        clearServiceSelection();
-        return;
-    }
-
-    if (row.classList.contains("active")) {
-        clearServiceSelection();
-        return;
-    }
-
-    selectServiceRow(row);
 });
 
 window.loadServices = loadServices;
