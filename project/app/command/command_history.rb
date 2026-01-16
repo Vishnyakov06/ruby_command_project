@@ -1,7 +1,8 @@
 class CommandHistory
+    #TODO Singleton pattern
+    #TODO Session-based history
     @history = []
     def self.push(command)
-        p @history
         @history << command
         @history.shift if @history.size > 10
     end
