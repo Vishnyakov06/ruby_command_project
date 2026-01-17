@@ -1,8 +1,8 @@
-<!-- Модальное окно для мастера -->
+<!-- Модальное окно для добавления мастера -->
 <div id="master-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-user-tie"></i> Добавить мастера</h3>
+            <h3><i class="fas fa-plus"></i> Добавить мастера</h3>
         </div>
         <div class="modal-body">
             <form id="master-form">
@@ -20,48 +20,37 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="master-middlename">Отчество</label>
-                    <input type="text" id="master-middlename" placeholder="Сергеевна">
+                    <label for="master-patronymic">Отчество</label>
+                    <input type="text" id="master-patronymic" placeholder="Сергеевна">
                 </div>
                 
                 <div class="form-group">
-                    <label for="master-phone">Телефон</label>
-                    <input type="tel" id="master-phone" placeholder="+7 (999) 123-45-67" required>
+                    <label for="master-phone-number">Телефон</label>
+                    <input type="tel" id="master-phone-number" placeholder="+7 (999) 123-45-67" required>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="master-status">Статус</label>
-                        <select id="master-status" required>
-                            <option value="">Выберите статус</option>
-                            <option value="working">Работает</option>
-                            <option value="vacation">Отпуск</option>
-                            <option value="sick">Больничный</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="master-active">Статус</label>
-                        <select id="master-active" required>
-                            <option value="1">Да</option>
-                            <option value="0">Нет</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="master-active">Статус</label>
+                    <select id="master-active" required>
+                        <option value="1">Активен</option>
+                        <option value="0">Не активен</option>
+                    </select>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить мастера</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для клиента -->
+<!-- Модальное окно для добавления клиента -->
 <div id="client-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-user-plus"></i> Добавить клиента</h3>
+            <h3><i class="fas fa-plus"></i> Добавить клиента</h3>
         </div>
         <div class="modal-body">
             <form id="client-form">
@@ -79,34 +68,29 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="client-middlename">Отчество</label>
-                    <input type="text" id="client-middlename" placeholder="Александровна">
+                    <label for="client-patronymic">Отчество</label>
+                    <input type="text" id="client-patronymic" placeholder="Александровна">
                 </div>
                 
                 <div class="form-group">
-                    <label for="client-phone">Телефон</label>
-                    <input type="tel" id="client-phone" placeholder="+7 (999) 987-65-43" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="client-reg-date">Дата регистрации</label>
-                    <input type="date" id="client-reg-date" required>
+                    <label for="client-phone-number">Телефон</label>
+                    <input type="tel" id="client-phone-number" placeholder="+7 (999) 987-65-43" required>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить клиента</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для записи -->
+<!-- Модальное окно для добавления записи -->
 <div id="booking-modal" class="modal">
     <div class="modal-content wide-modal">
         <div class="modal-header">
-            <h3><i class="fas fa-calendar-plus"></i> Новая запись</h3>
+            <h3><i class="fas fa-plus"></i> Новая запись</h3>
         </div>
         <div class="modal-body">
             <form id="booking-form">
@@ -114,13 +98,13 @@
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="booking-client">Клиент *</label>
+                        <label for="booking-client">Клиент</label>
                         <select id="booking-client" required>
                             <option value="">Выберите клиента</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="booking-master">Мастер *</label>
+                        <label for="booking-master">Мастер</label>
                         <select id="booking-master" required>
                             <option value="">Выберите мастера</option>
                         </select>
@@ -128,30 +112,32 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="booking-service">Услуга *</label>
+                    <label for="booking-service">Услуга</label>
                     <select id="booking-service" required>
                         <option value="">Выберите услугу</option>
-                        <option value="haircut">Стрижка</option>
-                        <option value="coloring">Окрашивание</option>
-                        <option value="laying">Укладка</option>
-                        <option value="manicure">Маникюр</option>
-                        <option value="pedicure">Педикюр</option>
-                        <option value="makeup">Визаж</option>
-                        <option value="depilation">Депиляция</option>
-                        <option value="massage">Массаж</option>
-                        <option value="cosmetology">Косметология</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="booking-time">Время *</label>
+                        <label for="booking-time">Время</label>
                         <input type="time" id="booking-time" required>
                     </div>
                     <div class="form-group">
                         <label for="booking-price">Цена, ₽ *</label>
                         <input type="number" id="booking-price" min="0" step="100" required>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-status">Статус</label>
+                    <select id="booking-status" required>
+                        <option value="">Выберите статус</option>
+                        <option value="Подтверждена">Подтверждена</option>
+                        <option value="Выполнена">Выполнена</option>
+                        <option value="Отменена">Отменена</option>
+                        <option value="Неявка">Неявка</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -161,18 +147,18 @@
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить запись</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Модальное окно для услуги -->
+<!-- Модальное окно для добавления услуги -->
 <div id="service-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3><i class="fas fa-user-plus"></i> Добавить услугу</h3>
+            <h3><i class="fas fa-plus"></i> Добавить услугу</h3>
         </div>
         <div class="modal-body">
             <form id="service-form">
@@ -198,21 +184,21 @@
                     <label for="service-category">Категория</label>
                     <select id="service-category" required>
                         <option value="">Выберите категорию</option>
-                        <option value="haircut">Стрижка</option>
-                        <option value="coloring">Окрашивание</option>
-                        <option value="laying">Укладка</option>
-                        <option value="manicure">Маникюр</option>
-                        <option value="pedicure">Педикюр</option>
-                        <option value="makeup">Визаж</option>
-                        <option value="depilation">Депиляция</option>
-                        <option value="massage">Массаж</option>
-                        <option value="cosmetology">Косметология</option>
+                        <option value="Стрижка">Стрижка</option>
+                        <option value="Окрашивание">Окрашивание</option>
+                        <option value="Укладка">Укладка</option>
+                        <option value="Маникюр">Маникюр</option>
+                        <option value="Педикюр">Педикюр</option>
+                        <option value="Визаж">Визаж</option>
+                        <option value="Депиляция">Депиляция</option>
+                        <option value="Массаж">Массаж</option>
+                        <option value="Косметология">Косметология</option>
                     </select>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn-secondary close-modal">Отмена</button>
-                    <button type="submit" class="btn-primary">Добавить клиента</button>
+                    <button type="submit" class="btn-primary">Добавить</button>
                 </div>
             </form>
         </div>

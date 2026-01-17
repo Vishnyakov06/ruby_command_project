@@ -1,12 +1,23 @@
 <div id="clients" class="tab-content active">
     <div class="section-header">
         <h2><i class="fas fa-users"></i> Управление клиентами</h2>
-        <button class="btn-primary" id="add-client-btn">
-            <i class="fas fa-plus"></i> Добавить клиента
-        </button>
+        <div class="header-actions">
+            <button class="btn-primary btn-icon" id="get-client-btn">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="btn-primary btn-icon" id="add-client-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn-primary btn-icon hidden" id="edit-client-btn">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-primary btn-icon hidden" id="delete-client-btn">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
     </div>
     <div class="table-container">
-        <div class="table-container">
+        <div class="table-wrapper">
             <table class="data-table" id="clients-table">
                 <thead>
                     <tr>
