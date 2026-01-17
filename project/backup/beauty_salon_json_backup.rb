@@ -11,25 +11,29 @@ class BeautySalonJsonBackup
     end
 
     def create_backup()
-        
-        backup_data = {
-            clients: Client.all.map(&:attributes),
-            masters: Master.all.map(&:attributes),
-            services: Service.all.map do |service|
-                attrs = service.attributes
-                attrs['duration'] = service.duration.to_i if service.duration
-                attrs
-            end,
-            bookings: Booking.all.map(&:attributes)
-        }
+        begin
+            backup_data = {
+                clients: Client.all.map(&:attributes),
+                masters: Master.all.map(&:attributes),
+                services: Service.all.map do |service|
+                    attrs = service.attributes
+                    attrs['duration'] = service.duration.to_i if service.duration
+                    attrs
+                end,
+                bookings: Booking.all.map(&:attributes)
+            }
 
-        timestamp = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
-        filename = "backup_#{timestamp}.json"
-        filepath = File.join(@path_to_backup_dir, filename)
+            timestamp = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
+            filename = "backup_#{timestamp}.json"
+            filepath = File.join(@path_to_backup_dir, filename)
 
-        File.write(filepath, JSON.pretty_generate(backup_data))
-
-        filepath
+            File.write(filepath, JSON.pretty_generate(backup_data))
+            
+            filename
+        rescue => error
+            puts "Ошибка при восстановлении: #{error.message}"
+            false
+        end
     end
 
     def restore_backup(filename = nil)
@@ -54,24 +58,26 @@ class BeautySalonJsonBackup
         backup_data = JSON.parse(File.read(filepath))
 
         begin
-            Booking.delete_all
-            Client.delete_all
-            Master.delete_all
-            Service.delete_all
+            ActiveRecord::Base.transaction do
+                Booking.delete_all
+                Client.delete_all
+                Master.delete_all
+                Service.delete_all
 
-            {
-                clients: Client,
-                masters: Master,
-                services: Service,
-                bookings: Booking
-            }.each do |key, model|
-                backup_data[key.to_s].each do |record_data|
-                    model.create!(record_data)
+                {
+                    clients: Client,
+                    masters: Master,
+                    services: Service,
+                    bookings: Booking
+                }.each do |key, model|
+                    backup_data[key.to_s].each do |record_data|
+                        record = model.new(record_data)
+                        record.save!(validate: false)
+                    end
                 end
-            end
-
-            puts "Восстановление завершено"
-            true
+                puts "Восстановление завершено"
+                true
+            end 
         rescue => error
             puts "Ошибка при восстановлении: #{error.message}"
             false
@@ -82,11 +88,13 @@ class BeautySalonJsonBackup
         backup_files = Dir.glob(File.join(@path_to_backup_dir, "*.json"))
     
         if backup_files.empty?
-            puts "Нет бэкапов."
+            false
         else
-            puts "Доступные бэкапы:"
-            backup_files.sort.reverse.each do |file|
-                puts "  #{File.basename(file)} (создан: #{File.mtime(file)})"
+            return backup_files.sort.reverse.map do |file|
+                {
+                    filename: File.basename(file),
+                    size: File.size(file)
+                }
             end
         end
     end
