@@ -5,7 +5,7 @@ let selectedBookingId = null;
 
 async function loadBookings() {
     try {
-        const bookings = await getBookings();
+        const bookings = await getEntity('bookings');
         const tbody = document.getElementById("bookings-table-body");
         if (!tbody) {
             console.error("bookings-table-body не найден");
@@ -178,7 +178,7 @@ async function searchBookingById(id) {
     const resultsDiv = document.getElementById("booking-search-results");
     const detailsDiv = document.getElementById("booking-result-details");
     
-    await getBookingById(id)
+    await getEntityById(id, 'bookings')
         .then(booking => {
             detailsDiv.innerHTML = `
                 <p><strong>Клиент:</strong> ${
@@ -221,7 +221,7 @@ document.getElementById("confirm-delete-booking")?.addEventListener("click", asy
     if (!selectedBookingId) return;
 
     try {
-        await deleteBooking(selectedBookingId);
+        await deleteEntity(selectedBookingId, 'bookings');
         closeModal(document.getElementById("delete-booking-modal"));
         await loadBookings();
         clearBookingSelection();
@@ -260,7 +260,7 @@ document.addEventListener("submit", async (e) => {
     };
 
     try {
-        await createBooking(payload);
+        await createEntity(payload, 'bookings');
         closeModal(document.getElementById("booking-modal"));
         await loadBookings();
         e.target.reset();

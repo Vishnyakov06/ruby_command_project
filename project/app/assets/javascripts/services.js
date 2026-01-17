@@ -2,7 +2,7 @@ let selectedServiceId = null;
 
 async function loadServices() {
     try {
-        const services = await getServices();
+        const services = await getEntity('services');
         const tbody = document.getElementById("services-table-body");
 
         if (!tbody) {
@@ -81,7 +81,7 @@ async function searchServiceById(id) {
     const resultsDiv = document.getElementById("service-search-results");
     const detailsDiv = document.getElementById("service-result-details");
     
-    await getServiceById(id)
+    await getEntityById(id, 'services')
         .then(service => {
             detailsDiv.innerHTML = `
                 <p><strong>Название:</strong> ${service.title}</p>
@@ -109,7 +109,7 @@ document.getElementById("confirm-delete-service")?.addEventListener("click", asy
     if (!selectedServiceId) return;
 
     try {
-        await deleteService(selectedServiceId);
+        await deleteEntity(selectedServiceId, 'services');
         closeModal(document.getElementById("delete-service-modal"));
         await loadServices();
         clearServiceSelection();
@@ -145,7 +145,7 @@ document.addEventListener("submit", async (e) => {
     };
 
     try {
-        await createService(payload);
+        await createEntity(payload, 'services');
         closeModal(document.getElementById("service-modal"));
         await loadServices();
         e.target.reset();

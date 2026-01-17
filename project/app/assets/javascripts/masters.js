@@ -2,7 +2,7 @@ let selectedMasterId = null;
 
 async function loadMasters() {
     try {
-        const masters = await getMasters();
+        const masters = await getEntity('masters');
         const tbody = document.getElementById("masters-table-body");
         if (!tbody) {
             console.error("masters-table-body не найден");
@@ -89,7 +89,7 @@ async function searchMasterById(id) {
     const resultsDiv = document.getElementById("master-search-results");
     const detailsDiv = document.getElementById("master-result-details");
     
-    await getMasterById(id)
+    await getEntityById(id, 'masters')
         .then(master => {
             detailsDiv.innerHTML = `
                 <p><strong>Фамилия И. О.:</strong> ${
@@ -120,7 +120,7 @@ document.getElementById("confirm-delete-master")?.addEventListener("click", asyn
     if (!selectedMasterId) return;
 
     try {
-        await deleteMaster(selectedMasterId);
+        await deleteEntity(selectedMasterId, 'masters');
         closeModal(document.getElementById("delete-master-modal"));
         await loadMasters();
         clearMasterSelection();
@@ -157,7 +157,7 @@ document.addEventListener("submit", async (e) => {
     };
 
     try {
-        await createMaster(payload);
+        await createEntity(payload, 'masters');
         closeModal(document.getElementById("master-modal"));
         await loadMasters();
         e.target.reset();

@@ -2,7 +2,7 @@ let selectedClientId = null;
 
 async function loadClients() {
     try {
-        const clients = await getClients();
+        const clients = await getEntity('clients');
 
         const tbody = document.getElementById("clients-table-body");
         if (!tbody) {
@@ -89,7 +89,7 @@ async function searchClientById(id) {
     const resultsDiv = document.getElementById("client-search-results");
     const detailsDiv = document.getElementById("client-result-details");
     
-    await getClientById(id)
+    await getEntityById(id, 'clients')
         .then(client => {
             const registrationDate = client.registration_date 
                 ? formatDate(client.registration_date) 
@@ -124,7 +124,7 @@ document.getElementById("confirm-delete-client")?.addEventListener("click", asyn
     if (!selectedClientId) return;
 
     try {
-        await deleteClient(selectedClientId);
+        await deleteEntity(selectedClientId, 'clients');
         closeModal(document.getElementById("delete-client-modal"));
         await loadClients();
         clearClientSelection();
@@ -148,7 +148,7 @@ document.addEventListener("submit", async (e) => {
     };
 
     try {
-        await createClient(payload);
+        await createEntity(payload, 'clients');
         closeModal(document.getElementById("client-modal"));
         await loadClients();
         e.target.reset();
