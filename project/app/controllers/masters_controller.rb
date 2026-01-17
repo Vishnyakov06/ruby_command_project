@@ -23,7 +23,7 @@ class MastersController < ApplicationController
         command = CreateCommand.new(Master, master_params)
 
         begin
-            master = Event.execute_command(command)
+            master = Event.execute_command(command,session)
             render json: master, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -33,7 +33,7 @@ class MastersController < ApplicationController
     def update
         command = UpdateCommand.new(@master, master_params)
         begin
-            master = Event.execute_command(command)
+            master = Event.execute_command(command,session)
             render json: master
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -42,7 +42,7 @@ class MastersController < ApplicationController
 
     def destroy
         command = DeleteCommand.new(@master)
-        Event.execute_command(command)
+        Event.execute_command(command,session)
         head :no_content
     end
 

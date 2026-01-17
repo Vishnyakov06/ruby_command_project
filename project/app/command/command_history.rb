@@ -1,15 +1,25 @@
 class CommandHistory
-    #TODO Singleton pattern
-    #TODO Session-based history
-    @history = []
-    def self.push(command)
-        @history << command
-        @history.shift if @history.size > 10
-    end
-    def self.pop
-        @history.pop
-    end
-    def self.empty?
-        @history.empty?
-    end
+  attr_reader :session
+  def initialize(session)
+    @session=session
+    @session[:undo_deque] ||= []
+  end
+
+  def push(command)
+    history=@session[:undo_deque]
+    history<<command
+    history.shift if history.size > 10
+    @session[:undo_deque] = history
+  end
+
+  def pop
+    history = @session[:undo_deque]
+    val=history.pop
+    @session[:undo_deque]=history
+    val
+  end
+
+  def empty?
+    (@session[:undo_deque] || []).empty?
+  end
 end

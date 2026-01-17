@@ -1,25 +1,3 @@
-document.addEventListener('keydown', function(e) {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
-    e.preventDefault();
-
-    fetch('/undo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        showToast(`Отменено: ${data.message}`);
-      } else {
-        showToast(`Нечего отменять`);
-      }
-    });
-  }
-});
-
 function showToast(msg) {
   const toast = document.createElement('div');
   toast.textContent = msg;
@@ -33,3 +11,33 @@ function showToast(msg) {
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 3000);
 }
+
+document.addEventListener('keydown', function(e) {
+  const target = e.target;
+  if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+
+  console.log(`Key pressed: ${e.key}, Ctrl: ${e.ctrlKey}, Meta: ${e.metaKey}`); // латинская c
+
+  if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'z' || e.key === 'я')) {
+    e.preventDefault();
+
+    fetch('/undo', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        showToast(`Отменено: ${data.message}`);
+        location.reload();
+      } else {
+        showToast(`Нечего отменять`);
+      }
+    });
+  }
+});

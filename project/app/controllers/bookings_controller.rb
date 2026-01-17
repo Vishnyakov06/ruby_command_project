@@ -22,7 +22,7 @@ class BookingsController < ApplicationController
         command = CreateCommand.new(Booking, booking_params)
 
         begin
-            booking = Event.execute_command(command)
+            booking = Event.execute_command(command,session)
             render json: booking, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -32,7 +32,7 @@ class BookingsController < ApplicationController
     def update
         command = UpdateCommand.new(@booking, booking_params)
         begin
-            booking = Event.execute_command(command)
+            booking = Event.execute_command(command,session)
             render json: booking
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity

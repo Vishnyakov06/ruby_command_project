@@ -14,7 +14,7 @@ class ClientsController < ApplicationController
         command = CreateCommand.new(Client, client_params)
 
         begin
-            client = Event.execute_command(command)
+            client = Event.execute_command(command,session)
             render json: client, status: :created
 
         rescue ActiveRecord::RecordInvalid => e
@@ -25,9 +25,8 @@ class ClientsController < ApplicationController
     def update
         command = UpdateCommand.new(@client, client_params)
         begin 
-            @client = Event.execute_command(command)
+            @client = Event.execute_command(command,session)
             render json: @client
-            Event.undo_last_command
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
@@ -36,7 +35,7 @@ class ClientsController < ApplicationController
     def destroy
         #TODO: handle errors
         command = DeleteCommand.new(@client)
-        Event.execute_command(command)
+        Event.execute_command(command,session)
         head :no_content
     end
 

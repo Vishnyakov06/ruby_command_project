@@ -10,4 +10,13 @@ class CreateCommand < Command
     def undo
         @entity.destroy if @entity.persisted?
     end
+    def description
+    {
+        type: "create",
+        entity: @entity.class.name,
+        primary_key: @entity.class.primary_key,
+        id: @entity.id
+    }
+    end
+
 end
