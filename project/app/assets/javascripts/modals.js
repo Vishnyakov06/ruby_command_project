@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (e.target.closest("#add-booking-btn")) {
-            await populateClientSelect();
-            await populateMasterSelect();
-            await populateServiceSelect();
+            await populateClientSelect('booking-client');
+            await populateMasterSelect('booking-master');
+            await populateServiceSelect('booking-service');
             openModal("booking-modal");
         }
 
@@ -40,11 +40,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (e.target.closest("#delete-service-btn")) {
+            populateServiceDelete();
             openModal("delete-service-modal");
         }
 
         if (e.target.closest("#delete-booking-btn")) {
+            populateBookingDelete();
             openModal("delete-booking-modal");
+        }
+
+        if (e.target.closest("#get-client-btn")) {
+            openModal("search-client-modal");
+        }
+
+        if (e.target.closest("#get-master-btn")) {
+            openModal("search-master-modal");
+        }
+
+        if (e.target.closest("#get-service-btn")) {
+            openModal("search-service-modal");
+        }
+
+        if (e.target.closest("#get-booking-btn")) {
+            openModal("search-booking-modal");
+        }
+
+        if (e.target.closest("#edit-client-btn")) {
+            openModal("edit-client-modal");
+        }
+
+        if (e.target.closest("#edit-master-btn")) {
+            openModal("edit-master-modal");
+        }
+
+        if (e.target.closest("#edit-service-btn")) {
+            openModal("edit-service-modal");
+        }
+
+        if (e.target.closest("#edit-booking-btn")) {
+            openModal("edit-booking-modal");
         }
 
         if (e.target.closest(".close, .close-modal")) {

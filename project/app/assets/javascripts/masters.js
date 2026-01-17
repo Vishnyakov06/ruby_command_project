@@ -2,7 +2,7 @@ let selectedMasterId = null;
 
 async function loadMasters() {
     try {
-        const masters = await getMasters();
+        const masters = await getEntity('masters');
         const tbody = document.getElementById("masters-table-body");
         if (!tbody) {
             console.error("masters-table-body не найден");
@@ -85,16 +85,102 @@ function populateMasterDelete() {
     `;
 }
 
+async function searchMasterById(id) {
+    const resultsDiv = document.getElementById("master-search-results");
+    const detailsDiv = document.getElementById("master-result-details");
+    
+    await getEntityById(id, 'masters')
+        .then(master => {
+            detailsDiv.innerHTML = `
+                <p><strong>Фамилия И. О.:</strong> ${
+                    master.last_name + " " + 
+                    master.first_name[0] + "." + " " + 
+                    master.patronymic[0] + "."
+                }</p>
+                <p><strong>Телефон:</strong> ${master.phone_number || "—"}</p>
+                <p><strong>Статус:</strong> ${getActiveStatus(master.is_active)}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        })
+        .catch(error => {
+            resultsDiv.style.display = 'block';
+        });
+}
+
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest("#edit-master-btn")) return;
+    if (!selectedMasterId) return;
+
+    try {
+        const master = await getEntityById(selectedMasterId, 'masters');
+
+        document.getElementById("edit-master-id").value = master.master_id;
+        document.getElementById("edit-master-firstname").value = master.first_name ?? "";
+        document.getElementById("edit-master-lastname").value = master.last_name ?? "";
+        document.getElementById("edit-master-patronymic").value = master.patronymic ?? "";
+        document.getElementById("edit-master-phone-number").value = master.phone_number ?? "";
+        document.getElementById("edit-master-active").value = master.is_active ?? "";
+    } catch (error) {
+        throw new Error("Не удалось загрузить мастера");
+    }
+});
+
+document.getElementById("edit-master-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("edit-master-id").value;
+
+    const payload = {
+        master: {
+            first_name: document.getElementById("edit-master-firstname").value,
+            last_name: document.getElementById("edit-master-lastname").value,
+            patronymic: document.getElementById("edit-master-patronymic").value,
+            phone_number: document.getElementById("edit-master-phone-number").value,
+            is_active: document.getElementById("edit-master-active").value
+        }
+    };
+
+    try {
+        await updateEntity(id, payload, 'masters');
+        closeModal(document.getElementById("edit-master-modal"));
+        await loadMasters();
+        clearMasterSelection();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#search-master-form")) return;
+    
+    e.preventDefault();
+    
+    const masterId = document.getElementById("search-master-id").value.trim();
+    await searchMasterById(masterId);
+});
+
 document.getElementById("confirm-delete-master")?.addEventListener("click", async () => {
     if (!selectedMasterId) return;
 
     try {
-        await deleteMaster(selectedMasterId);
+        await deleteEntity(selectedMasterId, 'masters');
         closeModal(document.getElementById("delete-master-modal"));
         await loadMasters();
         clearMasterSelection();
     } catch (error) {
         throw new Error("Не удалось удалить мастера");
+    }
+});
+
+document.addEventListener("click", (e) => {
+    const row = e.target.closest(".master-row");
+
+    if (!row) return;
+
+    if (row.classList.contains("active")) {
+        clearMasterSelection();
+    } else {
+        selectMasterRow(row);
     }
 });
 
@@ -114,7 +200,7 @@ document.addEventListener("submit", async (e) => {
     };
 
     try {
-        await createMaster(payload);
+        await createEntity(payload, 'masters');
         closeModal(document.getElementById("master-modal"));
         await loadMasters();
         e.target.reset();
@@ -122,18 +208,6 @@ document.addEventListener("submit", async (e) => {
     } catch (error) {
         console.error(error);
         throw new Error("Не удалось создать мастер");
-    }
-});
-
-document.addEventListener("click", (e) => {
-    const row = e.target.closest(".master-row");
-
-    if (!row) return;
-
-    if (row.classList.contains("active")) {
-        clearMasterSelection();
-    } else {
-        selectMasterRow(row);
     }
 });
 

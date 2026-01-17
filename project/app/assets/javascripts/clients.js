@@ -2,7 +2,7 @@ let selectedClientId = null;
 
 async function loadClients() {
     try {
-        const clients = await getClients();
+        const clients = await getEntity('clients');
 
         const tbody = document.getElementById("clients-table-body");
         if (!tbody) {
@@ -85,11 +85,87 @@ function populateClientDelete() {
     `;
 }
 
+async function searchClientById(id) {
+    const resultsDiv = document.getElementById("client-search-results");
+    const detailsDiv = document.getElementById("client-result-details");
+    
+    await getEntityById(id, 'clients')
+        .then(client => {
+            const registrationDate = client.registration_date 
+                ? formatDate(client.registration_date) 
+                : "—";
+            
+            detailsDiv.innerHTML = `
+                <p><strong>Фамилия И. О.:</strong> ${
+                    client.last_name + " " + 
+                    client.first_name[0] + "." + " " + 
+                    client.patronymic[0] + "."
+                }</p>
+                <p><strong>Телефон:</strong> ${client.phone_number || "—"}</p>
+                <p><strong>Дата регистрации:</strong> ${registrationDate}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        })
+        .catch(error => {
+            resultsDiv.style.display = 'block';
+        });
+}
+
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest("#edit-client-btn")) return;
+    if (!selectedClientId) return;
+
+    try {
+        const client = await getEntityById(selectedClientId, 'clients');
+
+        document.getElementById("edit-client-id").value = client.client_id;
+        document.getElementById("edit-client-firstname").value = client.first_name ?? "";
+        document.getElementById("edit-client-lastname").value = client.last_name ?? "";
+        document.getElementById("edit-client-patronymic").value = client.patronymic ?? "";
+        document.getElementById("edit-client-phone-number").value = client.phone_number ?? "";
+    } catch (error) {
+        throw new Error("Не удалось загрузить клиента");
+    }
+});
+
+document.getElementById("edit-client-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("edit-client-id").value;
+
+    const payload = {
+        client: {
+            first_name: document.getElementById("edit-client-firstname").value,
+            last_name: document.getElementById("edit-client-lastname").value,
+            patronymic: document.getElementById("edit-client-patronymic").value,
+            phone_number: document.getElementById("edit-client-phone-number").value
+        }
+    };
+
+    try {
+        await updateEntity(id, payload, 'clients');
+        closeModal(document.getElementById("edit-client-modal"));
+        await loadClients();
+        clearClientSelection();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+document.addEventListener("submit", async (e) => {
+    if (!e.target.matches("#search-client-form")) return;
+    
+    e.preventDefault();
+    
+    const clientId = document.getElementById("search-client-id").value.trim();
+    await searchClientById(clientId);
+});
+
 document.getElementById("confirm-delete-client")?.addEventListener("click", async () => {
     if (!selectedClientId) return;
 
     try {
-        await deleteClient(selectedClientId);
+        await deleteEntity(selectedClientId, 'clients');
         closeModal(document.getElementById("delete-client-modal"));
         await loadClients();
         clearClientSelection();
@@ -113,7 +189,7 @@ document.addEventListener("submit", async (e) => {
     };
 
     try {
-        await createClient(payload);
+        await createEntity(payload, 'clients');
         closeModal(document.getElementById("client-modal"));
         await loadClients();
         e.target.reset();
