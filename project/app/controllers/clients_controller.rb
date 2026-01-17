@@ -11,21 +11,17 @@ class ClientsController < ApplicationController
     end
 
     def create
-        command = CreateCommand.new(Client, client_params)
-
         begin
-            client = Event.execute_command(command,session)
+            client = EventMediator.execute_command(action: :create,model:Client,params: client_params,session: session)
             render json: client, status: :created
-
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     def update
-        command = UpdateCommand.new(@client, client_params)
         begin 
-            @client = Event.execute_command(command,session)
+            @client = EventMediator.execute_command(action: :update,entity:@client,params: client_params,session: session)
             render json: @client
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -34,8 +30,7 @@ class ClientsController < ApplicationController
 
     def destroy
         #TODO: handle errors
-        command = DeleteCommand.new(@client)
-        Event.execute_command(command,session)
+        EventMediator.execute_command(action: :delete,entity:@client,params: {},session: session)
         head :no_content
     end
 

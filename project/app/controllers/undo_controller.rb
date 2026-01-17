@@ -2,7 +2,7 @@ class UndoController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    command = Event.undo_last_command(session)
+    command = EventMediator.undo_last_command(session)
     if command
       render json: { success: true, message: command.class.name }
     else

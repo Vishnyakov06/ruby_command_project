@@ -19,10 +19,8 @@ class BookingsController < ApplicationController
     end
 
     def create
-        command = CreateCommand.new(Booking, booking_params)
-
         begin
-            booking = Event.execute_command(command,session)
+            booking = EventMediator.execute_command(action: :create,model:Booking,params: booking_params,session: session)
             render json: booking, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -30,9 +28,8 @@ class BookingsController < ApplicationController
     end
 
     def update
-        command = UpdateCommand.new(@booking, booking_params)
         begin
-            booking = Event.execute_command(command,session)
+            booking = EventMediator.execute_command(action: :update,entity:@booking,params: booking_params,session: session)
             render json: booking
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -40,8 +37,7 @@ class BookingsController < ApplicationController
     end
 
     def destroy
-        command = DeleteCommand.new(@booking)
-        Event.execute_command(command)
+        EventMediator.execute_command(action: :delete,entity:@booking,params: {},session: session)
         head :no_content
     end
 

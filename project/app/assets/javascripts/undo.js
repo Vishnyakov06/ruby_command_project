@@ -26,7 +26,6 @@ document.addEventListener('keydown', function(e) {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-
         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
       }
     })

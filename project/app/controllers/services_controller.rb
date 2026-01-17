@@ -11,10 +11,8 @@ class ServicesController < ApplicationController
     end
 
     def create
-        command = CreateCommand.new(Service, service_params)
-
         begin
-            service = Event.execute_command(command,session)
+            service = EventMediator.execute_command(action: :create,model:Service,params: service_params,session: session)
             render json: service, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -22,9 +20,8 @@ class ServicesController < ApplicationController
     end
 
     def update
-        command = UpdateCommand.new(@service, service_params)
         begin
-            service = Event.execute_command(command,session)
+            service = EventMediator.execute_command(action: :update,entity:@service,params: service_params,session: session)
             render json: service
             
         rescue ActiveRecord::RecordInvalid => e
@@ -33,8 +30,7 @@ class ServicesController < ApplicationController
     end
 
     def destroy
-        command = DeleteCommand.new(@service)
-        Event.execute_command(command,session)
+        EventMediator.execute_command(action: :delete,entity:@service,params: {},session: session)
         head :no_content
     end
 
