@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (e.target.closest("#add-booking-btn")) {
-            await populateClientSelect();
-            await populateMasterSelect();
-            await populateServiceSelect();
+            await populateClientSelect('booking-client');
+            await populateMasterSelect('booking-master');
+            await populateServiceSelect('booking-service');
             openModal("booking-modal");
         }
 

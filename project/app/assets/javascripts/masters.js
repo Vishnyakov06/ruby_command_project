@@ -107,6 +107,49 @@ async function searchMasterById(id) {
         });
 }
 
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest("#edit-master-btn")) return;
+    if (!selectedMasterId) return;
+
+    try {
+        const master = await getEntityById(selectedMasterId, 'masters');
+
+        document.getElementById("edit-master-id").value = master.master_id;
+        document.getElementById("edit-master-firstname").value = master.first_name ?? "";
+        document.getElementById("edit-master-lastname").value = master.last_name ?? "";
+        document.getElementById("edit-master-patronymic").value = master.patronymic ?? "";
+        document.getElementById("edit-master-phone-number").value = master.phone_number ?? "";
+        document.getElementById("edit-master-active").value = master.is_active ?? "";
+    } catch (error) {
+        throw new Error("Не удалось загрузить мастера");
+    }
+});
+
+document.getElementById("edit-master-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("edit-master-id").value;
+
+    const payload = {
+        master: {
+            first_name: document.getElementById("edit-master-firstname").value,
+            last_name: document.getElementById("edit-master-lastname").value,
+            patronymic: document.getElementById("edit-master-patronymic").value,
+            phone_number: document.getElementById("edit-master-phone-number").value,
+            is_active: document.getElementById("edit-master-active").value
+        }
+    };
+
+    try {
+        await updateEntity(id, payload, 'masters');
+        closeModal(document.getElementById("edit-master-modal"));
+        await loadMasters();
+        clearMasterSelection();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#search-master-form")) return;
     

@@ -40,7 +40,7 @@ async function getEntityById(id, url) {
     return response.json();
 }
 
-async function updateClient(id, data, url) {
+async function updateEntity(id, data, url) {
     const response = await fetch(`${API_BASE}/${url}/${id}`, {
         method: "PUT",
         headers: {

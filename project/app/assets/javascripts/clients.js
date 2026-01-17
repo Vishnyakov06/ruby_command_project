@@ -111,6 +111,47 @@ async function searchClientById(id) {
         });
 }
 
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest("#edit-client-btn")) return;
+    if (!selectedClientId) return;
+
+    try {
+        const client = await getEntityById(selectedClientId, 'clients');
+
+        document.getElementById("edit-client-id").value = client.client_id;
+        document.getElementById("edit-client-firstname").value = client.first_name ?? "";
+        document.getElementById("edit-client-lastname").value = client.last_name ?? "";
+        document.getElementById("edit-client-patronymic").value = client.patronymic ?? "";
+        document.getElementById("edit-client-phone-number").value = client.phone_number ?? "";
+    } catch (error) {
+        throw new Error("Не удалось загрузить клиента");
+    }
+});
+
+document.getElementById("edit-client-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("edit-client-id").value;
+
+    const payload = {
+        client: {
+            first_name: document.getElementById("edit-client-firstname").value,
+            last_name: document.getElementById("edit-client-lastname").value,
+            patronymic: document.getElementById("edit-client-patronymic").value,
+            phone_number: document.getElementById("edit-client-phone-number").value
+        }
+    };
+
+    try {
+        await updateEntity(id, payload, 'clients');
+        closeModal(document.getElementById("edit-client-modal"));
+        await loadClients();
+        clearClientSelection();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#search-client-form")) return;
     

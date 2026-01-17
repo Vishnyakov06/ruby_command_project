@@ -87,12 +87,12 @@ function formatDate(dateString, includeTime = false) {
     }
 }
 
-async function populateClientSelect() {
-    const select = document.getElementById('booking-client');
+async function populateClientSelect(selectId) {
+    const select = document.getElementById(selectId);
     if (!select) return;
     const currentValue = select.value;
     if (!clientsList.length) {
-        clientsList = await getClients();
+        clientsList = await getEntity('clients');
     }
     select.innerHTML = '<option value="">Выберите клиента</option>';
     
@@ -108,12 +108,12 @@ async function populateClientSelect() {
     }
 }
 
-async function populateMasterSelect() {
-    const select = document.getElementById('booking-master');
+async function populateMasterSelect(selectId) {
+    const select = document.getElementById(selectId);
     if (!select) return;
     const currentValue = select.value;
     if (!mastersList.length) {
-        mastersList = await getMasters();
+        mastersList = await getEntity('masters');
     }
     select.innerHTML = '<option value="">Выберите мастера</option>';
 
@@ -129,12 +129,12 @@ async function populateMasterSelect() {
     }
 }
 
-async function populateServiceSelect() {
-    const select = document.getElementById('booking-service');
+async function populateServiceSelect(selectId) {
+    const select = document.getElementById(selectId);
     if (!select) return;
     const currentValue = select.value;
     if (!servicesList.length) {
-        servicesList = await getServices();
+        servicesList = await getEntity('services');
     }
     select.innerHTML = '<option value="">Выберите услугу</option>';
     
@@ -207,6 +207,71 @@ async function searchBookingById(id) {
             resultsDiv.style.display = 'block';
         });
 }
+
+function formatForInputDatetime(value) {
+    if (!value) return "";
+    const d = new Date(value);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    const hh = String(d.getHours()).padStart(2, "0");
+    const min = String(d.getMinutes()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+}
+
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest("#edit-booking-btn")) return;
+    if (!selectedBookingId) return;
+
+    try {
+        const booking = await getEntityById(selectedBookingId, 'bookings');
+
+        document.getElementById("edit-booking-id").value = booking.booking_id;
+
+        await populateClientSelect("edit-booking-client");
+        await populateMasterSelect("edit-booking-master");
+        await populateServiceSelect("edit-booking-service");
+
+        document.getElementById("edit-booking-client").value = booking.client.client_id;
+        document.getElementById("edit-booking-master").value = booking.master.master_id;
+        document.getElementById("edit-booking-service").value = booking.service.service_id;
+        document.getElementById("edit-booking-time").value = formatForInputDatetime(booking.date_service);
+        document.getElementById("edit-booking-price").value = booking.price ?? "";
+        document.getElementById("edit-booking-status").value = booking.status ?? "";
+        document.getElementById("edit-booking-note").value = booking.notes ?? "";
+
+    } catch (error) {
+        console.error("Не удалось загрузить запись", error);
+    }
+});
+
+document.getElementById("edit-booking-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("edit-booking-id").value;
+
+    const payload = {
+        booking: {
+            client_id: document.getElementById("edit-booking-client").value,
+            master_id: document.getElementById("edit-booking-master").value,
+            service_id: document.getElementById("edit-booking-service").value,
+            date_service: document.getElementById("edit-booking-time").value,
+            price: document.getElementById("edit-booking-price").value,
+            status: document.getElementById("edit-booking-status").value,
+            notes: document.getElementById("edit-booking-note").value
+        }
+    };
+
+    try {
+        await updateEntity(id, payload, 'bookings');
+        closeModal(document.getElementById("edit-booking-modal"));
+        await loadBookings();
+        clearBookingSelection();
+    } catch (error) {
+        console.error("Ошибка при обновлении записи:", error);
+    }
+});
+
 
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#search-booking-form")) return;

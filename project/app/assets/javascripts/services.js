@@ -96,6 +96,47 @@ async function searchServiceById(id) {
         });
 }
 
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest("#edit-service-btn")) return;
+    if (!selectedServiceId) return;
+
+    try {
+        const service = await getEntityById(selectedServiceId, 'services');
+
+        document.getElementById("edit-service-id").value = service.service_id;
+        document.getElementById("edit-service-title").value = service.title ?? "";
+        document.getElementById("edit-service-duration").value = service.duration ?? "";
+        document.getElementById("edit-service-base-price").value = service.base_price ?? "";
+        document.getElementById("edit-service-category").value = service.category ?? "";
+    } catch (error) {
+        throw new Error("Не удалось загрузить мастера");
+    }
+});
+
+document.getElementById("edit-service-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("edit-service-id").value;
+
+    const payload = {
+        service: {
+            title: document.getElementById("edit-service-title").value,
+            duration: parseInt(document.getElementById("edit-service-duration").value),
+            base_price: parseInt(document.getElementById("edit-service-base-price").value),
+            category: document.getElementById("edit-service-category").value
+        }
+    };
+
+    try {
+        await updateEntity(id, payload, 'services');
+        closeModal(document.getElementById("edit-service-modal"));
+        await loadServices();
+        clearServiceSelection();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#search-service-form")) return;
     
