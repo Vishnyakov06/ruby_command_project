@@ -1,8 +1,6 @@
 class EventMediator
-
     def self.execute_command(action:,model: nil,entity:nil,params:,session:)
         command = create_command(action: action,model:model,entity:entity,params:params)
-        p command
         entity=command.execute
         CommandHistory.new(session).push(command.description)
         entity
@@ -19,6 +17,7 @@ class EventMediator
     end
 
     private 
+
     def self.create_command(action:, model:, entity:, params:)
         case action
         when :create

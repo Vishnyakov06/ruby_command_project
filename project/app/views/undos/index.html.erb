@@ -1,0 +1,28 @@
+<div class="tab-content active">
+  <div class="section-header">
+    <h2><i class="fas fa-history"></i> История изменений</h2>
+  </div>
+
+  <div class="backup-container">
+    <div class="backup-card history-card">
+      <h3>Последние операции</h3>
+      <p>Список изменений, которые можно отменить</p>
+
+      <div class="history-list">
+        <% @history.each_with_index do |item, index| %>
+          <div class="history-item">
+            <strong><%= index + 1 %>.</strong>
+            <%= item["type"].capitalize %>
+            <%= item["entity"] %>
+          </div>
+        <% end %>
+      </div>
+
+      <form method="post" action="/undo">
+        <button class="btn-primary">
+          <i class="fas fa-undo"></i> Отменить последнее
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

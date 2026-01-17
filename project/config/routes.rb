@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   resources :masters
   resources :services
   resources :bookings
-  post '/undo', to: 'undo#create'
+  resource :undo, only: [:show, :create]
+
   match '*path',
       to: proc { [204, {}, ['']] },
       via: :options
