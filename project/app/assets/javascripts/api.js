@@ -56,3 +56,14 @@ async function updateEntity(id, data, url) {
 
     return response.json();
 }
+
+async function createBackup(){
+    const response = await fetch('/backups', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+    return response.json();
+}

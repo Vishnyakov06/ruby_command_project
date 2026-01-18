@@ -63,6 +63,9 @@ function initTab(tabName) {
         case "dashboard":
             if (typeof loadDashboard === 'function') loadDashboard();
             break;
+        case "backup":
+            if (typeof initBackup === 'function') initBackup();
+            break;
     }
 }
 

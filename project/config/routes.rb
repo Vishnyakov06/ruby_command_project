@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :services
   resources :bookings
 
+  resources :backups, only: [:create] 
+
   match '*path',
       to: proc { [204, {}, ['']] },
       via: :options

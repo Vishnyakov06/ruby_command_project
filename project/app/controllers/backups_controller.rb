@@ -1,9 +1,11 @@
+require_relative '../../backup/beauty_salon_json_backup'
+
 class BackupsController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_backup_obj
     
-    def index
-        backups = backup_service.list_backups
+    def list
+        backups = @backup_service.list_backups
         
         if backups
             render json: {
@@ -21,7 +23,7 @@ class BackupsController < ApplicationController
     end
     
     def create
-        filename = backup_service.create_backup
+        filename = @backup_service.create_backup
         
         if filename            
             render json: {
@@ -38,7 +40,7 @@ class BackupsController < ApplicationController
     end
     
     def restore
-        success = backup_service.restore_backup
+        success = @backup_service.restore_backup
         
         if success
             render json: {
@@ -55,7 +57,7 @@ class BackupsController < ApplicationController
     
     # POST /backups/:filename/restore - восстановить из конкретного бэкапа
     def restore_specific
-        success = backup_service.restore_backup(params[:filename])
+        success = @backup_service.restore_backup(params[:filename])
         
         if success
             render json: {
@@ -74,6 +76,6 @@ class BackupsController < ApplicationController
     private
     
     def set_backup_obj
-        backup_service = BeautySalonJsonBackup.new
+        @backup_service = BeautySalonJsonBackup.new
     end
 end
