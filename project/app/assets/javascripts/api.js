@@ -67,3 +67,33 @@ async function createBackup(){
     });
     return response.json();
 }
+
+async function restoreBackup() {
+    const response = await fetch('/backups/restore', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+        
+    return response.json();
+}
+
+async function restoreSpecificBackup() {
+    const response = await fetch(`/backups/${selectedBackupFilename}/restore`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    return response.json();
+}
+
+async function listBackup() {
+    const response = await fetch('/backups');
+
+    return response.json();
+}

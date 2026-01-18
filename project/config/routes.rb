@@ -12,7 +12,10 @@ Rails.application.routes.draw do
   resources :services
   resources :bookings
 
-  resources :backups, only: [:create] 
+  resources :backups, only: [:create, :index] do
+      post 'restore', on: :collection
+      post ':filename/restore', to: 'backups#restore_specific', on: :collection
+  end
 
   match '*path',
       to: proc { [204, {}, ['']] },

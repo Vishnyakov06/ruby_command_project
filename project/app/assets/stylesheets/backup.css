@@ -75,3 +75,83 @@
 .history-item:last-child {
     border-bottom: none;
 }
+
+/* Стили для списка бэкапов */
+.backup-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
+
+.backup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.backup-item {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.backup-item:hover {
+    background-color: #f8f9fa;
+    border-color: var(--primary-color);
+}
+
+.backup-item.selected {
+    background-color: rgba(106, 17, 203, 0.1);
+    border-color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+.backup-info {
+    flex: 1;
+}
+
+.backup-filename {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--dark-color);
+}
+
+.backup-details {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+.backup-size {
+    font-family: monospace;
+}
+
+.backup-date {
+    font-style: italic;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-color);
+}
+
+.no-backups {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-color);
+}
+
+.file-upload-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}

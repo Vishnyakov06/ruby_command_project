@@ -4,7 +4,7 @@ class BackupsController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_backup_obj
     
-    def list
+    def index
         backups = @backup_service.list_backups
         
         if backups
@@ -42,34 +42,13 @@ class BackupsController < ApplicationController
     def restore
         success = @backup_service.restore_backup
         
-        if success
-            render json: {
-                success: true,
-                message: "База данных успешно восстановлена из последнего бэкапа"
-            }
-        else
-            render json: {
-                success: false,
-                error: "Не удалось восстановить базу данных"
-            }, status: :unprocessable_entity
-        end
+        make_json_response(success)
     end
     
-    # POST /backups/:filename/restore - восстановить из конкретного бэкапа
     def restore_specific
         success = @backup_service.restore_backup(params[:filename])
         
-        if success
-            render json: {
-                success: true,
-                message: "База данных восстановлена из бэкапа #{params[:filename]}"
-            }
-        else
-            render json: {
-                success: false,
-                error: "Не удалось восстановить из бэкапа #{params[:filename]}"
-            }, status: :unprocessable_entity
-        end
+        make_json_response(success, params[:filename])
     end
     
 
@@ -77,5 +56,19 @@ class BackupsController < ApplicationController
     
     def set_backup_obj
         @backup_service = BeautySalonJsonBackup.new
+    end
+
+    def make_json_response(success, backup_name = '')
+        if success
+            render json: {
+                success: true,
+                message: "База данных восстановлена из #{"последнего" if backup_name == ''} бэкапа #{backup_name}"
+            }
+        else
+            render json: {
+                success: false,
+                error: "Не удалось восстановить базу данных из бэкапа #{backup_name}"
+            }, status: :unprocessable_entity
+        end
     end
 end
