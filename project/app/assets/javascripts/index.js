@@ -30,9 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     const savedTab = loadActiveTab();
-    if (savedTab && savedTab !== currentTab) {
-        switchTab(savedTab);
-    }
+    switchTab(savedTab);
 });
 
 function saveActiveTab(tabName) {
