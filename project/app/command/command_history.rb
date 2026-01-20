@@ -8,7 +8,7 @@ class CommandHistory
   def push(command)
     history=@session[:undo_deque]
     history<<command
-    history.shift if history.size > 10
+    history.shift if history.size > 8
     @session[:undo_deque] = history
   end
 

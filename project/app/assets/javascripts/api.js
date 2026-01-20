@@ -57,17 +57,8 @@ async function updateEntity(id, data, url) {
     return response.json();
 }
 
-async function undo() {
-    const response = await fetch(`${API_BASE}/undo`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-        }
-    })
-
-    if (!response.ok) {
-        throw new Error("Ошибка ctrl+z");
-    }
+async function getUndoHistory() {
+    const response = await fetch(`${API_BASE}/undo`, { credentials: 'include' });
+    if (!response.ok) throw new Error('Ошибка при получении истории команд');
+    return response.json();
 }

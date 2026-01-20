@@ -21,28 +21,20 @@
       href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
       rel="stylesheet"
     />
-    <link 
-      href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
-      rel="stylesheet"
-    />
-    <link 
-      href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
-      rel="stylesheet"
-    />
 
     <title>Beauty Salon</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "backup", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "notifications", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "forms", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "reports", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "modals", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "buttons", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "tables", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "dashboard", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "backup", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "notifications", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "forms", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "reports", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "modals", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "buttons", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "tables", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "dashboard", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
 
     <%= javascript_include_tag "api", "data-turbo-track": "reload", defer: true%>
     <%= javascript_include_tag "modals", "data-turbo-track": "reload", defer: true%>
