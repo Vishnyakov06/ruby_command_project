@@ -30,9 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     const savedTab = loadActiveTab();
-    if (savedTab && savedTab !== currentTab) {
-        switchTab(savedTab);
-    }
+    switchTab(savedTab);
 });
 
 function saveActiveTab(tabName) {
@@ -58,7 +56,7 @@ function initTab(tabName) {
             if (typeof loadServices === 'function') loadServices();
             break;
         case "reports":
-            if (typeof loadReports === 'function') loadReports();
+            if (typeof initReportsTabs === 'function') initReportsTabs();
             break;
         case "dashboard":
             if (typeof loadDashboard === 'function') loadDashboard();

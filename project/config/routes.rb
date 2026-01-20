@@ -17,6 +17,12 @@ Rails.application.routes.draw do
       post ':filename/restore', to: 'backups#restore_specific', on: :collection
   end
 
+  namespace :reports do
+    get :revenue
+    get :masters
+    get :clients
+  end
+  
   match '*path',
       to: proc { [204, {}, ['']] },
       via: :options

@@ -97,3 +97,21 @@ async function listBackup() {
 
     return response.json();
 }
+
+async function getReport(type, params = {}) {
+    const url = new URL(`${API_BASE}/reports/${type}`);
+    
+    Object.keys(params).forEach(key => {
+        if (params[key]) {
+            url.searchParams.append(key, params[key]);
+        }
+    });
+    
+    const response = await fetch(url.toString());
+    
+    if (!response.ok) {
+        throw new Error(`Ошибка получения отчета`);
+    }
+    
+    return response.json();
+}
