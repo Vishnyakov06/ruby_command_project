@@ -11,7 +11,12 @@ Rails.application.routes.draw do
   resources :masters
   resources :services
   resources :bookings
-
+  namespace :reports do
+    get :revenue
+    get :masters
+    get :clients
+  end
+  
   match '*path',
       to: proc { [204, {}, ['']] },
       via: :options
