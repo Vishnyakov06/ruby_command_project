@@ -1,0 +1,239 @@
+{
+  "clients": [
+    {
+      "client_id": 19,
+      "last_name": "Клиент",
+      "first_name": "Будущий",
+      "patronymic": null,
+      "phone_number": "+79990000555",
+      "registration_date": "2026-01-19"
+    }
+  ],
+  "masters": [
+    {
+      "master_id": 13,
+      "last_name": "Мастер",
+      "first_name": "Будущий",
+      "patronymic": "Александрович",
+      "phone_number": "+79990000666",
+      "is_active": true
+    },
+    {
+      "master_id": 14,
+      "last_name": "Атаманов",
+      "first_name": "Олег",
+      "patronymic": "Александрович",
+      "phone_number": "+79181234567",
+      "is_active": true
+    }
+  ],
+  "services": [
+    {
+      "service_id": 17,
+      "title": "Будущая услуга",
+      "duration": 3600,
+      "base_price": 2000,
+      "category": "Cтрижка"
+    }
+  ],
+  "bookings": [
+    {
+      "booking_id": 49,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 19:19:00 UTC",
+      "price": 2100,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 08:19:22 UTC",
+      "notes": "Запись 20"
+    },
+    {
+      "booking_id": 46,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 21:38:00 UTC",
+      "price": 2100,
+      "status": "Подтверждена",
+      "created_at": "2026-01-19 05:19:22 UTC",
+      "notes": "Запись 17"
+    },
+    {
+      "booking_id": 36,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 13:19:22 UTC",
+      "price": 2209,
+      "status": "Подтверждена",
+      "created_at": "2026-01-19 08:19:22 UTC",
+      "notes": "Запись 7"
+    },
+    {
+      "booking_id": 38,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 03:19:22 UTC",
+      "price": 1744,
+      "status": "Подтверждена",
+      "created_at": "2026-01-19 12:19:22 UTC",
+      "notes": "Запись 9"
+    },
+    {
+      "booking_id": 30,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 09:19:00 UTC",
+      "price": 2200,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 01:19:22 UTC",
+      "notes": "Запись 1"
+    },
+    {
+      "booking_id": 31,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 06:19:00 UTC",
+      "price": 1900,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 09:19:22 UTC",
+      "notes": "Запись 2"
+    },
+    {
+      "booking_id": 32,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 22:19:00 UTC",
+      "price": 2100,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 00:19:22 UTC",
+      "notes": "Запись 3"
+    },
+    {
+      "booking_id": 33,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 16:19:00 UTC",
+      "price": 2300,
+      "status": "Выполнена",
+      "created_at": "2026-01-18 22:19:22 UTC",
+      "notes": "Запись 4"
+    },
+    {
+      "booking_id": 34,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 21:19:00 UTC",
+      "price": 2300,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 02:19:22 UTC",
+      "notes": "Запись 5"
+    },
+    {
+      "booking_id": 37,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 20:19:00 UTC",
+      "price": 1800,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 08:19:22 UTC",
+      "notes": "Запись 8"
+    },
+    {
+      "booking_id": 39,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 21:19:00 UTC",
+      "price": 2000,
+      "status": "Выполнена",
+      "created_at": "2026-01-18 20:19:22 UTC",
+      "notes": "Запись 10"
+    },
+    {
+      "booking_id": 40,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 07:19:00 UTC",
+      "price": 1800,
+      "status": "Выполнена",
+      "created_at": "2026-01-18 18:19:22 UTC",
+      "notes": "Запись 11"
+    },
+    {
+      "booking_id": 41,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 16:19:00 UTC",
+      "price": 2300,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 10:19:22 UTC",
+      "notes": "Запись 12"
+    },
+    {
+      "booking_id": 42,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 13:19:00 UTC",
+      "price": 2100,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 06:19:22 UTC",
+      "notes": "Запись 13"
+    },
+    {
+      "booking_id": 43,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-20 14:19:00 UTC",
+      "price": 1700,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 07:19:22 UTC",
+      "notes": "Запись 14"
+    },
+    {
+      "booking_id": 44,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 17:19:00 UTC",
+      "price": 2200,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 07:19:22 UTC",
+      "notes": "Запись 15"
+    },
+    {
+      "booking_id": 45,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-21 20:19:00 UTC",
+      "price": 2000,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 10:19:22 UTC",
+      "notes": "Запись 16"
+    },
+    {
+      "booking_id": 47,
+      "client_id": 19,
+      "master_id": 13,
+      "service_id": 17,
+      "date_service": "2026-01-22 01:19:00 UTC",
+      "price": 2200,
+      "status": "Выполнена",
+      "created_at": "2026-01-19 00:19:22 UTC",
+      "notes": "Запись 18"
+    }
+  ]
+}

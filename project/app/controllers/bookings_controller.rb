@@ -19,25 +19,25 @@ class BookingsController < ApplicationController
     end
 
     def create
-        booking = Booking.new(booking_params)
-
-        if booking.save
+        begin
+            booking = EventMediator.execute_command(action: :create,model:Booking,params: booking_params,session: session)
             render json: booking, status: :created
-        else
-            render json: { errors: booking.errors }, status: :unprocessable_entity
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @booking.update(booking_params)
-            render json: @booking
-        else
-            render json: { errors: @booking.errors }, status: :unprocessable_entity
+        begin
+            booking = EventMediator.execute_command(action: :update,entity:@booking,params: booking_params,session: session)
+            render json: booking
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @booking.destroy
+        EventMediator.execute_command(action: :delete,entity:@booking,params: {},session: session)
         head :no_content
     end
 

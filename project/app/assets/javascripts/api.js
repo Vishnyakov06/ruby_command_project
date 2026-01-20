@@ -112,6 +112,10 @@ async function getReport(type, params = {}) {
     if (!response.ok) {
         throw new Error(`Ошибка получения отчета`);
     }
+}
     
+async function getUndoHistory() {
+    const response = await fetch(`${API_BASE}/undo`, { credentials: 'include' });
+    if (!response.ok) throw new Error('Ошибка при получении истории команд');
     return response.json();
 }

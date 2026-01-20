@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :masters
   resources :services
   resources :bookings
+  resource :undo, only: [:show, :create]
 
   resources :backups, only: [:create, :index] do
       post 'restore', on: :collection

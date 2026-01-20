@@ -11,25 +11,26 @@ class ServicesController < ApplicationController
     end
 
     def create
-        service = Service.new(service_params)
-
-        if service.save
+        begin
+            service = EventMediator.execute_command(action: :create,model:Service,params: service_params,session: session)
             render json: service, status: :created
-        else
-            render json: { errors: service.errors }, status: :unprocessable_entity
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @service.update(service_params)
-            render json: @service
-        else
-            render json: { errors: @service.errors }, status: :unprocessable_entity
+        begin
+            service = EventMediator.execute_command(action: :update,entity:@service,params: service_params,session: session)
+            render json: service
+            
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @service.destroy
+        EventMediator.execute_command(action: :delete,entity:@service,params: {},session: session)
         head :no_content
     end
 

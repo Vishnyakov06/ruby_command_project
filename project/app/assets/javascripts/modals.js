@@ -81,6 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
             openModal("edit-booking-modal");
         }
 
+        if (e.target.closest("#history-list")) {
+            openModal("recent-changes-modal");
+        }
+
         if (e.target.closest(".close, .close-modal")) {
             closeModal(e.target.closest(".modal"));
         }

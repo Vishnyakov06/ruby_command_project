@@ -20,25 +20,25 @@ class MastersController < ApplicationController
     end
 
     def create
-        master = Master.new(master_params)
-
-        if master.save
+        begin
+            master = EventMediator.execute_command(action: :create,model:Master,params: master_params,session: session)
             render json: master, status: :created
-        else
-            render json: { errors: master.errors }, status: :unprocessable_entity
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def update
-        if @master.update(master_params)
-            render json: @master
-        else
-            render json: { errors: @master.errors }, status: :unprocessable_entity
+        begin
+            master = EventMediator.execute_command(action: :update,entity:@master,params: master_params,session: session)
+            render json: master
+        rescue ActiveRecord::RecordInvalid => e
+            render json: { errors: e.errors }, status: :unprocessable_entity
         end
     end
 
     def destroy
-        @master.destroy
+        EventMediator.execute_command(action: :delete,entity:@master,params: {},session: session)
         head :no_content
     end
 
