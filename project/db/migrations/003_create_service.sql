@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS service(
     duration INTERVAL NOT NULL,
     base_price INTEGER NOT NULL,
     category VARCHAR(50) NOT NULL CHECK (category IN (
-        'Cтрижка', 'Окрашивание', 'Укладка', 
+        'Стрижка', 'Окрашивание', 'Укладка', 
         'Маникюр', 'Педикюр', 'Визаж', 
         'Депиляция', 'Массаж', 'Косметология'
     ))
