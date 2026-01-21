@@ -1,0 +1,1 @@
+CREATE INDEX idx_client_phone_number ON client (phone_number);

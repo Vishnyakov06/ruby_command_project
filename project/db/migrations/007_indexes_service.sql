@@ -1,0 +1,1 @@
+CREATE INDEX idx_service_title ON service (title);

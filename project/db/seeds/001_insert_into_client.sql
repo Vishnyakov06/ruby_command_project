@@ -1,4 +1,4 @@
-INSERT INTO client (last_name, first_name, patronymic, phone_number, registartion_date) VALUES
+INSERT INTO client (last_name, first_name, patronymic, phone_number, registration_date) VALUES
 ('Иванова', 'Анна', 'Сергеевна', '+79161234567', '2024-01-15'),
 ('Петров', 'Дмитрий', 'Александрович', '+79162345678', '2024-02-10'),
 ('Сидорова', 'Екатерина', 'Владимировна', '+79163456789', '2024-02-28'),
