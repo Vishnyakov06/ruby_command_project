@@ -1,0 +1,134 @@
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public[0m
+  [1m[35m (72.8ms)[0m  [1m[35mCREATE DATABASE "beauty_salon_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "booking" CASCADE[0m
+  [1m[35m (15.0ms)[0m  [1m[35mCREATE TABLE "booking" ("booking_id" serial NOT NULL PRIMARY KEY, "client_id" integer NOT NULL, "created_at" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL, "date_service" timestamp NOT NULL, "master_id" integer NOT NULL, "notes" text, "price" integer NOT NULL, "service_id" integer NOT NULL, "status" character varying(20) DEFAULT 'Подтверждена' NOT NULL, CONSTRAINT booking_status_check CHECK (status::text = ANY (ARRAY['Подтверждена'::character varying, 'Выполнена'::character varying, 'Отменена'::character varying, 'Неявка'::character varying]::text[])), CONSTRAINT "booking_master_id_date_service_key" UNIQUE ("master_id", "date_service"))[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "client" CASCADE[0m
+  [1m[35m (8.5ms)[0m  [1m[35mCREATE TABLE "client" ("client_id" serial NOT NULL PRIMARY KEY, "first_name" character varying(50) NOT NULL, "last_name" character varying(50) NOT NULL, "patronymic" character varying(50), "phone_number" character varying(20) NOT NULL, "registartion_date" date DEFAULT CURRENT_DATE NOT NULL, CONSTRAINT "client_phone_number_key" UNIQUE ("phone_number"))[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "master" CASCADE[0m
+  [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE "master" ("master_id" serial NOT NULL PRIMARY KEY, "first_name" character varying(50) NOT NULL, "is_active" boolean DEFAULT TRUE NOT NULL, "last_name" character varying(50) NOT NULL, "patronymic" character varying(50), "phone_number" character varying(20) NOT NULL, CONSTRAINT "master_phone_number_key" UNIQUE ("phone_number"))[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "service" CASCADE[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "service" ("service_id" serial NOT NULL PRIMARY KEY, "base_price" integer NOT NULL, "category" character varying(50) NOT NULL, "duration" interval NOT NULL, "title" character varying(100) NOT NULL, CONSTRAINT service_category_check CHECK (category::text = ANY (ARRAY['Cтрижка'::character varying, 'Окрашивание'::character varying, 'Укладка'::character varying, 'Маникюр'::character varying, 'Педикюр'::character varying, 'Визаж'::character varying, 'Депиляция'::character varying, 'Массаж'::character varying, 'Косметология'::character varying]::text[])))[0m
+  [1m[35m (3.7ms)[0m  [1m[35mALTER TABLE "booking" ADD CONSTRAINT "booking_client_id_fkey"
+FOREIGN KEY ("client_id")
+  REFERENCES "client" ("client_id")
+ ON DELETE CASCADE[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "booking" ADD CONSTRAINT "booking_master_id_fkey"
+FOREIGN KEY ("master_id")
+  REFERENCES "master" ("master_id")
+ ON DELETE CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mALTER TABLE "booking" ADD CONSTRAINT "booking_service_id_fkey"
+FOREIGN KEY ("service_id")
+  REFERENCES "service" ("service_id")
+ ON DELETE CASCADE[0m
+  [1m[35m (10.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (4)[0m
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (2.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-01-08 12:48:38.169458', '2026-01-08 12:48:38.169462') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '84743fc85d84817b81eaafc0093f9854c0487ca2', '2026-01-08 12:48:38.174160', '2026-01-08 12:48:38.174163') RETURNING "key"[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(2672819813133110235)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(2672819813133110235)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public[0m
+  [1m[35m (63.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "beauty_salon_test"[0m
+  [1m[35m (47.7ms)[0m  [1m[35mCREATE DATABASE "beauty_salon_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (25.4ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "booking" CASCADE[0m
+  [1m[35m (14.4ms)[0m  [1m[35mCREATE TABLE "booking" ("booking_id" serial NOT NULL PRIMARY KEY, "client_id" integer NOT NULL, "created_at" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL, "date_service" timestamp NOT NULL, "master_id" integer NOT NULL, "notes" text, "price" integer NOT NULL, "service_id" integer NOT NULL, "status" character varying(20) DEFAULT 'Подтверждена' NOT NULL, CONSTRAINT booking_status_check CHECK (status::text = ANY (ARRAY['Подтверждена'::character varying::text, 'Выполнена'::character varying::text, 'Отменена'::character varying::text, 'Неявка'::character varying::text])), CONSTRAINT "booking_master_id_date_service_key" UNIQUE ("master_id", "date_service"))[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "client" CASCADE[0m
+  [1m[35m (10.4ms)[0m  [1m[35mCREATE TABLE "client" ("client_id" serial NOT NULL PRIMARY KEY, "first_name" character varying(50) NOT NULL, "last_name" character varying(50) NOT NULL, "patronymic" character varying(50), "phone_number" character varying(20) NOT NULL, "registartion_date" date DEFAULT CURRENT_DATE NOT NULL, CONSTRAINT "client_phone_number_key" UNIQUE ("phone_number"))[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "master" CASCADE[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE "master" ("master_id" serial NOT NULL PRIMARY KEY, "first_name" character varying(50) NOT NULL, "is_active" boolean DEFAULT TRUE NOT NULL, "last_name" character varying(50) NOT NULL, "patronymic" character varying(50), "phone_number" character varying(20) NOT NULL, CONSTRAINT "master_phone_number_key" UNIQUE ("phone_number"))[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "service" CASCADE[0m
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE TABLE "service" ("service_id" serial NOT NULL PRIMARY KEY, "base_price" integer NOT NULL, "category" character varying(50) NOT NULL, "duration" interval NOT NULL, "title" character varying(100) NOT NULL, CONSTRAINT service_category_check CHECK (category::text = ANY (ARRAY['Cтрижка'::character varying::text, 'Окрашивание'::character varying::text, 'Укладка'::character varying::text, 'Маникюр'::character varying::text, 'Педикюр'::character varying::text, 'Визаж'::character varying::text, 'Депиляция'::character varying::text, 'Массаж'::character varying::text, 'Косметология'::character varying::text])))[0m
+  [1m[35m (2.9ms)[0m  [1m[35mALTER TABLE "booking" ADD CONSTRAINT "booking_client_id_fkey"
+FOREIGN KEY ("client_id")
+  REFERENCES "client" ("client_id")
+ ON DELETE CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mALTER TABLE "booking" ADD CONSTRAINT "booking_master_id_fkey"
+FOREIGN KEY ("master_id")
+  REFERENCES "master" ("master_id")
+ ON DELETE CASCADE[0m
+  [1m[35m (2.5ms)[0m  [1m[35mALTER TABLE "booking" ADD CONSTRAINT "booking_service_id_fkey"
+FOREIGN KEY ("service_id")
+  REFERENCES "service" ("service_id")
+ ON DELETE CASCADE[0m
+  [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (4)[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2026-01-08 12:48:47.294848', '2026-01-08 12:48:47.294851') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (1.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'ba77598361a9a6ed4fafd023a4918c29db7ac973', '2026-01-08 12:48:47.300048', '2026-01-08 12:48:47.300050') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+Started GET "/appointments" for 127.0.0.1 at 2026-01-08 15:59:36 +0300
+  
+ActionController::RoutingError (No route matches [GET] "/appointments"):
+  
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/appointments" for 127.0.0.1 at 2026-01-08 15:59:36 +0300
+  
+ActionController::RoutingError (No route matches [POST] "/appointments"):
+  
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (3.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (3.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (4.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (4.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (3.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
