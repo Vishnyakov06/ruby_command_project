@@ -60,7 +60,7 @@
 .modal-header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 1.5rem 2rem;
+    padding: 1rem 2rem;
     border-radius: 10px 10px 0 0;
     display: flex;
     justify-content: space-between;
@@ -137,4 +137,21 @@
 
 .notification-modal .btn-primary {
     min-width: 120px;
+}
+
+.errors-container {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center; /* центрируем текст */
+    font-weight: bold;
+}
+
+.errors-container ul {
+    list-style: none; /* убираем маркеры */
+    padding: 0;
+    margin: 0;
+}
+
+.errors-container li {
+    margin: 5px 0;
 }

@@ -29,7 +29,6 @@ class ClientsController < ApplicationController
     end
 
     def destroy
-        #TODO: handle errors
         EventMediator.execute_command(action: :delete,entity:@client,params: {},session: session)
         head :no_content
     end

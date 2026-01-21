@@ -1,16 +1,28 @@
 class Service < ApplicationRecord
     self.table_name = 'service'
+    self.primary_key = 'service_id'
+
     has_many :bookings, foreign_key: 'service_id', dependent: :destroy
     
-    validates :title, :duration, :base_price, :category, presence: true
-    validates :base_price, numericality: { greater_than: 0 }
-    validates :category, inclusion: { in: %w[
-        Cтрижка Окрашивание Укладка Маникюр Педикюр Визаж Депиляция Массаж Косметология
-    ], message: "%{value} не является допустимой категорией" }
-    
-    CATEGORIES = [
-        'Cтрижка', 'Окрашивание', 'Укладка', 
-        'Маникюр', 'Педикюр', 'Визаж', 
-        'Депиляция', 'Массаж', 'Косметология'
-    ].freeze
+    validates :title,
+        presence: true,
+        length: { in: 1..100 },
+        uniqueness: true
+    validates :duration, 
+        numericality: {
+            greater_than_or_equal_to: 15,
+            less_than_or_equal_to: 240
+        }
+    validates :base_price,
+        numericality: {
+            only_integer: true,
+            greater_than_or_equal_to: 100,
+            less_than_or_equal_to: 50_000
+        }
+    CATEGORIES = %w[
+        Стрижка Окрашивание Укладка Маникюр 
+        Педикюр Визаж Депиляция Массаж Косметология
+    ]
+    validates :category, 
+        inclusion: { in: CATEGORIES }
 end

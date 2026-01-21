@@ -24,7 +24,7 @@ class MastersController < ApplicationController
             master = EventMediator.execute_command(action: :create,model:Master,params: master_params,session: session)
             render json: master, status: :created
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -33,7 +33,7 @@ class MastersController < ApplicationController
             master = EventMediator.execute_command(action: :update,entity:@master,params: master_params,session: session)
             render json: master
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 

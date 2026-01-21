@@ -6,6 +6,7 @@
         </div>
         <div class="modal-body">
             <form id="edit-master-form">
+                <div id="edit-master-errors" class="errors-container"></div>
                 <input type="hidden" id="edit-master-id">
                 
                 <div class="form-row">
@@ -54,6 +55,7 @@
         </div>
         <div class="modal-body">
             <form id="edit-client-form">
+                <div id="edit-client-errors" class="errors-container"></div>
                 <input type="hidden" id="edit-client-id">
                 
                 <div class="form-row">
@@ -94,6 +96,7 @@
         </div>
         <div class="modal-body">
             <form id="edit-booking-form">
+                <div id="edit-booking-errors" class="errors-container"></div>
                 <input type="hidden" id="edit-booking-id">
                 
                 <div class="form-row">
@@ -162,6 +165,7 @@
         </div>
         <div class="modal-body">
             <form id="edit-service-form">
+                <div id="edit-service-errors" class="errors-container"></div>
                 <input type="hidden" id="edit-service-id">
                 
                 <div class="form-row">
@@ -170,8 +174,8 @@
                         <input type="text" id="edit-service-title" placeholder="Женская стрижка" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit-service-duration">Продолжительность (в сек.)</label>
-                        <input type="number" id="edit-service-duration" placeholder="3600" required>
+                        <label for="edit-service-duration">Продолжительность (в мин.)</label>
+                        <input type="number" id="edit-service-duration" placeholder="30" required>
                     </div>
                 </div>
                 

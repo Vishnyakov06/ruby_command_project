@@ -2,6 +2,7 @@ const API_BASE = "http://localhost:3000";
 
 async function getEntity(url) {
     const response = await fetch(`${API_BASE}/${url}`);
+    if (!response.ok) throw new Error("Ошибка получения данных");
     return response.json();
 }
 
@@ -15,11 +16,15 @@ async function createEntity(data, url) {
         body: JSON.stringify(data)
     });
 
+    const json = await response.json();
+
     if (!response.ok) {
-        throw new Error("Ошибка создания сущности");
+        const error = new Error("Ошибка создания сущности");
+        error.response = json;
+        throw error;
     }
 
-    return response.json();
+    return json;
 }
 
 async function deleteEntity(id, url) {
@@ -31,12 +36,18 @@ async function deleteEntity(id, url) {
     });
 
     if (!response.ok) {
-        throw new Error("Ошибка удаления сущности");
+        const json = await response.json().catch(() => ({}));
+        const error = new Error("Ошибка удаления сущности");
+        error.response = json;
+        throw error;
     }
+
+    return true;
 }
 
 async function getEntityById(id, url) {
     const response = await fetch(`${API_BASE}/${url}/${id}`);
+    if (!response.ok) throw new Error("Ошибка получения данных");
     return response.json();
 }
 
@@ -50,11 +61,15 @@ async function updateEntity(id, data, url) {
         body: JSON.stringify(data)
     });
 
+    const json = await response.json();
+
     if (!response.ok) {
-        throw new Error("Ошибка изменения сущности");
+        const error = new Error("Ошибка обновления сущности");
+        error.response = json;
+        throw error;
     }
 
-    return response.json();
+    return json;
 }
 
 async function createBackup(){

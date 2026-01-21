@@ -17,7 +17,7 @@ async function loadBookings() {
         if (!bookings.length) {
             tbody.innerHTML = `
                 <tr>
-                <td colspan="8" style="text-align:center;">Записей нет</td>
+                <td colspan="8" style="text-align:center;"><strong>Записей нет</strong></td>
                 </tr>
             `;
             return;
@@ -39,7 +39,7 @@ async function loadBookings() {
                     </td>
                     <td style="text-align: center">
                         ${booking.service.title ?? " "}<br>
-                        ${booking.service.duration + " сек." ?? " "}<br>
+                        ${booking.service.duration + " мин." ?? " "}<br>
                         ${"₽" + booking.service.base_price ?? " "}
                     </td>
                     <td style="text-align: center">${formatDate(booking.date_service, true) ?? " "}</td>
@@ -193,7 +193,7 @@ async function searchBookingById(id) {
                 }</p>
                 <p><strong>Услуга:</strong> ${
                     booking.service.title + ", " + 
-                    booking.service.duration + " сек. " + 
+                    booking.service.duration + " мин. " + 
                     booking.service.base_price + "₽"
                 }</p>
                 <p><strong>Дата:</strong> ${formatDate(booking.date_service)}</p>
@@ -249,6 +249,8 @@ document.getElementById("edit-booking-form")?.addEventListener("submit", async (
     e.preventDefault();
 
     const id = document.getElementById("edit-booking-id").value;
+    const errorsDiv = document.getElementById("edit-booking-errors");
+    errorsDiv.innerHTML = "";
 
     const payload = {
         booking: {
@@ -268,10 +270,14 @@ document.getElementById("edit-booking-form")?.addEventListener("submit", async (
         await loadBookings();
         clearBookingSelection();
     } catch (error) {
-        console.error("Ошибка при обновлении записи:", error);
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось изменить запись</p>`;
+        }
     }
 });
-
 
 document.addEventListener("submit", async (e) => {
     if (!e.target.matches("#search-booking-form")) return;
@@ -312,6 +318,9 @@ document.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
+    const errorsDiv = document.getElementById("booking-errors");
+    errorsDiv.innerHTML = "";
+
     const payload = {
         booking: {
             client_id: document.getElementById("booking-client").value,
@@ -331,8 +340,12 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        console.error(error);
-        throw new Error("Не удалось создать запись");
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось создать запись</p>`;
+        }
     }
 });
 

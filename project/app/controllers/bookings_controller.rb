@@ -23,7 +23,7 @@ class BookingsController < ApplicationController
             booking = EventMediator.execute_command(action: :create,model:Booking,params: booking_params,session: session)
             render json: booking, status: :created
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -32,7 +32,7 @@ class BookingsController < ApplicationController
             booking = EventMediator.execute_command(action: :update,entity:@booking,params: booking_params,session: session)
             render json: booking
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 

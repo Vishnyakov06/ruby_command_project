@@ -60,6 +60,15 @@ async function loadMastersReport(period = 'month') {
     
     body.innerHTML = '';
 
+    if (!data) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align:center;"><strong>Данных для отчета по мастерам нет</strong></td>
+            </tr>
+        `;
+        return;
+    }
+
     data.forEach(row => {
         body.insertAdjacentHTML('beforeend', `
             <tr>
@@ -82,6 +91,15 @@ async function loadClientsReport() {
     
     body.innerHTML = '';
     
+    if (!data) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align:center;"><strong>Данных для отчета по клиентам нет</strong></td>
+            </tr>
+        `;
+        return;
+    }
+    
     data.forEach(row => {
         body.insertAdjacentHTML('beforeend', `
             <tr>
@@ -103,6 +121,15 @@ async function loadRevenueReport() {
     document.getElementById("report-period").classList.add("hidden");
 
     body.innerHTML = '';
+
+    if (!data) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align:center;"><strong>Данных для отчета по выручке нет</strong></td>
+            </tr>
+        `;
+        return;
+    }
 
     data.forEach(row => {
         body.insertAdjacentHTML('beforeend', `
