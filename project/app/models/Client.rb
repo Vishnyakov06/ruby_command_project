@@ -15,11 +15,11 @@ class Client < ApplicationRecord
     validates :phone_number, 
         presence: true, 
         uniqueness: true, 
-        format: { 
-            with: /\A(\+7|8)\d{10}\z/
-        }
+        format: { with: /\A(\+7|8)\d{10}\z/}
     
     validate :registration_date_valid
+
+    private
     
     def registration_date_valid
         return if registration_date.blank?
