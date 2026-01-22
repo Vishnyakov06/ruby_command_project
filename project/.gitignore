@@ -27,7 +27,7 @@
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
-
+/app/logger_service/logs
 /public/assets
 
 # Ignore key files for decrypting credentials and more.
