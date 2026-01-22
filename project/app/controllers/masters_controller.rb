@@ -21,7 +21,7 @@ class MastersController < ApplicationController
 
     def create
         begin
-            master = EventMediator.execute_command(action: :create,model:Master,params: master_params,session: session)
+            master = CreateService.new(model: Master , params: master_params,session: session).call
             render json: master, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -30,7 +30,7 @@ class MastersController < ApplicationController
 
     def update
         begin
-            master = EventMediator.execute_command(action: :update,entity:@master,params: master_params,session: session)
+            master = UpdateService.new(entity:@master,params: master_params,session: session).call
             render json: master
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity
@@ -38,7 +38,7 @@ class MastersController < ApplicationController
     end
 
     def destroy
-        EventMediator.execute_command(action: :delete,entity:@master,params: {},session: session)
+        DeleteService.new(entity:@master,session: session).call
         head :no_content
     end
 
