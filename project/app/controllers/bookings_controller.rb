@@ -1,9 +1,11 @@
+require_relative '../models/StrategyDb'
+
 class BookingsController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_booking, only: %i[show update destroy]
 
     def index
-        bookings = Booking.includes(:client, :master, :service)
+        bookings = StrategyDb.Booking.includes(:client, :master, :service)
 
         bookings = bookings.where(status: params[:status]) if params[:status]
 
@@ -44,7 +46,7 @@ class BookingsController < ApplicationController
     private
 
     def set_booking
-        @booking = Booking.find(params[:id])
+        @booking = StrategyDb.Booking.find(params[:id])
     end
 
     def booking_params

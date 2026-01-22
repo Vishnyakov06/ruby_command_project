@@ -1,13 +1,15 @@
+require_relative '../models/StrategyDb'
+
 class ClientsController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_client, only: %i[show update destroy]
 
     def index
-        render json: Client.all
+        render json: StrategyDb.Client.all
     end
 
     def show
-        render json: @client
+        render json: @client.to_h
     end
 
     def create
@@ -36,7 +38,7 @@ class ClientsController < ApplicationController
     private
 
     def set_client
-        @client = Client.find(params[:id])
+        @client = StrategyDb.Client.find(params[:id])
     end
 
     def client_params

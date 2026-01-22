@@ -40,8 +40,6 @@ class BeautySalonJsonBackup
 
         if filename
             filepath = File.join(@path_to_backup_dir, filename.to_s + '.json')
-
-            puts("======> #{filepath}")
         
             unless File.exist?(filepath)
                 raise ArgumentError, "Файл '#{filename}' не найден в директории '#{@path_to_backup_dir}'"

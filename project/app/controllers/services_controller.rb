@@ -1,13 +1,15 @@
+require_relative '../models/StrategyDb'
+
 class ServicesController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_service, only: %i[show update destroy]
 
     def index
-        render json: Service.all
+        render json: StrategyDb.Service.all
     end
 
     def show
-        render json: @service
+        render json: @service.to_h
     end
 
     def create
@@ -37,7 +39,7 @@ class ServicesController < ApplicationController
     private
 
     def set_service
-        @service = Service.find(params[:id])
+        @service = StrategyDb.Service.find(params[:id])
     end
 
     def service_params
