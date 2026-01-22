@@ -29,7 +29,7 @@
 !/tmp/storage/.keep
 /app/logger_service/logs
 /public/assets
-
+/backup/backup_jsons
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
