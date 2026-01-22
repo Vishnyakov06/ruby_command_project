@@ -1,2 +1,1 @@
-class ServiceError < ApplicationError
-end;
+class ServiceError < ApplicationError; end

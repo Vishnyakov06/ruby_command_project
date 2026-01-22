@@ -21,6 +21,13 @@ class CrudService < ApplicationService
 
 		log_info("#{target_name} #{@action} completed", entity_id: result.id)
 		result
+	rescue ActiveRecord::RecordNotUnique => e
+		log_error("#{target} #{action} failed", error: error.message)
+		raise DuplicateError.new(
+			"Duplicate record",
+			e,
+			code: :duplicate_record
+		)
 	rescue ActiveRecord::RecordInvalid => e
 		log_error("#{target_name} #{@action} failed", error: e.record.errors.full_messages.join(", "))
 		raise ValidationError.new(
@@ -29,14 +36,6 @@ class CrudService < ApplicationService
 			code: :validation_failed,
 			details: { errors: e.record.errors }
 		)
-	rescue ActiveRecord::RecordNotUnique => e
-		log_error("#{target} #{action} failed", error: error.message)
-		raise DuplicateError.new(
-			"Duplicate record",
-			e,
-			code: :duplicate_record
-		)
-
 	rescue ActiveRecord::RecordNotFound => e
 		log_error("#{target} #{action} failed", error: error.message)
 		raise NotFoundError.new(
