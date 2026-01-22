@@ -1,3 +1,5 @@
+require_relative '../models/StrategyDb'
+
 class ReportsController < ApplicationController
   skip_before_action :verify_authenticity_token
 

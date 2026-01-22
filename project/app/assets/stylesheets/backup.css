@@ -348,3 +348,272 @@
   align-items: center;
   gap: 0.3rem;
 }
+
+
+/* Стили для переключателя БД =========================================================================*/
+.db-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.db-toggle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.db-toggle-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.toggle-switch {
+    position: relative;
+}
+
+.toggle-input {
+    display: none;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    background: #e9ecef;
+    border-radius: 30px;
+    padding: 3px;
+    width: 200px;
+    height: 36px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.toggle-input:checked + .toggle-label {
+    background: var(--primary-color);
+}
+
+.toggle-text-left,
+.toggle-text-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+.toggle-text-left {
+    left: 12px;
+}
+
+.toggle-text-right {
+    right: 12px;
+}
+
+.toggle-input:checked + .toggle-label .toggle-text-left {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.toggle-input:checked + .toggle-label .toggle-text-right {
+    color: white;
+}
+
+.toggle-input:not(:checked) + .toggle-label .toggle-text-left {
+    color: white;
+}
+
+.toggle-input:not(:checked) + .toggle-label .toggle-text-right {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.toggle-handle {
+    width: 96px;
+    height: 30px;
+    background: white;
+    border-radius: 25px;
+    position: absolute;
+    left: 3px;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.toggle-input:checked + .toggle-label .toggle-handle {
+    transform: translateX(98px);
+}
+
+#select-backup-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+}
+#select-backup-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+#select-backup-btn.hidden {
+    display: none !important;
+}
+
+/* Добавьте в конец файла backup.css */
+.db-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.db-toggle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.db-toggle-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.toggle-switch {
+    position: relative;
+}
+
+.toggle-input {
+    display: none;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    background: #e9ecef;
+    border-radius: 30px;
+    padding: 3px;
+    width: 200px;
+    height: 36px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.toggle-input:checked + .toggle-label {
+    background: var(--primary-color);
+}
+
+.toggle-text-left,
+.toggle-text-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    z-index: 1;
+    transition: color 0.3s;
+}
+
+.toggle-text-left {
+    left: 12px;
+}
+
+.toggle-text-right {
+    right: 12px;
+}
+
+.toggle-input:checked + .toggle-label .toggle-text-left {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.toggle-input:checked + .toggle-label .toggle-text-right {
+    color: white;
+}
+
+.toggle-input:not(:checked) + .toggle-label .toggle-text-left {
+    color: white;
+}
+
+.toggle-input:not(:checked) + .toggle-label .toggle-text-right {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.toggle-handle {
+    width: 96px;
+    height: 30px;
+    background: white;
+    border-radius: 25px;
+    position: absolute;
+    left: 3px;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.toggle-input:checked + .toggle-label .toggle-handle {
+    transform: translateX(98px);
+}
+
+#select-backup-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+#select-backup-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+#select-backup-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+/* В конец файла добавь */
+#select-backup-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+#select-backup-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

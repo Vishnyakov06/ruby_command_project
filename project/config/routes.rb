@@ -18,6 +18,14 @@ Rails.application.routes.draw do
       post ':filename/restore', to: 'backups#restore_specific', on: :collection
   end
 
+  #=======================================================================================
+  namespace :api do
+    post '/database_mode', to: 'database_mode#update'
+    post '/database_mode/set_file_name', to: 'database_mode#set_file_name'
+    get '/database_mode/status', to: 'database_mode#status'
+  end
+  # =====================================================================================
+
   namespace :reports do
     get :revenue
     get :masters
