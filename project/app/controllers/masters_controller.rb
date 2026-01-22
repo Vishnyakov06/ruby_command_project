@@ -26,7 +26,7 @@ class MastersController < ApplicationController
             master = CreateService.new(model: StrategyDb.Master , params: master_params,session: session).call
             render json: master, status: :created
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -35,7 +35,7 @@ class MastersController < ApplicationController
             master = UpdateService.new(entity:@master,params: master_params,session: session).call
             render json: master
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 

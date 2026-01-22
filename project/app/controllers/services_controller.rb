@@ -17,7 +17,7 @@ class ServicesController < ApplicationController
             service = CreateService.new(model: StrategyDb.Service , params: service_params,session: session).call
             render json: service, status: :created
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -27,7 +27,7 @@ class ServicesController < ApplicationController
             render json: service
             
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 

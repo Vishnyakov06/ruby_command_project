@@ -33,3 +33,8 @@ else
 fi
 
 echo "PostgreSQL пользователь и базы готовы"
+
+echo "Запуск миграций и сидов"
+ruby db/launch_create_db.rb
+
+echo "Настройка базы завершена"

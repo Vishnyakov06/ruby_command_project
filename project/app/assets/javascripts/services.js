@@ -6,7 +6,6 @@ async function loadServices() {
         const tbody = document.getElementById("services-table-body");
 
         if (!tbody) {
-            console.error("services-table-body не найден");
             return;
         }
 
@@ -15,7 +14,7 @@ async function loadServices() {
         if (!services.length) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="5" style="text-align:center;">Услуг нет</td>
+                <td colspan="5" style="text-align:center;"><strong>Услуг нет<strong></td>
             </tr>
         `;
         return;
@@ -26,7 +25,7 @@ async function loadServices() {
                 <tr class="service-row" data-id="${service.service_id}">
                     <td style="text-align: center">${service.service_id}</td>
                     <td style="text-align: center">${service.title ?? " "}</td>
-                    <td style="text-align: center">${service.duration + " сек." ?? " "}</td>
+                    <td style="text-align: center">${service.duration + " мин." ?? " "}</td>
                     <td style="text-align: center">${"₽" + service.base_price ?? " "}</td>
                     <td style="text-align: center">${service.category ?? " "}</td>
                 </tr>
@@ -85,7 +84,7 @@ async function searchServiceById(id) {
         .then(service => {
             detailsDiv.innerHTML = `
                 <p><strong>Название:</strong> ${service.title}</p>
-                <p><strong>Продолжительность:</strong> ${service.duration + " сек."}</p>
+                <p><strong>Продолжительность:</strong> ${service.duration + " мин."}</p>
                 <p><strong>Базовая стоимость:</strong> ${service.base_price + "₽"}</p>
                 <p><strong>Категория:</strong> ${service.category}</p>
             `;
@@ -117,6 +116,8 @@ document.getElementById("edit-service-form")?.addEventListener("submit", async (
     e.preventDefault();
 
     const id = document.getElementById("edit-service-id").value;
+    const errorsDiv = document.getElementById("edit-service-errors");
+    errorsDiv.innerHTML = "";
 
     const payload = {
         service: {
@@ -133,7 +134,12 @@ document.getElementById("edit-service-form")?.addEventListener("submit", async (
         await loadServices();
         clearServiceSelection();
     } catch (error) {
-        console.error(error);
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось изменить услугу</p>`;
+        }
     }
 });
 
@@ -176,6 +182,9 @@ document.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
+    const errorsDiv = document.getElementById("service-errors");
+    errorsDiv.innerHTML = "";
+
     const payload = {
         service: {
             title: document.getElementById("service-title").value,
@@ -192,8 +201,12 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        console.error(error);
-        throw new Error("Не удалось создать услугу");
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось создать услугу</p>`;
+        }
     }
 });
 

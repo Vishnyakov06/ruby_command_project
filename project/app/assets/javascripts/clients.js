@@ -15,7 +15,7 @@ async function loadClients() {
         if (!clients.length) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="6" style="text-align:center;">Клиентов нет</td>
+                    <td colspan="6" style="text-align:center;"><strong>Клиентов нет</strong></td>
                 </tr>
             `;
             return;
@@ -79,7 +79,7 @@ function populateClientDelete() {
         <p><strong>Фамилия И. О.:</strong> ${
             cells[1].textContent + " " + 
             cells[2].textContent[0] + "." + " " + 
-            cells[3].textContent[0] + "."
+            cells[3].textContent[0] || " " + "."
         }</p>
         <p><strong>Телефон:</strong> ${cells[4].textContent}</p>
     `;
@@ -132,6 +132,8 @@ document.getElementById("edit-client-form")?.addEventListener("submit", async (e
     e.preventDefault();
 
     const id = document.getElementById("edit-client-id").value;
+    const errorsDiv = document.getElementById("edit-client-errors");
+    errorsDiv.innerHTML = "";
 
     const payload = {
         client: {
@@ -148,7 +150,12 @@ document.getElementById("edit-client-form")?.addEventListener("submit", async (e
         await loadClients();
         clearClientSelection();
     } catch (error) {
-        console.error(error);
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось изменить клиента</p>`;
+        }
     }
 });
 
@@ -179,6 +186,9 @@ document.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
+    const errorsDiv = document.getElementById("client-errors");
+    errorsDiv.innerHTML = "";
+
     const payload = {
         client: {
             first_name: document.getElementById("client-firstname").value,
@@ -195,7 +205,12 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        throw new Error("Не удалось создать клиента");
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось создать клиента</p>`;
+        }
     }
 });
 

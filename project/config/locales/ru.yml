@@ -1,0 +1,136 @@
+ru:
+  activerecord:
+    models:
+      client: "Клиент"
+      master: "Мастер"
+      service: "Услуга"
+      booking: "Запись"
+
+    attributes:
+      client:
+        first_name: "Имя:"
+        last_name: "Фамилия:"
+        patronymic: "Отчество:"
+        phone_number: "Телефон:"
+
+      master:
+        first_name: "Имя:"
+        last_name: "Фамилия:"
+        patronymic: "Отчество:"
+        phone_number: "Телефон:"
+        is_active: "Статус:"
+
+      service:
+        title: "Название:"
+        duration: "Длительность (мин):"
+        base_price: "Базовая цена:"
+        category: "Категория:"
+
+      booking:
+        client: "Клиент"
+        master: "Мастер"
+        service: "Услуга"
+        client_id: "Клиент"
+        master_id: "Мастер"
+        service_id: "Услуга"
+        date_service: "Дата и время услуги"
+        price: "Цена"
+        status: "Статус"
+        notes: "Комментарий"
+        created_at: "Дата создания"
+
+    errors:
+      models:
+        client:
+          attributes:
+            first_name:
+              blank: "не может быть пустым"
+              invalid: "Некорректное имя"
+            last_name:
+              blank: "не может быть пустым"
+              invalid: "Некорректная фамилия"
+            patronymic:
+              invalid: "Некорректное отчество"
+            phone_number:
+              blank: "не может быть пустым"
+              invalid: "Некорректный номер телефона"
+
+        master:
+          attributes:
+            first_name:
+              blank: "не может быть пустым"
+              too_short: "слишком короткое"
+              too_long: "слишком длинное"
+              invalid: "Некорректное имя"
+
+            last_name:
+              blank: "не может быть пустым"
+              too_short: "слишком короткая"
+              too_long: "слишком длинная"
+              invalid: "Некорректная фамилия"
+
+            patronymic:
+              too_long: "слишком длинное"
+              invalid: "Некорректное отчество"
+
+            phone_number:
+              blank: "не может быть пустым"
+              taken: "уже используется"
+              invalid: "Некорректный номер телефона"
+
+            is_active:
+              inclusion: "имеет недопустимое значение"
+
+        service:
+          attributes:
+            title:
+              blank: "не может быть пустым"
+              too_short: "слишком короткое"
+              too_long: "слишком длинное"
+              taken: "уже существует"
+
+            duration:
+              not_a_number: "должна быть числом"
+              greater_than_or_equal_to: "должна быть не меньше 15 минут"
+              less_than_or_equal_to: "должна быть не больше 240 минут"
+
+            base_price:
+              not_a_number: "должна быть числом"
+              not_an_integer: "должна быть целым числом"
+              greater_than_or_equal_to: "должна быть не меньше 100"
+              less_than_or_equal_to: "должна быть не больше 50 000"
+
+            category:
+              inclusion: "имеет недопустимое значение"
+
+        booking:
+          attributes:
+            price:
+              not_a_number: "должна быть числом"
+              not_an_integer: "должна быть целым числом"
+              greater_than_or_equal_to: "не может быть меньше 0"
+              less_than_or_equal_to: "не может быть больше 100 000"
+
+            status:
+              inclusion: "имеет недопустимое значение"
+
+            notes:
+              too_long: "слишком длинный (максимум 1000 символов)"
+
+            date_service:
+              blank: "не может быть пустой"
+              taken: "уже занята"
+              invalid: "имеет неверный формат"
+
+            master_id:
+              blank: "не выбран"
+              invalid: "некорректен"
+              inactive: "не активен и не может принимать записи"
+
+            client_id:
+              blank: "не выбран"
+              invalid: "некорректен"
+
+            service_id:
+              blank: "не выбрана"
+              invalid: "некорректна"

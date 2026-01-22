@@ -5,7 +5,6 @@ async function loadMasters() {
         const masters = await getEntity('masters');
         const tbody = document.getElementById("masters-table-body");
         if (!tbody) {
-            console.error("masters-table-body не найден");
             return;
         }
 
@@ -14,7 +13,7 @@ async function loadMasters() {
         if (!masters.length) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="6" style="text-align:center;">Мастеров нет</td>
+                <td colspan="6" style="text-align:center;"><strong>Мастеров нет</strong></td>
             </tr>
         `;
         return;
@@ -129,6 +128,8 @@ document.getElementById("edit-master-form")?.addEventListener("submit", async (e
     e.preventDefault();
 
     const id = document.getElementById("edit-master-id").value;
+    const errorsDiv = document.getElementById("edit-master-errors");
+    errorsDiv.innerHTML = "";
 
     const payload = {
         master: {
@@ -146,7 +147,12 @@ document.getElementById("edit-master-form")?.addEventListener("submit", async (e
         await loadMasters();
         clearMasterSelection();
     } catch (error) {
-        console.error(error);
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось изменить мастера</p>`;
+        }
     }
 });
 
@@ -189,6 +195,9 @@ document.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
+    const errorsDiv = document.getElementById("master-errors");
+    errorsDiv.innerHTML = "";
+
     const payload = {
         master: {
             first_name: document.getElementById("master-firstname").value,
@@ -206,8 +215,12 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        console.error(error);
-        throw new Error("Не удалось создать мастер");
+        if (error.response && error.response.errors) {
+            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+            errorsDiv.innerHTML = `<ul>${list}</ul>`;
+        } else {
+            errorsDiv.innerHTML = `<p>Не удалось создать мастера</p>`;
+        }
     }
 });
 

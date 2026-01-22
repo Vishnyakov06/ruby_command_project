@@ -25,7 +25,7 @@ class BookingsController < ApplicationController
             booking = CreateService.new(model: StrategyDb.Booking , params: booking_params,session: session).call
             render json: booking, status: :created
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -34,7 +34,7 @@ class BookingsController < ApplicationController
             booking = UpdateService.new(entity:@booking,params: booking_params,session: session).call
             render json: booking
         rescue ActiveRecord::RecordInvalid => e
-            render json: { errors: e.errors }, status: :unprocessable_entity
+            render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
