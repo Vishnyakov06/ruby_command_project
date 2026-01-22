@@ -4,16 +4,12 @@ module ReportServiceInterface
         raise NotImplementedError, "This method should be implemented in a subclass"
     end
 
-    def client_analytics_report(start_date, end_date)
+    def client_analytics_report(status='Выполнена')
         raise NotImplementedError, "This method should be implemented in a subclass"
     end
 
-    def operational_report(start_date, end_date)
+    def operational_report(status='Выполнена')
         raise NotImplementedError, "Subclass must implement this method"
     end
-    
-    def invalidate_cache
-        raise NotImplementedError, "Subclass must implement this method"
-    end
-    
+
 end

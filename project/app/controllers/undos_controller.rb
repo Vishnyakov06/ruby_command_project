@@ -7,7 +7,7 @@ class UndosController < ApplicationController
   end
 
   def create
-    command = EventMediator.undo_last_command(session)
+    command = UndoService.new(session: session).call
     @history = session[:undo_deque] || []
     render json: {
       undone: command,
