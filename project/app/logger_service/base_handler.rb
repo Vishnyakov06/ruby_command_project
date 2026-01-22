@@ -1,6 +1,6 @@
 class BaseHandler
     include HandlerInterface
-    def initialize(handler)
+    def initialize(handler = nil)
         @next=handler
     end
     def forward(request)
