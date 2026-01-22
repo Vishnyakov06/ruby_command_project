@@ -1,22 +1,16 @@
 class ProxyCachedReportService
     include ReportServiceInterface
     CACHE_TTL=10.minutes
-
     @instance=nil
-    private_class_method :new
-
-    def self.instance
-        if(@instance.nil?)
-            @instance = new
-        end
-        @instance
-    end
-
     def initialize
-        @report_service=RealReportService
+        @report_service=RealReportService.new
         @cache={}
     end
-
+    private_class_method :new
+    def self.instance
+        @instance ||= new
+    end
+    
     def master_efficiency_report(start_date, end_date,status = 'Выполнена', is_active=true)
         cached_report(:master_efficiency_report, start_date, end_date, status, is_active)
     end
@@ -82,7 +76,7 @@ class ProxyCachedReportService
         Marshal.dump(data).bytesize/1024.0
     end
 
-    def  estimate_memory_usage
+    def estimate_memory_usage
        @cache.values.sum { |entry| entry[:size]||0 }.round(2)
     end
 

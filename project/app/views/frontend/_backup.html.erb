@@ -1,8 +1,27 @@
 <div id="backup" class="tab-content active">
     <div class="section-header">
         <h2><i class="fas fa-database"></i> Управление бэкапами</h2>
+        <div class="db-toggle-container">
+            <div class="db-toggle">
+                <span class="db-toggle-label">Режим БД:</span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="db-toggle-switch" class="toggle-input" 
+                           data-postgres-value="false" 
+                           data-backup-value="true">
+                    <label for="db-toggle-switch" class="toggle-label">
+                        <span class="toggle-text-left">PostgreSQL</span>
+                        <span class="toggle-handle"></span>
+                        <span class="toggle-text-right">Backup JSON</span>
+                    </label>
+                </div>
+                <button id="select-backup-btn" class="btn-secondary hidden">
+                    <i class="fas fa-file"></i> Выбрать файл
+                </button>
+            </div>
+        </div>
     </div>
     <div class="backup-container">
+        <!-- Остальной контент остается без изменений -->
         <div class="backup-card">
             <div class="backup-icon">
                 <i class="fas fa-file-export"></i>
@@ -22,7 +41,7 @@
             <p>Восстановите данные из существующих бэкапов</p>
             
             <div class="file-upload-wrapper">
-                <label for="backup-file" class="btn-secondary">
+                <label for="backup-file" class="btn-secondary" id="backup-file-label">
                     <i class="fas fa-folder-open"></i> Выбрать бэкап из списка
                 </label>
                 <input type="file" id="backup-file" accept=".json" style="display: none;">

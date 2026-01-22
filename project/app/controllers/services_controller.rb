@@ -1,18 +1,20 @@
+require_relative '../models/StrategyDb'
+
 class ServicesController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_service, only: %i[show update destroy]
 
     def index
-        render json: Service.all
+        render json: StrategyDb.Service.all
     end
 
     def show
-        render json: @service
+        render json: @service.to_h
     end
 
     def create
         begin
-            service = EventMediator.execute_command(action: :create,model:Service,params: service_params,session: session)
+            service = CreateService.new(model: StrategyDb.Service , params: service_params,session: session).call
             render json: service, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -21,7 +23,7 @@ class ServicesController < ApplicationController
 
     def update
         begin
-            service = EventMediator.execute_command(action: :update,entity:@service,params: service_params,session: session)
+            service = UpdateService.new(entity:@service,params: service_params,session: session).call
             render json: service
             
         rescue ActiveRecord::RecordInvalid => e
@@ -30,14 +32,14 @@ class ServicesController < ApplicationController
     end
 
     def destroy
-        EventMediator.execute_command(action: :delete,entity:@service,params: {},session: session)
+        DeleteService.new(entity:@service,session: session).call
         head :no_content
     end
 
     private
 
     def set_service
-        @service = Service.find(params[:id])
+        @service = StrategyDb.Service.find(params[:id])
     end
 
     def service_params

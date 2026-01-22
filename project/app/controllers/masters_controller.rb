@@ -1,3 +1,5 @@
+require_relative '../models/StrategyDb'
+
 class MastersController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_master, only: %i[show update destroy]
@@ -5,23 +7,23 @@ class MastersController < ApplicationController
     def index
         masters =
         if params[:active] == 'true'
-            Master.active
+            StrategyDb.Master.active
         elsif params[:active] == 'false'
-            Master.inactive
+            StrategyDb.Master.inactive
         else
-            Master.all
+            StrategyDb.Master.all
         end
 
         render json: masters
     end
 
     def show
-        render json: @master
+        render json: @master.to_h
     end
 
     def create
         begin
-            master = EventMediator.execute_command(action: :create,model:Master,params: master_params,session: session)
+            master = CreateService.new(model: StrategyDb.Master , params: master_params,session: session).call
             render json: master, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -30,7 +32,7 @@ class MastersController < ApplicationController
 
     def update
         begin
-            master = EventMediator.execute_command(action: :update,entity:@master,params: master_params,session: session)
+            master = UpdateService.new(entity:@master,params: master_params,session: session).call
             render json: master
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -38,14 +40,14 @@ class MastersController < ApplicationController
     end
 
     def destroy
-        EventMediator.execute_command(action: :delete,entity:@master,params: {},session: session)
+        DeleteService.new(entity:@master,session: session).call
         head :no_content
     end
 
     private
 
     def set_master
-        @master = Master.find(params[:id])
+        @master = StrategyDb.Master.find(params[:id])
     end
 
     def master_params

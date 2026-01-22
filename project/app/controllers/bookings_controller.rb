@@ -1,9 +1,11 @@
+require_relative '../models/StrategyDb'
+
 class BookingsController < ApplicationController
     skip_before_action :verify_authenticity_token
     before_action :set_booking, only: %i[show update destroy]
 
     def index
-        bookings = Booking.includes(:client, :master, :service)
+        bookings = StrategyDb.Booking.includes(:client, :master, :service)
 
         bookings = bookings.where(status: params[:status]) if params[:status]
 
@@ -20,7 +22,7 @@ class BookingsController < ApplicationController
 
     def create
         begin
-            booking = EventMediator.execute_command(action: :create,model:Booking,params: booking_params,session: session)
+            booking = CreateService.new(model: StrategyDb.Booking , params: booking_params,session: session).call
             render json: booking, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -29,7 +31,7 @@ class BookingsController < ApplicationController
 
     def update
         begin
-            booking = EventMediator.execute_command(action: :update,entity:@booking,params: booking_params,session: session)
+            booking = UpdateService.new(entity:@booking,params: booking_params,session: session).call
             render json: booking
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -37,14 +39,14 @@ class BookingsController < ApplicationController
     end
 
     def destroy
-        EventMediator.execute_command(action: :delete,entity:@booking,params: {},session: session)
+        DeleteService.new(entity:@booking,session: session).call
         head :no_content
     end
 
     private
 
     def set_booking
-        @booking = Booking.find(params[:id])
+        @booking = StrategyDb.Booking.find(params[:id])
     end
 
     def booking_params
