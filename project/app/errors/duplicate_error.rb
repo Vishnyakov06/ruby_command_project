@@ -1,0 +1,2 @@
+class DuplicateError < ServiceError
+end;

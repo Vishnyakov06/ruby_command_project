@@ -1,0 +1,2 @@
+class DatabaseError < ServiceError
+end;

@@ -1,0 +1,2 @@
+class UndoError < ServiceError
+end;
