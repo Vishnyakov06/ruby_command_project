@@ -19,11 +19,8 @@ Rails.application.routes.draw do
   end
 
   #=======================================================================================
-  namespace :api do
     post '/database_mode', to: 'database_mode#update'
     post '/database_mode/set_file_name', to: 'database_mode#set_file_name'
-    get '/database_mode/status', to: 'database_mode#status'
-  end
   # =====================================================================================
 
   namespace :reports do

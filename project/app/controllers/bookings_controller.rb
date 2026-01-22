@@ -22,7 +22,7 @@ class BookingsController < ApplicationController
 
     def create
         begin
-            booking = CreateService.new(model: Booking , params: booking_params,session: session).call
+            booking = CreateService.new(model: StrategyDb.Booking , params: booking_params,session: session).call
             render json: booking, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity

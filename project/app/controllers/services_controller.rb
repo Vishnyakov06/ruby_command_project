@@ -14,7 +14,7 @@ class ServicesController < ApplicationController
 
     def create
         begin
-            service = CreateService.new(model: Service , params: service_params,session: session).call
+            service = CreateService.new(model: StrategyDb.Service , params: service_params,session: session).call
             render json: service, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity

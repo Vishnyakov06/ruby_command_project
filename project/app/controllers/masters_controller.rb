@@ -23,7 +23,7 @@ class MastersController < ApplicationController
 
     def create
         begin
-            master = CreateService.new(model: Master , params: master_params,session: session).call
+            master = CreateService.new(model: StrategyDb.Master , params: master_params,session: session).call
             render json: master, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.errors }, status: :unprocessable_entity

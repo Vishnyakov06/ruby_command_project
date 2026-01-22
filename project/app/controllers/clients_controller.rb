@@ -14,7 +14,7 @@ class ClientsController < ApplicationController
 
     def create
         begin
-            client = CreateService.new(model: Client , params: client_params,session: session).call
+            client = CreateService.new(model: StrategyDb.Client , params: client_params,session: session).call
             render json: client, status: :created
         rescue ActiveRecord::RecordInvalid => e
             render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
