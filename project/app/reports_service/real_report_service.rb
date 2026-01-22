@@ -1,6 +1,6 @@
 class RealReportService
-    extend ReportServiceInterface
-    def self.master_efficiency_report(start_date, end_date,status = 'Выполнена', is_active=true)
+    include ReportServiceInterface
+    def master_efficiency_report(start_date, end_date,status = 'Выполнена', is_active=true)
         results = Booking
         .joins(:master, :service)
         .references(:master, :service) 
@@ -50,7 +50,7 @@ class RealReportService
         formatted_results
     end
 
-    def self.client_analytics_report(status='Выполнена')
+    def client_analytics_report(status='Выполнена')
         client_stats = Booking.joins(:client)
                                 .where(status: status)
                                 .group('client.client_id', 'client.first_name', 'client.last_name', 'client.phone_number','client.registration_date')
@@ -100,7 +100,7 @@ class RealReportService
         end
     end
 
-    def self.operational_efficiency_report(status = 'Выполнена')
+    def operational_efficiency_report(status = 'Выполнена')
         results = Booking
         .joins(:master, :service)
         .where(status: status)
