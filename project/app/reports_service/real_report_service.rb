@@ -1,5 +1,5 @@
 class RealReportService
-    include ReportServiceInterface
+    extend ReportServiceInterface
     def self.master_efficiency_report(start_date, end_date,status = 'Выполнена', is_active=true)
         results = Booking
         .joins(:master, :service)
