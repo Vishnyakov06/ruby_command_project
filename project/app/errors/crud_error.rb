@@ -1,0 +1,2 @@
+class CrudError < ServiceError
+end;
