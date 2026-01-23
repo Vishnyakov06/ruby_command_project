@@ -150,8 +150,8 @@ document.getElementById("edit-client-form")?.addEventListener("submit", async (e
         await loadClients();
         clearClientSelection();
     } catch (error) {
-        if (error.response && error.response.errors) {
-            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+        if (error.response.message) {
+            const list = `<li>${error.response.message}</li>`;
             errorsDiv.innerHTML = `<ul>${list}</ul>`;
         } else {
             errorsDiv.innerHTML = `<p>Не удалось изменить клиента</p>`;
@@ -205,8 +205,8 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        if (error.response && error.response.errors) {
-            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+        if (error.response.message) {
+            const list = `<li>${error.response.message}</li>`;
             errorsDiv.innerHTML = `<ul>${list}</ul>`;
         } else {
             errorsDiv.innerHTML = `<p>Не удалось создать клиента</p>`;

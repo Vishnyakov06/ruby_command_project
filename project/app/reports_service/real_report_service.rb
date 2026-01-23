@@ -103,6 +103,7 @@ class RealReportService
     def operational_efficiency_report(status = 'Выполнена')
         results = Booking
         .joins(:master, :service)
+        .where("EXTRACT(YEAR FROM date_service) = 2026")
         .where(status: status)
         .group(
             'master.master_id',

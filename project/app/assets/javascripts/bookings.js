@@ -270,8 +270,8 @@ document.getElementById("edit-booking-form")?.addEventListener("submit", async (
         await loadBookings();
         clearBookingSelection();
     } catch (error) {
-        if (error.response && error.response.errors) {
-            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+        if (error.response.message) {
+            const list = `<li>${error.response.message}</li>`;
             errorsDiv.innerHTML = `<ul>${list}</ul>`;
         } else {
             errorsDiv.innerHTML = `<p>Не удалось изменить запись</p>`;
@@ -340,8 +340,8 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        if (error.response && error.response.errors) {
-            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+        if (error.response.message) {
+            const list = `<li>${error.response.message}</li>`;
             errorsDiv.innerHTML = `<ul>${list}</ul>`;
         } else {
             errorsDiv.innerHTML = `<p>Не удалось создать запись</p>`;

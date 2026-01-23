@@ -134,8 +134,8 @@ document.getElementById("edit-service-form")?.addEventListener("submit", async (
         await loadServices();
         clearServiceSelection();
     } catch (error) {
-        if (error.response && error.response.errors) {
-            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+        if (error.response.message) {
+            const list = `<li>${error.response.message}</li>`;
             errorsDiv.innerHTML = `<ul>${list}</ul>`;
         } else {
             errorsDiv.innerHTML = `<p>Не удалось изменить услугу</p>`;
@@ -201,8 +201,8 @@ document.addEventListener("submit", async (e) => {
         e.target.reset();
 
     } catch (error) {
-        if (error.response && error.response.errors) {
-            const list = error.response.errors.map(msg => `<li>${msg}</li>`).join("");
+        if (error.response.message) {
+            const list = `<li>${error.response.message}</li>`;
             errorsDiv.innerHTML = `<ul>${list}</ul>`;
         } else {
             errorsDiv.innerHTML = `<p>Не удалось создать услугу</p>`;

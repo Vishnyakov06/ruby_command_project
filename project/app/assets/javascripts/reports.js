@@ -118,6 +118,7 @@ async function loadClientsReport() {
 async function loadRevenueReport() {
     const body = document.getElementById('revenue-report-body');
     const data = await getReport('revenue');
+    console.log(data)
     document.getElementById("report-period").classList.add("hidden");
 
     body.innerHTML = '';
