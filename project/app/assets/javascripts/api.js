@@ -116,16 +116,33 @@ async function listBackup() {
 async function getReport(type, params = {}) {
     const url = new URL(`${API_BASE}/reports/${type}`);
     
-    Object.keys(params).forEach(key => {
-        if (params[key]) {
-            url.searchParams.append(key, params[key]);
+    switch(type) {
+        case 'masters':
+            if (params.start_date) {
+                url.searchParams.append('start_date', params.start_date);
+            }
+            if (params.end_date) {
+                url.searchParams.append('end_date', params.end_date);
+            }
+            break;
+    }
+    
+    console.log(`Запрос к ${url.toString()}`);
+    
+    try {
+        const response = await fetch(url.toString());
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ошибка: ${response.status}`);
         }
-    });
-    
-    const response = await fetch(url.toString());
-    
-    if (!response.ok) {
-        throw new Error(`Ошибка получения отчета`);
+        
+        const data = await response.json();
+        console.log(`Отчет "${type}" загружен: ${data.length} записей`);
+        return data;
+        
+    } catch (error) {
+        console.error(`Ошибка загрузки отчета "${type}":`, error);
+        throw error;
     }
 }
     
