@@ -1,6 +1,5 @@
 <div id="backup" class="tab-content active">
     <div class="section-header">
-    # ========================================================================================================
         <h2><i class="fas fa-database"></i> Управление бэкапами</h2>
         <div class="db-toggle-container">
             <div class="db-toggle">
@@ -8,20 +7,20 @@
                 <div class="toggle-switch">
                     <input type="checkbox" id="db-toggle-switch" class="toggle-input" 
                            data-postgres-value="false" 
-                           data-backup-value="true">
+                           data-backup-value="true"
+                           data-current-mode="postgresql">
                     <label for="db-toggle-switch" class="toggle-label">
                         <span class="toggle-text-left">PostgreSQL</span>
                         <span class="toggle-handle"></span>
                         <span class="toggle-text-right">Backup JSON</span>
                     </label>
                 </div>
-                <button id="select-backup-btn" class="btn-secondary hidden">
+                <button id="select-backup-btn" class="btn-secondary">
                     <i class="fas fa-file"></i> Выбрать файл
                 </button>
             </div>
         </div>
     </div>
-    # ==================================================================================================
     <div class="backup-container">
         <!-- Остальной контент остается без изменений -->
         <div class="backup-card">
