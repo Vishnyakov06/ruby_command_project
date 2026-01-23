@@ -3,7 +3,7 @@ class DatabaseModeController < ApplicationController
     
     def update
         StrategyDb.toggle
-        
+        puts("🍋‍🟩 Alles gut")
         render json: { 
             success: true, 
             mode: StrategyDb.instance_variable_get(:@instance).to_s 
@@ -11,11 +11,12 @@ class DatabaseModeController < ApplicationController
     end
 
     def set_file_name
-        if params[:backup_file].present?
-            StrategyDb.set_specific_backup(params[:backup_file])
+        if params[:filename].present?
+            StrategyDb.set_specific_backup(params[:filename])
+            puts("🍋‍🟩🍋‍🟩🍋‍🟩🍋‍🟩 Alles gut")
             render json: { 
                 success: true, 
-                message: "Выбран файл бэкапа: #{params[:backup_file]}" 
+                message: "Выбран файл бэкапа: #{params[:filename]}" 
             }
         else
             render json: { 

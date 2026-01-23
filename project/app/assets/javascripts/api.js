@@ -113,6 +113,25 @@ async function listBackup() {
     return response.json();
 }
 
+async function set_file_name() {
+    const response = await fetch(`${selectedBackupFilename}/set_file_name`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    return response.json();
+}
+
+async function updateDatabase() {
+    const response = await fetch('/database_mode');
+
+    return response.json();
+}
+
+
 async function getReport(type, params = {}) {
     const url = new URL(`${API_BASE}/reports/${type}`);
     

@@ -554,7 +554,7 @@
 }
 
 .toggle-input:not(:checked) + .toggle-label .toggle-text-right {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(65, 65, 65, 0.852);
 }
 
 .toggle-handle {
@@ -616,4 +616,19 @@
     background: var(--secondary-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Стили для модалки выбора файла БД */
+.backup-item.db-file-item {
+    border-left: 4px solid #4CAF50;
+}
+
+.backup-item.db-file-item.selected {
+    background-color: #f0f9ff;
+    border-left-color: #2196F3;
+}
+
+.modal-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
 }
