@@ -19,10 +19,10 @@ class CrudService < ApplicationService
 			session: @session
 		)
 
-		log_info("#{target_name} #{@action} completed", entity_id: result.id)
+		log_info("#{target_name} #{@action} completed")
 		result
 	rescue ActiveRecord::RecordNotUnique => e
-		log_error("#{target} #{action} failed", error: error.message)
+		log_error("#{target_name} #{action} failed", error: error.message)
 		raise DuplicateError.new(
 			"Duplicate record",
 			e,
@@ -37,7 +37,7 @@ class CrudService < ApplicationService
 			details: { errors: e.record.errors }
 		)
 	rescue ActiveRecord::RecordNotFound => e
-		log_error("#{target} #{action} failed", error: error.message)
+		log_error("#{target_name} #{action} failed", error: error.message)
 		raise NotFoundError.new(
 			"Record not found",
 			e,
@@ -45,7 +45,7 @@ class CrudService < ApplicationService
 		)
 
 	rescue ActiveRecord::ConnectionNotEstablished, PG::ConnectionBad => e
-		log_error("#{target} #{action} failed", error: error.message)
+		log_error("#{target_name} #{action} failed", error: error.message)
 		raise DatabaseError.new(
 			"Database connection error",
 			e,
@@ -53,7 +53,7 @@ class CrudService < ApplicationService
 		)
 
 	rescue StandardError => e
-		log_error("#{target} #{action} failed", error: error.message)
+		log_error("#{target_name} #{action} failed", error: error.message)
 		raise CrudError.new(
 			e.message,
 			e,
