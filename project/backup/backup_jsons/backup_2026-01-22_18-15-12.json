@@ -149,10 +149,10 @@
     {
       "master_id": 12,
       "last_name": "Элегант",
-      "first_name": "Антон",
+      "first_name": "Эрнест",
       "patronymic": "Фармович",
       "phone_number": "+79615365246",
-      "is_active": true
+      "is_active": "true"
     }
   ],
   "services": [

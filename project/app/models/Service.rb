@@ -25,4 +25,14 @@ class Service < ApplicationRecord
     ]
     validates :category, 
         inclusion: { in: CATEGORIES }
+
+    def to_h
+        {
+            service_id: service_id,
+            title: title,
+            duration: duration,
+            base_price: base_price,
+            category: category
+        }
+    end
 end

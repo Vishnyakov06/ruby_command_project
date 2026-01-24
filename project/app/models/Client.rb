@@ -19,6 +19,17 @@ class Client < ApplicationRecord
     
     validate :registration_date_valid
 
+    def to_h
+        {
+            client_id: client_id,
+            first_name: first_name,
+            last_name: last_name,
+            patronymic: patronymic,
+            phone_number: phone_number,
+            registration_date: registration_date
+        }
+    end
+
     private
     
     def registration_date_valid

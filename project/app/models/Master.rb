@@ -17,4 +17,15 @@ class Master < ApplicationRecord
         uniqueness: true, 
         format: { with: /\A(\+7|8)\d{10}\z/ }
     validates :is_active, inclusion: { in: [true, false] }
+
+    def to_h
+        {
+            master_id: master_id,
+            first_name: first_name,
+            last_name: last_name,
+            patronymic: patronymic,
+            phone_number: phone_number,
+            is_active: is_active
+        }
+    end
 end
