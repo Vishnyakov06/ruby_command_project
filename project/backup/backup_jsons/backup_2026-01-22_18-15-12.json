@@ -1,0 +1,342 @@
+{
+  "clients": [
+    {
+      "client_id": 1,
+      "last_name": "Иванова",
+      "first_name": "Анна",
+      "patronymic": "Сергеевна",
+      "phone_number": "+79161234567",
+      "registration_date": "2024-01-15"
+    },
+    {
+      "client_id": 2,
+      "last_name": "Петров",
+      "first_name": "Дмитрий",
+      "patronymic": "Александрович",
+      "phone_number": "+79162345678",
+      "registration_date": "2024-02-10"
+    },
+    {
+      "client_id": 3,
+      "last_name": "Сидорова",
+      "first_name": "Екатерина",
+      "patronymic": "Владимировна",
+      "phone_number": "+79163456789",
+      "registration_date": "2024-02-28"
+    },
+    {
+      "client_id": 4,
+      "last_name": "Кузнецов",
+      "first_name": "Алексей",
+      "patronymic": "Игоревич",
+      "phone_number": "+79164567890",
+      "registration_date": "2024-03-05"
+    },
+    {
+      "client_id": 5,
+      "last_name": "Морозова",
+      "first_name": "Ольга",
+      "patronymic": "Дмитриевна",
+      "phone_number": "+79165678901",
+      "registration_date": "2024-03-12"
+    },
+    {
+      "client_id": 8,
+      "last_name": "Бигидейл",
+      "first_name": "Жорик",
+      "patronymic": "Алексеевич",
+      "phone_number": "+79234568898",
+      "registration_date": "2026-01-18"
+    },
+    {
+      "client_id": 11,
+      "last_name": "Додепп",
+      "first_name": "Жорик",
+      "patronymic": "Мартиросянович",
+      "phone_number": "+79234568823",
+      "registration_date": "2026-01-21"
+    },
+    {
+      "client_id": 44,
+      "last_name": "Шпроттер",
+      "first_name": "Гарик",
+      "patronymic": "Пельменевич",
+      "phone_number": "+79234568000",
+      "registration_date": "2026-01-22"
+    }
+  ],
+  "masters": [
+    {
+      "master_id": 8,
+      "last_name": "Харламов",
+      "first_name": "Гарик",
+      "patronymic": "Юрьевич",
+      "phone_number": "+72283142536",
+      "is_active": false
+    },
+    {
+      "master_id": 9,
+      "last_name": "Летов",
+      "first_name": "Игорь",
+      "patronymic": "Фёдорович",
+      "phone_number": "+79615365725",
+      "is_active": true
+    },
+    {
+      "master_id": 10,
+      "last_name": "Бетмен",
+      "first_name": "Эчпочмак",
+      "patronymic": "Суперменович",
+      "phone_number": "+72283142535",
+      "is_active": true
+    },
+    {
+      "master_id": 11,
+      "last_name": "Суровый",
+      "first_name": "Эдуард",
+      "patronymic": "",
+      "phone_number": "+79615365726",
+      "is_active": true
+    },
+    {
+      "master_id": 1,
+      "last_name": "Волкова",
+      "first_name": "Елена",
+      "patronymic": "Анатольевна",
+      "phone_number": "+79166789012",
+      "is_active": true
+    },
+    {
+      "master_id": 2,
+      "last_name": "Смирнов",
+      "first_name": "Артем",
+      "patronymic": "Павлович",
+      "phone_number": "+79167890123",
+      "is_active": true
+    },
+    {
+      "master_id": 3,
+      "last_name": "Ковалева",
+      "first_name": "Мария",
+      "patronymic": "Сергеевна",
+      "phone_number": "+79168901234",
+      "is_active": true
+    },
+    {
+      "master_id": 4,
+      "last_name": "Новиков",
+      "first_name": "Игорь",
+      "patronymic": "Викторович",
+      "phone_number": "+79169012345",
+      "is_active": false
+    },
+    {
+      "master_id": 5,
+      "last_name": "Федорова",
+      "first_name": "Анастасия",
+      "patronymic": "Алексеевна",
+      "phone_number": "+79160123456",
+      "is_active": true
+    },
+    {
+      "master_id": 6,
+      "last_name": "Бурунов",
+      "first_name": "Сергей",
+      "patronymic": "Александрович",
+      "phone_number": "+88005553535",
+      "is_active": true
+    },
+    {
+      "master_id": 12,
+      "last_name": "Элегант",
+      "first_name": "Эрнест",
+      "patronymic": "Фармович",
+      "phone_number": "+79615365246",
+      "is_active": "true"
+    }
+  ],
+  "services": [
+    {
+      "service_id": 1,
+      "title": "Женская стрижка",
+      "duration": 3600,
+      "base_price": 2500,
+      "category": "Cтрижка"
+    },
+    {
+      "service_id": 2,
+      "title": "Мужская стрижка",
+      "duration": 2700,
+      "base_price": 1500,
+      "category": "Cтрижка"
+    },
+    {
+      "service_id": 3,
+      "title": "Окрашивание в один тон",
+      "duration": 9000,
+      "base_price": 4500,
+      "category": "Окрашивание"
+    },
+    {
+      "service_id": 4,
+      "title": "Сложное окрашивание",
+      "duration": 12600,
+      "base_price": 7500,
+      "category": "Окрашивание"
+    },
+    {
+      "service_id": 5,
+      "title": "Классический маникюр",
+      "duration": 5400,
+      "base_price": 2000,
+      "category": "Маникюр"
+    },
+    {
+      "service_id": 6,
+      "title": "Аппаратный педикюр",
+      "duration": 6300,
+      "base_price": 2800,
+      "category": "Педикюр"
+    },
+    {
+      "service_id": 7,
+      "title": "Вечерний макияж",
+      "duration": 4500,
+      "base_price": 3500,
+      "category": "Визаж"
+    },
+    {
+      "service_id": 8,
+      "title": "Депиляция воском (ноги)",
+      "duration": 3600,
+      "base_price": 2200,
+      "category": "Депиляция"
+    },
+    {
+      "service_id": 9,
+      "title": "Расслабляющий массаж",
+      "duration": 4500,
+      "base_price": 3200,
+      "category": "Массаж"
+    },
+    {
+      "service_id": 10,
+      "title": "Чистка лица",
+      "duration": 5400,
+      "base_price": 4000,
+      "category": "Косметология"
+    }
+  ],
+  "bookings": [
+    {
+      "booking_id": 1,
+      "client_id": 1,
+      "master_id": 1,
+      "service_id": 1,
+      "date_service": "2024-04-10 14:00:00 UTC",
+      "price": 2500,
+      "status": "Выполнена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Клиент просил чуть короче сзади"
+    },
+    {
+      "booking_id": 2,
+      "client_id": 2,
+      "master_id": 2,
+      "service_id": 2,
+      "date_service": "2024-04-11 16:30:00 UTC",
+      "price": 1500,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Стандартная мужская стрижка"
+    },
+    {
+      "booking_id": 3,
+      "client_id": 3,
+      "master_id": 3,
+      "service_id": 3,
+      "date_service": "2024-04-12 11:00:00 UTC",
+      "price": 4500,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Клиентка хочет темно-русый"
+    },
+    {
+      "booking_id": 4,
+      "client_id": 4,
+      "master_id": 1,
+      "service_id": 5,
+      "date_service": "2024-04-13 13:00:00 UTC",
+      "price": 2000,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": null
+    },
+    {
+      "booking_id": 5,
+      "client_id": 1,
+      "master_id": 4,
+      "service_id": 7,
+      "date_service": "2024-04-14 18:00:00 UTC",
+      "price": 3500,
+      "status": "Отменена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Клиентка заболела"
+    },
+    {
+      "booking_id": 6,
+      "client_id": 5,
+      "master_id": 5,
+      "service_id": 9,
+      "date_service": "2024-04-15 12:00:00 UTC",
+      "price": 3200,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Аллергия на миндальное масло"
+    },
+    {
+      "booking_id": 7,
+      "client_id": 2,
+      "master_id": 2,
+      "service_id": 2,
+      "date_service": "2024-04-09 15:00:00 UTC",
+      "price": 1500,
+      "status": "Неявка",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Клиент не пришел"
+    },
+    {
+      "booking_id": 8,
+      "client_id": 3,
+      "master_id": 3,
+      "service_id": 4,
+      "date_service": "2024-04-16 10:00:00 UTC",
+      "price": 7500,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Балаяж с тонированием"
+    },
+    {
+      "booking_id": 9,
+      "client_id": 4,
+      "master_id": 1,
+      "service_id": 6,
+      "date_service": "2024-04-17 14:30:00 UTC",
+      "price": 2800,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": null
+    },
+    {
+      "booking_id": 10,
+      "client_id": 5,
+      "master_id": 5,
+      "service_id": 10,
+      "date_service": "2024-04-18 16:00:00 UTC",
+      "price": 4000,
+      "status": "Подтверждена",
+      "created_at": "2026-01-15 11:44:34 UTC",
+      "notes": "Чувствительная кожа"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+/* Стили для отчетов */
+.report-tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.report-tab {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: 2px solid transparent;
+}
+
+.report-tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.report-tab.active {
+    background: white;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.report-tab i {
+    font-size: 1.2rem;
+}
+
+.report-content {
+    display: none;
+    flex: 1;
+    min-height: 0;
+}
+
+.report-content.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Стили для таблиц отчетов */
+.report-table-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.report-table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 500px;
+    border-radius: 10px;
+}
+
+/* Заголовки для отчетов */
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 10px 10px 0 0;
+}
+
+.report-header h3 {
+    margin: 0;
+    color: var(--dark-color);
+    font-size: 1.2rem;
+}
+
+/* Стили для элементов управления отчетами */
+.report-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.styled-select {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: white;
+    color: var(--dark-color);
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.styled-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+/* Статусы в таблицах */
+.revenue-high {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.revenue-medium {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.revenue-low {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+/* Индикаторы загрузки */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.loading-spinner i {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Стили для сообщений об ошибках */
+.error-message {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+    color: #721c24;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .report-controls {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .report-tabs-nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}

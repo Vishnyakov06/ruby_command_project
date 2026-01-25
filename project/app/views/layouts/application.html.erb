@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link 
+      rel="preconnect" 
+      href="https://fonts.googleapis.com"
+    />
+    <link 
+      rel="preconnect" 
+      href="https://fonts.gstatic.com" 
+      crossorigin
+    />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
+      rel="stylesheet"
+    />
+
+    <title>Beauty Salon</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "backup", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "notifications", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "forms", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "reports", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "modals", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "buttons", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "tables", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "dashboard", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", "data-turbo-preload": "false" %>
+
+    <%= javascript_include_tag "api", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "modals", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "reports", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "undo", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag "clients", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "masters", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "services", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "bookings", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "backups", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag "dashboard", "data-turbo-track": "reload", defer: true%>
+    <%= javascript_include_tag "index", "data-turbo-track": "reload", defer: true %>
+  </head>
+  <body>
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+</html>

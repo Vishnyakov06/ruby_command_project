@@ -1,0 +1,89 @@
+<div id="reports" class="tab-content active">
+    <div class="section-header">
+        <h2><i class="fas fa-chart-bar"></i> Отчеты</h2>
+        <div class="header-actions">
+            <div class="date-filter">
+                <select id="report-period" class="styled-select hidden">
+                    <option value="today">Сегодня</option>
+                    <option value="week">Неделя</option>
+                    <option value="month" selected>Месяц</option>
+                    <option value="quarter">Квартал</option>
+                    <option value="year">Год</option>
+                </select>
+            </div>
+            <div class="report-tabs-nav" style="display: flex; gap: 0.5rem; align-items: center;">
+                <button class="btn-primary btn-icon report-tab active" data-report="revenue" title="Выручка">
+                    <i class="fas fa-money-bill-wave"></i>
+                </button>
+                <button class="btn-primary btn-icon report-tab" data-report="masters" title="Мастера">
+                    <i class="fas fa-user-tie"></i>
+                </button>
+                <button class="btn-primary btn-icon report-tab" data-report="clients" title="Клиенты">
+                    <i class="fas fa-users"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-container">
+        <!-- Отчет по выручке -->
+        <div class="report-content active" id="revenue-report">
+            <div class="table-wrapper">
+                <table class="data-table" id="revenue-table">
+                    <thead>
+                        <tr>
+                            <th>Период</th>
+                            <th>Средняя продолжительность</th>
+                            <th>Средняя цена</th>
+                            <th>Мастер</th>
+                            <th>Записи</th>
+                            <th>Выручка</th>
+                            <th>Уникальных клиентов</th>
+                        </tr>
+                    </thead>
+                    <tbody id="revenue-report-body"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Отчет по мастерам -->
+        <div class="report-content" id="masters-report">
+            <div class="table-wrapper">
+                <table class="data-table" id="masters-report-table">
+                    <thead>
+                        <tr>
+                            <th>Мастер</th>
+                            <th>Категория</th>
+                            <th>Услуга</th>
+                            <th>Клиенты</th>
+                            <th>Записи</th>
+                            <th>Выручка</th>
+                            <th>Средний чек</th>
+                        </tr>
+                    </thead>
+                    <tbody id="masters-report-body"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Отчет по клиентам -->
+        <div class="report-content" id="clients-report">
+            <div class="table-wrapper">
+                <table class="data-table" id="clients-report-table">
+                    <thead>
+                        <tr>
+                            <th>Клиент</th>
+                            <th>Телефон</th>
+                            <th>Посещений</th>
+                            <th>Потрачено</th>
+                            <th>Средний чек</th>
+                            <th>Любимый мастер</th>
+                            <th>Категория</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clients-report-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

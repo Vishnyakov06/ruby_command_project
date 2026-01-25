@@ -1,0 +1,1 @@
+CREATE INDEX idx_master_phone_number ON master (phone_number);

@@ -1,0 +1,57 @@
+<!-- Модальное окно для выбора бэкапа -->
+<div id="backup-list-modal" class="modal">
+    <div class="modal-content wide-modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-history"></i> Выберите бэкап для восстановления</h3>
+        </div>
+        <div class="modal-body">
+            <div class="backup-list-container" id="backup-list-container">
+                <div class="loading" id="backup-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Загрузка списка бэкапов...
+                </div>
+                <div class="backup-list" id="backup-list" style="display: none;">
+                    <!-- Список бэкапов будет здесь -->
+                </div>
+                <div class="no-backups" id="no-backups" style="display: none;">
+                    <p>Нет доступных бэкапов</p>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-secondary close-modal">Отмена</button>
+                <button type="button" class="btn-primary" id="restore-selected-btn" disabled>
+                    <i class="fas fa-upload"></i> Восстановить выбранный
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для выбора файла для режима БД -->
+<div id="db-file-select-modal" class="modal">
+    <div class="modal-content wide-modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-database"></i> Выберите файл для режима Backup JSON</h3>
+        </div>
+        <div class="modal-body">
+            <div class="backup-list-container" id="db-file-list-container">
+                <div class="loading" id="db-file-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Загрузка списка бэкапов...
+                </div>
+                <div class="backup-list" id="db-file-list" style="display: none;">
+                    <!-- Список бэкапов будет здесь -->
+                </div>
+                <div class="no-backups" id="db-no-backups" style="display: none;">
+                    <p>Нет доступных бэкапов</p>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-secondary close-modal">Отмена</button>
+                <button type="button" class="btn-primary" id="confirm-db-file-btn" disabled>
+                    <i class="fas fa-check"></i> Использовать этот файл
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
